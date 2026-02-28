@@ -4,7 +4,8 @@ import asyncio
 import os
 
 import aiohttp
-from rp_to_strong_cli.models import (
+
+from .models import (
     BootstrapResponse,
     Exercise,
     ExerciseHistoryEntry,
