@@ -1,0 +1,25 @@
+[settings]
+pipx.uvx = true
+
+[tools]
+java = "21"
+"npm:@openapitools/openapi-generator-cli" = "2.30.0"
+
+[env]
+HEVY_API_BASE_URL = "https://api.hevyapp.com"
+
+[tasks.test]
+run = "echo 'No tests defined'"
+
+[tasks.generate-models]
+description = "Generate Python SDK from OpenAPI spec"
+run = """
+openapi-generator-cli generate \
+  -i openapi.yaml \
+  -g python \
+  -o src \
+  --package-name hevy_api_service \
+  --additional-properties=generateSourceCodeOnly=true \
+  --additional-properties=library=asyncio
+"""
+depends_post = ["//:format"]

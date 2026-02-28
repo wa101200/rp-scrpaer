@@ -8,7 +8,15 @@ local python_linters = new Mapping<String, Step> {
   // Fast Python formatter (black replacement)
   ["ruff-format"] = Builtins.ruff_format
   // Validates Python files parse without syntax errors
-  ["python-check-ast"] = Builtins.python_check_ast
+  ["python-check-ast"] = (Builtins.python_check_ast) {
+    exclude =
+      List(
+        "**/.venv/**",
+        "**/__pycache__/**",
+        "packages/api-service-hevy/src/hevy_api_service/**",
+        "packages/api-service-rp/src/api_service_rp/**",
+      )
+  }
   // Detects leftover breakpoint()/pdb statements
   ["python-debug-statements"] = Builtins.python_debug_statements
 }
@@ -23,6 +31,8 @@ local config_linters = new Mapping<String, Step> {
   ["taplo-format"] = Builtins.taplo_format
   // Formats YAML files consistently
   ["yamlfmt"] = Builtins.yamlfmt
+  ["pkl"] = Builtins.pkl
+  ["pkl-format"] = Builtins.pkl_format
 }
 
 // --- GitHub Actions ---

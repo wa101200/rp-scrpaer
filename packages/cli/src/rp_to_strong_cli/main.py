@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 import click
-from rp_to_strong_api_consumer.service import RPClient
+from api_service_rp import ApiClient, Configuration, TrainingDataApi, UserApi
 
 EXPORT_TYPES = [
     "all",
@@ -26,6 +26,8 @@ def _read_token(token_file: str) -> str:
 
 
 def _serialize(obj: object) -> object:
+    from datetime import datetime
+
     from pydantic import BaseModel
 
     if isinstance(obj, BaseModel):
@@ -34,6 +36,8 @@ def _serialize(obj: object) -> object:
         return [_serialize(item) for item in obj]
     if isinstance(obj, dict):
         return {k: _serialize(v) for k, v in obj.items()}
+    if isinstance(obj, datetime):
+        return obj.isoformat()
     return obj
 
 
@@ -43,29 +47,67 @@ def _write_json(data: object, output: Path) -> None:
     click.echo(f"Wrote {output}")
 
 
+async def _fetch_all(user_api: UserApi, training_api: TrainingDataApi) -> dict:
+    (
+        profile,
+        subscriptions,
+        exercises,
+        summaries,
+        templates,
+        exercise_history,
+    ) = await asyncio.gather(
+        user_api.get_user_profile(),
+        user_api.get_user_subscriptions(),
+        training_api.get_exercises(),
+        training_api.get_mesocycles(),
+        training_api.get_templates(),
+        training_api.get_user_exercise_history(),
+    )
+    mesocycles = await asyncio.gather(
+        *(training_api.get_mesocycle(m.key) for m in summaries)
+    )
+    return {
+        "profile": profile,
+        "subscriptions": subscriptions,
+        "exercises": sorted(exercises, key=lambda e: e.id),
+        "mesocycles": sorted(mesocycles, key=lambda m: m.created_at, reverse=True),
+        "templates": sorted(templates, key=lambda t: t.id),
+        "exercise_history": exercise_history,
+    }
+
+
+async def _fetch_mesocycles(training_api: TrainingDataApi) -> list:
+    summaries = await training_api.get_mesocycles()
+    return list(
+        await asyncio.gather(*(training_api.get_mesocycle(m.key) for m in summaries))
+    )
+
+
 async def _export(token: str, export_type: str, output: Path) -> None:
-    async with RPClient(token) as client:
+    config = Configuration(access_token=token)
+    async with ApiClient(config) as client:
+        user_api = UserApi(client)
+        training_api = TrainingDataApi(client)
+
         if export_type == "all":
-            data = await client.export_all()
+            data = await _fetch_all(user_api, training_api)
             if output.suffix == ".json":
                 _write_json(data, output)
             else:
-                out_dir = output
-                out_dir.mkdir(parents=True, exist_ok=True)
+                output.mkdir(parents=True, exist_ok=True)
                 for key, value in data.items():
-                    _write_json(value, out_dir / f"{key}.json")
-        elif export_type == "profile":
-            _write_json(await client.get_user_profile(), output)
-        elif export_type == "subscriptions":
-            _write_json(await client.get_user_subscriptions(), output)
-        elif export_type == "exercises":
-            _write_json(await client.get_exercises(), output)
-        elif export_type == "mesocycles":
-            _write_json(await client.get_all_mesocycles(), output)
-        elif export_type == "templates":
-            _write_json(await client.get_templates(), output)
-        elif export_type == "exercise-history":
-            _write_json(await client.get_user_exercise_history(), output)
+                    _write_json(value, output / f"{key}.json")
+            return
+
+        fetchers = {
+            "profile": user_api.get_user_profile,
+            "subscriptions": user_api.get_user_subscriptions,
+            "exercises": training_api.get_exercises,
+            "mesocycles": lambda: _fetch_mesocycles(training_api),
+            "templates": training_api.get_templates,
+            "exercise-history": training_api.get_user_exercise_history,
+        }
+        _write_json(await fetchers[export_type](), output)
 
 
 @click.group()

@@ -4,9 +4,8 @@ version = "0.1.0"
 description = "CLI frontend for RP to STRONG workout data exporter"
 requires-python = ">=3.12"
 dependencies = [
-  "aiofiles>=25.1.0",
-  "aiohttp>=3.13.3",
   "click>=8.1",
   "pydantic>=2.12.5",
-  "rp-to-strong-rp-api-service",
+  "rp-to-strong-api-service-rp",
+  "api-service-hevy",
 ]

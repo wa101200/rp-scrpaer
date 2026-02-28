@@ -1,6 +1,6 @@
 # rp-to-strong-cli
 
-Command-line tool for exporting personal workout data from the [RP Hypertrophy](https://rpstrength.com/) app to JSON. Built with [Click](https://click.palletsprojects.com/) and powered by the `rp-to-strong-rp-api-service` library.
+Command-line tool for exporting personal workout data from the [RP Hypertrophy](https://rpstrength.com/) app to JSON. Built with [Click](https://click.palletsprojects.com/) and powered by the `rp-to-strong-api-service-rp` library.
 
 ## Quick Start
 
@@ -64,7 +64,7 @@ export/        # Default output directory (sample data included)
 | Package | Purpose |
 | --- | --- |
 | `click` >=8.1 | CLI framework |
-| `rp-to-strong-rp-api-service` | Async API client and Pydantic models |
+| `rp-to-strong-api-service-rp` | Async API client and Pydantic models |
 | `aiohttp` >=3.13 | Async HTTP (transitive) |
 | `aiofiles` >=25.1 | Async file I/O |
 | `pydantic` >=2.12 | Data validation (transitive) |

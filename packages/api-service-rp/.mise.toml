@@ -1,0 +1,51 @@
+[settings]
+npm.package_manager = "bun"
+auto_install = false
+
+[tools]
+"node" = "latest"
+"bun" = "latest"
+"npm:@redocly/cli" = "2.20.0"
+java = "21"
+"npm:@openapitools/openapi-generator-cli" = "2.30.0"
+
+
+[env]
+RP_APP_BASE_URL = "https://training.rpstrength.com/api"
+RP_APP_VERSION = "1.1.13"
+
+[tasks.test]
+run = "echo 'No tests defined'"
+
+[tasks.build]
+run = "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} docker build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t rp-to-strong-api-service-rp ../.."
+description = "Build the CLI Docker image"
+sources = ["openapi.yaml", "Dockerfile"]
+
+[tasks.compile-openai]
+tools = { "npm:redocly" = "2.20.0" }
+run = "redocly build-docs openapi.yaml --output openapi/index.html"
+description = "Compile OpenAPI docs"
+
+[tasks.serve-openapi]
+depends = ["compile-openai"]
+run = "python -m http.server --directory openapi"
+description = "Serve OpenAPI docs"
+
+[tasks.run-docker]
+depends = ["build"]
+run = "docker run -p 8080:8080 rp-to-strong-api-service-rp "
+
+
+[tasks.generate-models]
+description = "Generate Python SDK from OpenAPI spec"
+run = """
+openapi-generator-cli generate \
+  -i openapi.yaml \
+  -g python \
+  -o src \
+  --package-name api_service_rp \
+  --additional-properties=generateSourceCodeOnly=true \
+  --additional-properties=library=asyncio
+"""
+depends_post = ["//:format"]
