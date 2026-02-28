@@ -10,7 +10,6 @@ members = ["packages/*"]
 [tool.uv.sources]
 rp-to-strong-cli = { workspace = true }
 rp-to-strong-pipeline = { workspace = true }
-rp-to-strong-api-service-rp = { workspace = true }
 api-service = { workspace = true }
 
 [tool.ruff]
