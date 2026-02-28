@@ -2,4 +2,5 @@
 run = "echo 'No tests defined'"
 
 [tasks.build]
-run = "echo 'No build steps defined'"
+run = "docker build -f Dockerfile -t rp-to-strong-pipeline ../.."
+description = "Build the pipeline Docker image"

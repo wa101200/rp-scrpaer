@@ -8,6 +8,7 @@ experimental = true
 
 [tools]
 python = "3.12"
+uv = "latest"
 hk = "1.36.0"
 ruff = "latest"
 pkl = "latest"
