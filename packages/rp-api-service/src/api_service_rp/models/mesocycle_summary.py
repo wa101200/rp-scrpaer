@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class MesocycleSummary(BaseModel):
@@ -25,12 +25,12 @@ class MesocycleSummary(BaseModel):
     MesocycleSummary
     """  # noqa: E501
 
-    id: StrictStr | None = None
-    key: StrictStr | None = None
-    name: StrictStr | None = None
-    days: StrictInt | None = None
-    weeks: StrictInt | None = None
-    unit: StrictStr | None = None
+    id: str | None = None
+    key: str | None = None
+    name: str | None = None
+    days: int | None = None
+    weeks: int | None = None
+    unit: str | None = None
     created_at: datetime | None = Field(default=None, alias="createdAt")
     updated_at: datetime | None = Field(default=None, alias="updatedAt")
     __properties: ClassVar[list[str]] = [
@@ -48,6 +48,7 @@ class MesocycleSummary(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -84,7 +85,7 @@ class MesocycleSummary(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
+    def from_dict(cls, obj: Any | None) -> Self | None:
         """Create an instance of MesocycleSummary from a dict"""
         if obj is None:
             return None

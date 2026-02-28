@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 from api_service_rp.models.muscle_group_priority import MuscleGroupPriority
 from api_service_rp.models.week import Week
@@ -28,18 +28,18 @@ class Mesocycle(BaseModel):
     Mesocycle
     """  # noqa: E501
 
-    id: StrictStr | None = None
-    key: StrictStr | None = None
-    user_id: StrictStr | None = Field(default=None, alias="userId")
-    name: StrictStr | None = None
-    days: StrictInt | None = None
-    unit: StrictStr | None = None
-    week_count: StrictInt | None = Field(
+    id: str | None = None
+    key: str | None = None
+    user_id: str | None = Field(default=None, alias="userId")
+    name: str | None = None
+    days: int | None = None
+    unit: str | None = None
+    week_count: int | None = Field(
         default=None, description="Number of weeks in the mesocycle", alias="weekCount"
     )
-    source_template_id: StrictStr | None = Field(default=None, alias="sourceTemplateId")
-    source_meso_id: StrictStr | None = Field(default=None, alias="sourceMesoId")
-    micro_rirs: dict[str, Any] | None = Field(default=None, alias="microRirs")
+    source_template_id: str | None = Field(default=None, alias="sourceTemplateId")
+    source_meso_id: str | None = Field(default=None, alias="sourceMesoId")
+    micro_rirs: Any | None = Field(default=None, alias="microRirs")
     created_at: datetime | None = Field(default=None, alias="createdAt")
     updated_at: datetime | None = Field(default=None, alias="updatedAt")
     finished_at: datetime | None = Field(default=None, alias="finishedAt")
@@ -50,10 +50,10 @@ class Mesocycle(BaseModel):
     last_workout_finished_at: datetime | None = Field(
         default=None, alias="lastWorkoutFinishedAt"
     )
-    priorities: dict[str, MuscleGroupPriority] | None = None
+    priorities: Any | None = None
     notes: list[dict[str, Any]] | None = None
-    status: StrictStr | None = None
-    generated_from: StrictStr | None = Field(default=None, alias="generatedFrom")
+    status: str | None = None
+    generated_from: str | None = Field(default=None, alias="generatedFrom")
     weeks: list[Week] | None = None
     __properties: ClassVar[list[str]] = [
         "id",
@@ -79,20 +79,11 @@ class Mesocycle(BaseModel):
         "weeks",
     ]
 
-    @field_validator("status")
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["complete", "ready"]):
-            raise ValueError("must be one of enum values ('complete', 'ready')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -189,7 +180,7 @@ class Mesocycle(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
+    def from_dict(cls, obj: Any | None) -> Self | None:
         """Create an instance of Mesocycle from a dict"""
         if obj is None:
             return None

@@ -21,10 +21,6 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    field_validator,
 )
 
 from api_service_rp.models.day_exercise import DayExercise
@@ -35,18 +31,20 @@ class Day(BaseModel):
     Day
     """  # noqa: E501
 
-    id: StrictStr | None = None
-    meso_id: StrictStr | None = Field(default=None, alias="mesoId")
-    week: StrictInt | None = None
-    position: StrictInt | None = None
-    bodyweight: StrictFloat | StrictInt | None = None
+    id: str | None = None
+    meso_id: str | None = Field(default=None, alias="mesoId")
+    week: int | None = None
+    position: int | None = None
+    bodyweight: float | int | None = None
     bodyweight_at: datetime | None = Field(default=None, alias="bodyweightAt")
-    unit: StrictStr | None = None
-    label: StrictStr | None = None
+    unit: str | None = None
+    label: str | None = None
     finished_at: datetime | None = Field(default=None, alias="finishedAt")
-    status: StrictStr | None = None
+    status: str | None = None
     notes: list[dict[str, Any]] | None = None
-    muscle_groups: list[StrictStr] | None = Field(default=None, alias="muscleGroups")
+    muscle_groups: list[dict[str, Any]] | None = Field(
+        default=None, alias="muscleGroups"
+    )
     exercises: list[DayExercise] | None = None
     __properties: ClassVar[list[str]] = [
         "id",
@@ -64,20 +62,11 @@ class Day(BaseModel):
         "exercises",
     ]
 
-    @field_validator("status")
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["complete", "skipped"]):
-            raise ValueError("must be one of enum values ('complete', 'skipped')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -136,7 +125,7 @@ class Day(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
+    def from_dict(cls, obj: Any | None) -> Self | None:
         """Create an instance of Day from a dict"""
         if obj is None:
             return None

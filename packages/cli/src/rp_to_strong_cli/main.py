@@ -25,6 +25,8 @@ def _read_token(token_file: str) -> str:
 
 
 def _serialize(obj: object) -> object:
+    from datetime import datetime
+
     from pydantic import BaseModel
 
     if isinstance(obj, BaseModel):
@@ -33,6 +35,8 @@ def _serialize(obj: object) -> object:
         return [_serialize(item) for item in obj]
     if isinstance(obj, dict):
         return {k: _serialize(v) for k, v in obj.items()}
+    if isinstance(obj, datetime):
+        return obj.isoformat()
     return obj
 
 
@@ -52,12 +56,15 @@ def _export(token: str, export_type: str, output: Path) -> None:
             data = {
                 "profile": user_api.get_user_profile(),
                 "subscriptions": user_api.get_user_subscriptions(),
-                "exercises": training_api.get_exercises(),
-                "mesocycles": [
-                    training_api.get_mesocycle(m.key)
-                    for m in training_api.get_mesocycles()
-                ],
-                "templates": training_api.get_templates(),
+                "exercises": sorted(training_api.get_exercises(), key=lambda e: e.id),
+                "mesocycles": sorted(
+                    [
+                        training_api.get_mesocycle(m.key)
+                        for m in training_api.get_mesocycles()
+                    ],
+                    key=lambda m: m.created_at,
+                ),
+                "templates": sorted(training_api.get_templates(), key=lambda t: t.id),
                 "exercise_history": training_api.get_user_exercise_history(),
             }
             if output.suffix == ".json":
@@ -75,9 +82,7 @@ def _export(token: str, export_type: str, output: Path) -> None:
             _write_json(training_api.get_exercises(), output)
         elif export_type == "mesocycles":
             summaries = training_api.get_mesocycles()
-            _write_json(
-                [training_api.get_mesocycle(m.key) for m in summaries], output
-            )
+            _write_json([training_api.get_mesocycle(m.key) for m in summaries], output)
         elif export_type == "templates":
             _write_json(training_api.get_templates(), output)
         elif export_type == "exercise-history":

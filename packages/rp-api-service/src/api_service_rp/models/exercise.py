@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Exercise(BaseModel):
@@ -25,15 +25,15 @@ class Exercise(BaseModel):
     Exercise
     """  # noqa: E501
 
-    id: StrictStr | None = None
-    name: StrictStr | None = None
-    muscle_group_id: StrictStr | None = Field(default=None, alias="muscleGroupId")
-    mg_sub_type: StrictStr | None = Field(
+    id: str | None = None
+    name: str | None = None
+    muscle_group_id: str | None = Field(default=None, alias="muscleGroupId")
+    mg_sub_type: str | None = Field(
         default=None, description='e.g. "vertical"', alias="mgSubType"
     )
-    exercise_type: StrictStr | None = Field(default=None, alias="exerciseType")
-    youtube_id: StrictStr | None = Field(default=None, alias="youtubeId")
-    user_id: StrictStr | None = Field(
+    exercise_type: str | None = Field(default=None, alias="exerciseType")
+    youtube_id: str | None = Field(default=None, alias="youtubeId")
+    user_id: str | None = Field(
         default=None,
         description="null for built-in, user ID for custom",
         alias="userId",
@@ -56,24 +56,11 @@ class Exercise(BaseModel):
         "deletedAt",
     ]
 
-    @field_validator("exercise_type")
-    def exercise_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(
-            ["cable", "barbell", "dumbbell", "machine", "bodyweight-only"]
-        ):
-            raise ValueError(
-                "must be one of enum values ('cable', 'barbell', 'dumbbell', 'machine', 'bodyweight-only')"
-            )
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -130,7 +117,7 @@ class Exercise(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
+    def from_dict(cls, obj: Any | None) -> Self | None:
         """Create an instance of Exercise from a dict"""
         if obj is None:
             return None

@@ -20,11 +20,9 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
-    StrictBool,
-    StrictInt,
-    StrictStr,
-    field_validator,
 )
+
+from api_service_rp.models.set import Set
 
 
 class DayExercise(BaseModel):
@@ -32,17 +30,17 @@ class DayExercise(BaseModel):
     DayExercise
     """  # noqa: E501
 
-    id: StrictStr | None = None
-    day_id: StrictStr | None = Field(default=None, alias="dayId")
-    exercise_id: StrictStr | None = Field(default=None, alias="exerciseId")
-    position: StrictInt | None = None
-    joint_pain: StrictBool | None = Field(default=None, alias="jointPain")
-    muscle_group_id: StrictStr | None = Field(default=None, alias="muscleGroupId")
-    source_day_exercise_id: StrictStr | None = Field(
+    id: str | None = None
+    day_id: str | None = Field(default=None, alias="dayId")
+    exercise_id: str | None = Field(default=None, alias="exerciseId")
+    position: int | None = None
+    joint_pain: int | bool | None = Field(default=None, alias="jointPain")
+    muscle_group_id: str | None = Field(default=None, alias="muscleGroupId")
+    source_day_exercise_id: str | None = Field(
         default=None, alias="sourceDayExerciseId"
     )
-    status: StrictStr | None = None
-    sets: list[set] | None = None
+    status: str | None = None
+    sets: list[Set] | None = None
     __properties: ClassVar[list[str]] = [
         "id",
         "dayId",
@@ -55,20 +53,11 @@ class DayExercise(BaseModel):
         "sets",
     ]
 
-    @field_validator("status")
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["complete", "skipped"]):
-            raise ValueError("must be one of enum values ('complete', 'skipped')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -125,7 +114,7 @@ class DayExercise(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
+    def from_dict(cls, obj: Any | None) -> Self | None:
         """Create an instance of DayExercise from a dict"""
         if obj is None:
             return None
@@ -143,7 +132,7 @@ class DayExercise(BaseModel):
                 "muscleGroupId": obj.get("muscleGroupId"),
                 "sourceDayExerciseId": obj.get("sourceDayExerciseId"),
                 "status": obj.get("status"),
-                "sets": [set.from_dict(_item) for _item in obj["sets"]]
+                "sets": [Set.from_dict(_item) for _item in obj["sets"]]
                 if obj.get("sets") is not None
                 else None,
             }

@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 
 from api_service_rp.models.user_attributes import UserAttributes
 
@@ -27,16 +27,16 @@ class UserProfile(BaseModel):
     UserProfile
     """  # noqa: E501
 
-    id: StrictStr | None = None
-    email: StrictStr | None = None
-    display_name: StrictStr | None = Field(default=None, alias="displayName")
-    photo_url: StrictStr | None = Field(default=None, alias="photoUrl")
-    google_id: StrictStr | None = Field(default=None, alias="googleId")
-    apple_id: StrictStr | None = Field(default=None, alias="appleId")
-    facebook_id: StrictStr | None = Field(default=None, alias="facebookId")
-    role_id: StrictStr | None = Field(default=None, alias="roleId")
-    stripe_id: StrictStr | None = Field(default=None, alias="stripeId")
-    klaviyo_id: StrictStr | None = Field(default=None, alias="klaviyoId")
+    id: str | None = None
+    email: str | None = None
+    display_name: str | None = Field(default=None, alias="displayName")
+    photo_url: str | None = Field(default=None, alias="photoUrl")
+    google_id: str | None = Field(default=None, alias="googleId")
+    apple_id: str | None = Field(default=None, alias="appleId")
+    facebook_id: str | None = Field(default=None, alias="facebookId")
+    role_id: str | None = Field(default=None, alias="roleId")
+    stripe_id: str | None = Field(default=None, alias="stripeId")
+    klaviyo_id: str | None = Field(default=None, alias="klaviyoId")
     created_at: datetime | None = Field(default=None, alias="createdAt")
     updated_at: datetime | None = Field(default=None, alias="updatedAt")
     first_seen_at: datetime | None = Field(default=None, alias="firstSeenAt")
@@ -62,6 +62,7 @@ class UserProfile(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
+        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -126,7 +127,7 @@ class UserProfile(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
+    def from_dict(cls, obj: Any | None) -> Self | None:
         """Create an instance of UserProfile from a dict"""
         if obj is None:
             return None
