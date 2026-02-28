@@ -3,7 +3,7 @@ pipx.uvx = true
 
 [tools]
 java = "21"
-"npm:@openapitools/openapi-generator-cli" = "7.20"
+"npm:@openapitools/openapi-generator-cli" = "2.30.0"
 
 [env]
 HEVY_API_BASE_URL = "https://api.hevyapp.com"
