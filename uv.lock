@@ -1391,10 +1391,8 @@ source = { virtual = "." }
 [[package]]
 name = "rp-to-strong-cli"
 version = "0.1.0"
-source = { virtual = "packages/cli" }
+source = { editable = "packages/cli" }
 dependencies = [
-    { name = "aiofiles" },
-    { name = "aiohttp" },
     { name = "click" },
     { name = "hevy-api-service" },
     { name = "pydantic" },
@@ -1403,8 +1401,6 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aiofiles", specifier = ">=25.1.0" },
-    { name = "aiohttp", specifier = ">=3.13.3" },
     { name = "click", specifier = ">=8.1" },
     { name = "hevy-api-service", editable = "packages/hevy-api-service" },
     { name = "pydantic", specifier = ">=2.12.5" },

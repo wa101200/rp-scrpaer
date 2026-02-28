@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import asyncio
 import json
 from pathlib import Path
 
 import click
-from rp_to_strong_api_consumer.service import RPClient
+from api_service_rp import ApiClient, Configuration, TrainingDataApi, UserApi
 
 EXPORT_TYPES = [
     "all",
@@ -43,10 +42,24 @@ def _write_json(data: object, output: Path) -> None:
     click.echo(f"Wrote {output}")
 
 
-async def _export(token: str, export_type: str, output: Path) -> None:
-    async with RPClient(token) as client:
+def _export(token: str, export_type: str, output: Path) -> None:
+    config = Configuration(access_token=token)
+    with ApiClient(config) as client:
+        user_api = UserApi(client)
+        training_api = TrainingDataApi(client)
+
         if export_type == "all":
-            data = await client.export_all()
+            data = {
+                "profile": user_api.get_user_profile(),
+                "subscriptions": user_api.get_user_subscriptions(),
+                "exercises": training_api.get_exercises(),
+                "mesocycles": [
+                    training_api.get_mesocycle(m.key)
+                    for m in training_api.get_mesocycles()
+                ],
+                "templates": training_api.get_templates(),
+                "exercise_history": training_api.get_user_exercise_history(),
+            }
             if output.suffix == ".json":
                 _write_json(data, output)
             else:
@@ -55,17 +68,20 @@ async def _export(token: str, export_type: str, output: Path) -> None:
                 for key, value in data.items():
                     _write_json(value, out_dir / f"{key}.json")
         elif export_type == "profile":
-            _write_json(await client.get_user_profile(), output)
+            _write_json(user_api.get_user_profile(), output)
         elif export_type == "subscriptions":
-            _write_json(await client.get_user_subscriptions(), output)
+            _write_json(user_api.get_user_subscriptions(), output)
         elif export_type == "exercises":
-            _write_json(await client.get_exercises(), output)
+            _write_json(training_api.get_exercises(), output)
         elif export_type == "mesocycles":
-            _write_json(await client.get_all_mesocycles(), output)
+            summaries = training_api.get_mesocycles()
+            _write_json(
+                [training_api.get_mesocycle(m.key) for m in summaries], output
+            )
         elif export_type == "templates":
-            _write_json(await client.get_templates(), output)
+            _write_json(training_api.get_templates(), output)
         elif export_type == "exercise-history":
-            _write_json(await client.get_user_exercise_history(), output)
+            _write_json(training_api.get_user_exercise_history(), output)
 
 
 @click.group()
@@ -101,7 +117,7 @@ def export(token_file: str, export_type: str, output: str | None):
     else:
         output_path = Path(output)
 
-    asyncio.run(_export(token, export_type, output_path))
+    _export(token, export_type, output_path)
 
 
 if __name__ == "__main__":
