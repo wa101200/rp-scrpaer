@@ -12,7 +12,7 @@ members = [
     "rp-to-strong",
     "rp-to-strong-cli",
     "rp-to-strong-pipeline",
-    "rp-to-strong-rp-api-service",
+    "rp-to-strong-api-service-rp",
 ]
 
 [[package]]
@@ -1396,7 +1396,7 @@ dependencies = [
     { name = "click" },
     { name = "hevy-api-service" },
     { name = "pydantic" },
-    { name = "rp-to-strong-rp-api-service" },
+    { name = "rp-to-strong-api-service-rp" },
 ]
 
 [package.metadata]
@@ -1404,7 +1404,7 @@ requires-dist = [
     { name = "click", specifier = ">=8.1" },
     { name = "hevy-api-service", editable = "packages/hevy-api-service" },
     { name = "pydantic", specifier = ">=2.12.5" },
-    { name = "rp-to-strong-rp-api-service", editable = "packages/rp-api-service" },
+    { name = "rp-to-strong-api-service-rp", editable = "packages/api-service-rp" },
 ]
 
 [[package]]
@@ -1427,9 +1427,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "rp-to-strong-rp-api-service"
+name = "rp-to-strong-api-service-rp"
 version = "0.1.0"
-source = { editable = "packages/rp-api-service" }
+source = { editable = "packages/api-service-rp" }
 dependencies = [
     { name = "aiofiles" },
     { name = "aiohttp" },

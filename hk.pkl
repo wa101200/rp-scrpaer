@@ -14,7 +14,7 @@ local python_linters = new Mapping<String, Step> {
         "**/.venv/**",
         "**/__pycache__/**",
         "packages/hevy-api-service/src/hevy_api_service/**",
-        "packages/rp-api-service/src/api_service_rp/**",
+        "packages/api-service-rp/src/api_service_rp/**",
       )
   }
   // Detects leftover breakpoint()/pdb statements

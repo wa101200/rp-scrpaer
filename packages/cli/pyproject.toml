@@ -6,6 +6,6 @@ requires-python = ">=3.12"
 dependencies = [
   "click>=8.1",
   "pydantic>=2.12.5",
-  "rp-to-strong-rp-api-service",
+  "rp-to-strong-api-service-rp",
   "hevy-api-service",
 ]

@@ -17,19 +17,19 @@ ENV MISE_YES=1 \
 
 WORKDIR /app
 COPY .mise.toml mise.lock ./
-COPY packages/rp-api-service/.mise.toml packages/rp-api-service/.mise.toml
+COPY packages/api-service-rp/.mise.toml packages/api-service-rp/.mise.toml
 
-WORKDIR /app/packages/rp-api-service
+WORKDIR /app/packages/api-service-rp
 RUN --mount=type=secret,id=GITHUB_TOKEN \
     GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
     mise install node bun npm:@redocly/cli
 
-COPY packages/rp-api-service/openapi.yaml /app/packages/rp-api-service/openapi.yaml
-RUN mise //packages/rp-api-service:compile-openai
+COPY packages/api-service-rp/openapi.yaml /app/packages/api-service-rp/openapi.yaml
+RUN mise //packages/api-service-rp:compile-openai
 
 FROM caddy:2-alpine
 
-COPY --from=builder /app/packages/rp-api-service/openapi/ /usr/share/caddy/
+COPY --from=builder /app/packages/api-service-rp/openapi/ /usr/share/caddy/
 
 EXPOSE 8080
 CMD ["caddy", "file-server", "--listen", ":8080", "--root", "/usr/share/caddy"]
