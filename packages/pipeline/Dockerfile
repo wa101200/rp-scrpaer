@@ -4,13 +4,13 @@
 FROM jdxcode/mise:2026.2.23 AS mise
 
 # --- Builder ---
-FROM debian:trixie-slim AS builder
+FROM debian:trixie-slim@sha256:1d3c811171a08a5adaa4a163fbafd96b61b87aa871bbc7aa15431ac275d3d430 AS builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    ca-certificates \
-    curl \
-    git \
+    build-essential=12.12 \
+    ca-certificates=20250419 \
+    curl=8.14.1-2+deb13u2 \
+    git=1:2.47.3-0+deb13u1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Grab mise from its official image (not installed via apt/curl)
@@ -39,11 +39,11 @@ RUN uv sync --frozen --package rp-to-strong-pipeline --no-editable
 COPY packages/pipeline/src packages/pipeline/src
 
 # --- Runtime ---
-FROM debian:trixie-slim
+FROM debian:trixie-slim@sha256:1d3c811171a08a5adaa4a163fbafd96b61b87aa871bbc7aa15431ac275d3d430
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    libffi8 \
+    ca-certificates=20250419 \
+    libffi8=3.4.8-2 \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -r -s /usr/sbin/nologin -d /app app
 
