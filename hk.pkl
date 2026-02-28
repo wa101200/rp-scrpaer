@@ -1,24 +1,57 @@
 amends "package://github.com/jdx/hk/releases/download/v1.36.0/hk@1.36.0#/Config.pkl"
 import "package://github.com/jdx/hk/releases/download/v1.36.0/hk@1.36.0#/Builtins.pkl"
 
-local linters = new Mapping<String, Step> {
+// --- Python ---
+local python_linters = new Mapping<String, Step> {
+  // Fast Python linter (flake8/pylint/isort replacement)
   ["ruff"] = Builtins.ruff
+  // Fast Python formatter (black replacement)
   ["ruff-format"] = Builtins.ruff_format
+  // Validates Python files parse without syntax errors
   ["python-check-ast"] = Builtins.python_check_ast
+  // Detects leftover breakpoint()/pdb statements
   ["python-debug-statements"] = Builtins.python_debug_statements
 }
+
+// --- Config files ---
+local config_linters = new Mapping<String, Step> {
+  // Formats mise.toml configuration files
+  ["mise"] = Builtins.mise
+  // Validates TOML files for correctness
+  ["taplo"] = Builtins.taplo
+  // Formats TOML files consistently
+  ["taplo-format"] = Builtins.taplo_format
+  // Formats YAML files consistently
+  ["yamlfmt"] = Builtins.yamlfmt
+}
+
+// --- GitHub Actions ---
+local gh_actions_linters = new Mapping<String, Step> {
+  // Pins and updates GitHub Actions to latest commit SHAs
+  ["pinact-update"] = Builtins.pinact_update
+  // Audits GitHub Actions workflows for security vulnerabilities
+  ["zizmor"] = Builtins.zizmor
+}
+
+local all_linters = new Mapping<String, Step> {
+  ...python_linters
+  ...config_linters
+  ...gh_actions_linters
+}
+
+fail_fast = false
 
 hooks {
   ["fix"] {
     fix = true
-    steps = linters
+    steps = all_linters
   }
   ["check"] {
-    steps = linters
+    steps = all_linters
   }
   ["pre-commit"] {
     fix = true
     stash = "git"
-    steps = linters
+    steps = all_linters
   }
 }

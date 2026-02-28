@@ -1,9 +1,21 @@
+experimental_monorepo_root = true
+
+[settings]
+experimental = true
+
 [tools]
 python = "3.12"
 hk = "1.36.0"
 ruff = "latest"
 pkl = "latest"
+taplo = "latest"
+yamlfmt = "latest"
+pinact = "latest"
+zizmor = "latest"
 
 [env]
 # RP Hypo API auth token - set before running extraction
 RP_AUTH_TOKEN = ""
+
+[tasks.lint]
+run = "hk run pre-commit"
