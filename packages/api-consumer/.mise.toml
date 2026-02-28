@@ -20,7 +20,7 @@ description = "Build the CLI Docker image"
 sources = ["openapi.yaml", "Dockerfile"]
 
 [tasks.compile-openai]
-tools = { "redocly" = "2.20.0" }
+tools = { "npm:redocly" = "2.20.0" }
 run = "redocly build-docs openapi.yaml --output openapi/index.html"
 sources = ["openapi.yaml"]
 description = "Compile OpenAPI docs"
