@@ -1,0 +1,31 @@
+experimental_monorepo_root = true
+
+[env]
+DOCKER_BUILDKIT = 1
+RP_AUTH_TOKEN = ""
+
+
+[monorepo]
+config_roots = ["packages/*"]
+
+[settings]
+experimental = true
+lockfile = true
+
+[tools]
+python = "3.12"
+uv = "0.10.7"
+hk = "1.36.0"
+ruff = "latest"
+pkl = "latest"
+taplo = "latest"
+yamlfmt = "latest"
+pinact = "latest"
+zizmor = "latest"
+github-cli = "latest"
+hadolint = "latest"
+[tasks.lint]
+run = "hk run pre-commit"
+
+[prepare.uv]
+run = "uv sync --all-packages"
