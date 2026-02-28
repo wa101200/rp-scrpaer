@@ -1,5 +1,10 @@
 experimental_monorepo_root = true
 
+[env]
+DOCKER_BUILDKIT = 1
+RP_AUTH_TOKEN = ""
+
+
 [monorepo]
 config_roots = ["packages/*"]
 
@@ -18,10 +23,6 @@ yamlfmt = "latest"
 pinact = "latest"
 zizmor = "latest"
 github-cli = "latest"
-
-[env]
-# RP Hypo API auth token - set before running extraction
-RP_AUTH_TOKEN = ""
 
 [tasks.lint]
 run = "hk run pre-commit"
