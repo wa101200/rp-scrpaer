@@ -1,5 +1,5 @@
 [project]
-name = "api-service-hevy"
+name = "api-service"
 version = "0.1.0"
 description = "Hevy API service with generated Python SDK"
 requires-python = ">=3.12"

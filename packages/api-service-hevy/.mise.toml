@@ -22,3 +22,15 @@ openapi-generator-cli generate \
   --additional-properties=generateSourceCodeOnly=true \
   --additional-properties=library=asyncio
 """
+
+[tasks.generate-models-rp]
+description = "Generate Python SDK from OpenAPI spec"
+run = """
+openapi-generator-cli generate \
+  -i openapi/rp.openapi.yaml \
+  -g python \
+  -o src \
+  --package-name api_service_rp \
+  --additional-properties=generateSourceCodeOnly=true \
+  --additional-properties=library=asyncio
+"""

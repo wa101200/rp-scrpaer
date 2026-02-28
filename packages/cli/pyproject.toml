@@ -7,5 +7,5 @@ dependencies = [
   "click>=8.1",
   "pydantic>=2.12.5",
   "rp-to-strong-api-service-rp",
-  "api-service-hevy",
+  "api-service",
 ]

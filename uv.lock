@@ -8,7 +8,7 @@ resolution-markers = [
 
 [manifest]
 members = [
-    "api-service-hevy",
+    "api-service",
     "rp-to-strong",
     "rp-to-strong-api-service-rp",
     "rp-to-strong-cli",
@@ -198,9 +198,9 @@ wheels = [
 ]
 
 [[package]]
-name = "api-service-hevy"
+name = "api-service"
 version = "0.1.0"
-source = { editable = "packages/api-service-hevy" }
+source = { editable = "packages/api-service" }
 dependencies = [
     { name = "aenum" },
     { name = "pydantic" },
@@ -1424,7 +1424,7 @@ name = "rp-to-strong-cli"
 version = "0.1.0"
 source = { editable = "packages/cli" }
 dependencies = [
-    { name = "api-service-hevy" },
+    { name = "api-service" },
     { name = "click" },
     { name = "pydantic" },
     { name = "rp-to-strong-api-service-rp" },
@@ -1432,7 +1432,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "api-service-hevy", editable = "packages/api-service-hevy" },
+    { name = "api-service", editable = "packages/api-service" },
     { name = "click", specifier = ">=8.1" },
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "rp-to-strong-api-service-rp", editable = "packages/api-service-rp" },
