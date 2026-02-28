@@ -63,6 +63,7 @@ def _export(token: str, export_type: str, output: Path) -> None:
                         for m in training_api.get_mesocycles()
                     ],
                     key=lambda m: m.created_at,
+                    reverse=True
                 ),
                 "templates": sorted(training_api.get_templates(), key=lambda t: t.id),
                 "exercise_history": training_api.get_user_exercise_history(),
