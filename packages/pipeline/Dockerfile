@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # --- Mise binary ---
-FROM jdxcode/mise:latest AS mise
+FROM jdxcode/mise:2026.2.23 AS mise
 
 # --- Builder ---
 FROM debian:trixie-slim AS builder
@@ -18,16 +18,17 @@ COPY --from=mise /usr/local/bin/mise /usr/local/bin/mise
 ENV MISE_YES=1 \
     MISE_DATA_DIR=/opt/mise
 
-# Install Python version declared in root .mise.toml
+# Install Python and uv via mise (versions from root .mise.toml)
 WORKDIR /app
 COPY .mise.toml ./
-RUN mise install python \
-    && cp -a "$(mise where python)" /opt/python
+COPY mise.lock ./
+RUN --mount=type=secret,id=GITHUB_TOKEN \
+    GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
+    mise install python uv \
+    && cp -a "$(mise where python)" /opt/python \
+    && cp -a "$(mise which uv)" /usr/local/bin/uv
 
 ENV PATH="/opt/python/bin:$PATH"
-
-# Grab uv from its official image
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # Copy workspace layout for dependency resolution
 COPY pyproject.toml uv.lock ./

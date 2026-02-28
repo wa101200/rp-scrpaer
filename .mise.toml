@@ -5,10 +5,11 @@ config_roots = ["packages/*"]
 
 [settings]
 experimental = true
+lockfile = true
 
 [tools]
 python = "3.12"
-uv = "latest"
+uv = "0.10.7"
 hk = "1.36.0"
 ruff = "latest"
 pkl = "latest"
@@ -16,6 +17,7 @@ taplo = "latest"
 yamlfmt = "latest"
 pinact = "latest"
 zizmor = "latest"
+github-cli = "latest"
 
 [env]
 # RP Hypo API auth token - set before running extraction
