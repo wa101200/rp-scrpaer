@@ -1,10 +1,11 @@
 [settings]
 npm.package_manager = "bun"
+auto_install = false
 
 [tools]
 "node" = "latest"
 "bun" = "latest"
-"npm:swagger-ui-watcher" = "2.1.14"
+"npm:@redocly/cli" = "2.20.0"
 
 [env]
 RP_APP_BASE_URL = "https://training.rpstrength.com/api"
@@ -22,6 +23,7 @@ run = "swagger-ui-watcher --no-open -p 8001 swagger.yaml"
 description = "Serve Swagger UI on port 8001"
 
 [tasks.compile-openai]
+tools = { "redocly" = "2.20.0" }
 run = "redocly build-docs openapi.yaml --output openapi/index.html"
 sources = ["openapi.yaml"]
 description = "Compile OpenAPI docs"
