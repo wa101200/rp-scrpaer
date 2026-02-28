@@ -6,6 +6,9 @@ auto_install = false
 "node" = "latest"
 "bun" = "latest"
 "npm:@redocly/cli" = "2.20.0"
+java = "21"
+"npm:@openapitools/openapi-generator-cli" = "2.30.0"
+
 
 [env]
 RP_APP_BASE_URL = "https://training.rpstrength.com/api"
@@ -34,3 +37,16 @@ description = "Serve OpenAPI docs"
 [tasks.run-docker]
 depends = ["build"]
 run = "docker run -p 8080:8080 rp-to-strong-rp-api-service "
+
+
+[tasks.generate-models]
+description = "Generate Python SDK from OpenAPI spec"
+run = """
+openapi-generator-cli generate \
+  -i openapi.yaml \
+  -g python \
+  -o src \
+  --package-name api_service_rp \
+  --additional-properties=generateSourceCodeOnly=true
+"""
+depends_post = ["//:format"]
