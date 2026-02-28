@@ -1117,7 +1117,7 @@ components:
           description: The type of set (warmup, normal, failure, dropset)
           example: normal
     CustomExerciseType:
-      type: enum
+      type: string
       enum:
         - weight_reps
         - reps_only
@@ -1129,7 +1129,7 @@ components:
         - short_distance_weight
       example: weight_reps
     MuscleGroup:
-      type: enum
+      type: string
       enum:
         - abdominals
         - shoulders
@@ -1153,7 +1153,7 @@ components:
         - other
       example: chest
     EquipmentCategory:
-      type: enum
+      type: string
       enum:
         - none
         - barbell
@@ -1195,9 +1195,10 @@ components:
           example: false
     CreateCustomExerciseRequestBody:
       type: object
+      required:
+        - exercise
       properties:
         exercise:
-          required: true
           type: object
           properties:
             title:

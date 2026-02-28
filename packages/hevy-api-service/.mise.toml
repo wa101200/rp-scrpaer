@@ -1,5 +1,25 @@
+[settings]
+pipx.uvx = true
+
+[tools]
+"pipx:datamodel-code-generator" = { version = "latest", uvx_args = "--with ruff" }
+
 [env]
 HEVY_API_BASE_URL = "https://api.hevyapp.com"
 
 [tasks.test]
 run = "echo 'No tests defined'"
+
+[tasks.generate-models]
+
+
+run = """
+
+datamodel-codegen --input openapi.yaml --input-file-type openapi \
+    --output-model-type pydantic_v2.BaseModel \
+    --formatters ruff-format ruff-check \
+    --read-only-write-only-model-type all \
+    --output src/hevy_api_service/models.py
+
+"""
+description = "Generate Pydantic models from OpenAPI spec"
