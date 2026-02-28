@@ -47,6 +47,39 @@ def _write_json(data: object, output: Path) -> None:
     click.echo(f"Wrote {output}")
 
 
+async def _fetch_all(user_api: UserApi, training_api: TrainingDataApi) -> dict:
+    profile, subscriptions, exercises, summaries, templates, exercise_history = (
+        await asyncio.gather(
+            user_api.get_user_profile(),
+            user_api.get_user_subscriptions(),
+            training_api.get_exercises(),
+            training_api.get_mesocycles(),
+            training_api.get_templates(),
+            training_api.get_user_exercise_history(),
+        )
+    )
+    mesocycles = await asyncio.gather(
+        *(training_api.get_mesocycle(m.key) for m in summaries)
+    )
+    return {
+        "profile": profile,
+        "subscriptions": subscriptions,
+        "exercises": sorted(exercises, key=lambda e: e.id),
+        "mesocycles": sorted(mesocycles, key=lambda m: m.created_at, reverse=True),
+        "templates": sorted(templates, key=lambda t: t.id),
+        "exercise_history": exercise_history,
+    }
+
+
+async def _fetch_mesocycles(training_api: TrainingDataApi) -> list:
+    summaries = await training_api.get_mesocycles()
+    return list(
+        await asyncio.gather(
+            *(training_api.get_mesocycle(m.key) for m in summaries)
+        )
+    )
+
+
 async def _export(token: str, export_type: str, output: Path) -> None:
     config = Configuration(access_token=token)
     async with ApiClient(config) as client:
@@ -54,45 +87,24 @@ async def _export(token: str, export_type: str, output: Path) -> None:
         training_api = TrainingDataApi(client)
 
         if export_type == "all":
-            summaries = await training_api.get_mesocycles()
-            data = {
-                "profile": await user_api.get_user_profile(),
-                "subscriptions": await user_api.get_user_subscriptions(),
-                "exercises": sorted(
-                    await training_api.get_exercises(), key=lambda e: e.id
-                ),
-                "mesocycles": sorted(
-                    [await training_api.get_mesocycle(m.key) for m in summaries],
-                    key=lambda m: m.created_at,
-                    reverse=True,
-                ),
-                "templates": sorted(
-                    await training_api.get_templates(), key=lambda t: t.id
-                ),
-                "exercise_history": await training_api.get_user_exercise_history(),
-            }
+            data = await _fetch_all(user_api, training_api)
             if output.suffix == ".json":
                 _write_json(data, output)
             else:
-                out_dir = output
-                out_dir.mkdir(parents=True, exist_ok=True)
+                output.mkdir(parents=True, exist_ok=True)
                 for key, value in data.items():
-                    _write_json(value, out_dir / f"{key}.json")
-        elif export_type == "profile":
-            _write_json(await user_api.get_user_profile(), output)
-        elif export_type == "subscriptions":
-            _write_json(await user_api.get_user_subscriptions(), output)
-        elif export_type == "exercises":
-            _write_json(await training_api.get_exercises(), output)
-        elif export_type == "mesocycles":
-            summaries = await training_api.get_mesocycles()
-            _write_json(
-                [await training_api.get_mesocycle(m.key) for m in summaries], output
-            )
-        elif export_type == "templates":
-            _write_json(await training_api.get_templates(), output)
-        elif export_type == "exercise-history":
-            _write_json(await training_api.get_user_exercise_history(), output)
+                    _write_json(value, output / f"{key}.json")
+            return
+
+        fetchers = {
+            "profile": user_api.get_user_profile,
+            "subscriptions": user_api.get_user_subscriptions,
+            "exercises": training_api.get_exercises,
+            "mesocycles": lambda: _fetch_mesocycles(training_api),
+            "templates": training_api.get_templates,
+            "exercise-history": training_api.get_user_exercise_history,
+        }
+        _write_json(await fetchers[export_type](), output)
 
 
 @click.group()
