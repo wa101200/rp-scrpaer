@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 
 class ConsumedIap(BaseModel):
@@ -25,14 +25,16 @@ class ConsumedIap(BaseModel):
     ConsumedIap
     """  # noqa: E501
 
-    platform: str | None = None
-    purchase_type: str | None = Field(default=None, alias="purchaseType")
-    platform_id: str | None = Field(default=None, alias="platformId")
-    subscription_group_id: str | None = Field(default=None, alias="subscriptionGroupId")
-    subscription_group_key: str | None = Field(
+    platform: StrictStr | None = None
+    purchase_type: StrictStr | None = Field(default=None, alias="purchaseType")
+    platform_id: StrictStr | None = Field(default=None, alias="platformId")
+    subscription_group_id: StrictStr | None = Field(
+        default=None, alias="subscriptionGroupId"
+    )
+    subscription_group_key: StrictStr | None = Field(
         default=None, alias="subscriptionGroupKey"
     )
-    access: list[str] | None = None
+    access: list[StrictStr] | None = None
     access_ends_at: datetime | None = Field(default=None, alias="accessEndsAt")
     __properties: ClassVar[list[str]] = [
         "platform",
@@ -48,7 +50,6 @@ class ConsumedIap(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -85,7 +86,7 @@ class ConsumedIap(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of ConsumedIap from a dict"""
         if obj is None:
             return None

@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 
 
 class Template(BaseModel):
@@ -24,12 +24,12 @@ class Template(BaseModel):
     Template
     """  # noqa: E501
 
-    id: str | None = None
-    key: str | None = None
-    name: str | None = None
-    emphasis: str | None = None
-    sex: str | None = None
-    frequency: int | None = None
+    id: StrictInt | None = None
+    key: StrictStr | None = None
+    name: StrictStr | None = None
+    emphasis: StrictStr | None = None
+    sex: StrictStr | None = None
+    frequency: StrictInt | None = None
     __properties: ClassVar[list[str]] = [
         "id",
         "key",
@@ -43,7 +43,6 @@ class Template(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -80,7 +79,7 @@ class Template(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of Template from a dict"""
         if obj is None:
             return None

@@ -33,7 +33,6 @@ class Week(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -77,7 +76,7 @@ class Week(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of Week from a dict"""
         if obj is None:
             return None

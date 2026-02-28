@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
 **key** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **days** | **int** |  | [optional] 

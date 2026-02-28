@@ -5,16 +5,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
 **key** | **str** |  | [optional] 
-**user_id** | **str** |  | [optional] 
+**user_id** | **int** |  | [optional] 
 **name** | **str** |  | [optional] 
 **days** | **int** |  | [optional] 
 **unit** | **str** |  | [optional] 
 **week_count** | **int** | Number of weeks in the mesocycle | [optional] 
-**source_template_id** | **str** |  | [optional] 
-**source_meso_id** | **str** |  | [optional] 
-**micro_rirs** | **object** |  | [optional] 
+**source_template_id** | **int** |  | [optional] 
+**source_meso_id** | **int** |  | [optional] 
+**micro_rirs** | **int** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 **finished_at** | **datetime** |  | [optional] 

@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 
 
 class MuscleGroupPriority(BaseModel):
@@ -24,16 +24,15 @@ class MuscleGroupPriority(BaseModel):
     MuscleGroupPriority
     """  # noqa: E501
 
-    id: str | None = None
-    muscle_group_id: str | None = Field(default=None, alias="muscleGroupId")
-    mg_priority_type: str | None = Field(default=None, alias="mgPriorityType")
+    id: StrictInt | None = None
+    muscle_group_id: StrictInt | None = Field(default=None, alias="muscleGroupId")
+    mg_priority_type: StrictStr | None = Field(default=None, alias="mgPriorityType")
     __properties: ClassVar[list[str]] = ["id", "muscleGroupId", "mgPriorityType"]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -70,7 +69,7 @@ class MuscleGroupPriority(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of MuscleGroupPriority from a dict"""
         if obj is None:
             return None

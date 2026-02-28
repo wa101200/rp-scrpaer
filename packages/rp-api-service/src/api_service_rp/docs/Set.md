@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
-**day_exercise_id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
+**day_exercise_id** | **int** |  | [optional] 
 **position** | **int** |  | [optional] 
 **set_type** | **str** |  | [optional] 
 **weight** | **float** |  | [optional] 

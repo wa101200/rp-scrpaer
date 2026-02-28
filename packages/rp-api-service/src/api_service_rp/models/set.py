@@ -17,11 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self, Set
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-)
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 
 
 class Set(BaseModel):
@@ -29,20 +25,26 @@ class Set(BaseModel):
     Set
     """  # noqa: E501
 
-    id: str | None = None
-    day_exercise_id: str | None = Field(default=None, alias="dayExerciseId")
-    position: int | None = None
-    set_type: str | None = Field(default=None, alias="setType")
-    weight: float | int | None = None
-    weight_target: float | int | None = Field(default=None, alias="weightTarget")
-    weight_target_min: float | int | None = Field(default=None, alias="weightTargetMin")
-    weight_target_max: float | int | None = Field(default=None, alias="weightTargetMax")
-    reps: int | None = None
-    reps_target: int | None = Field(default=None, alias="repsTarget")
-    bodyweight: float | int | None = None
-    unit: str | None = None
+    id: StrictInt | None = None
+    day_exercise_id: StrictInt | None = Field(default=None, alias="dayExerciseId")
+    position: StrictInt | None = None
+    set_type: StrictStr | None = Field(default=None, alias="setType")
+    weight: StrictFloat | StrictInt | None = None
+    weight_target: StrictFloat | StrictInt | None = Field(
+        default=None, alias="weightTarget"
+    )
+    weight_target_min: StrictFloat | StrictInt | None = Field(
+        default=None, alias="weightTargetMin"
+    )
+    weight_target_max: StrictFloat | StrictInt | None = Field(
+        default=None, alias="weightTargetMax"
+    )
+    reps: StrictInt | None = None
+    reps_target: StrictInt | None = Field(default=None, alias="repsTarget")
+    bodyweight: StrictFloat | StrictInt | None = None
+    unit: StrictStr | None = None
     finished_at: datetime | None = Field(default=None, alias="finishedAt")
-    status: str | None = None
+    status: StrictStr | None = None
     created_at: datetime | None = Field(default=None, alias="createdAt")
     __properties: ClassVar[list[str]] = [
         "id",
@@ -66,7 +68,6 @@ class Set(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -154,7 +155,7 @@ class Set(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of Set from a dict"""
         if obj is None:
             return None

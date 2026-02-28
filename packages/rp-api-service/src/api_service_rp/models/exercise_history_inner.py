@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from api_service_rp.models.exercise_history_set import ExerciseHistorySet
 
@@ -26,8 +26,8 @@ class ExerciseHistoryInner(BaseModel):
     ExerciseHistoryInner
     """  # noqa: E501
 
-    name: str | None = Field(default=None, description="Mesocycle name")
-    key: str | None = Field(default=None, description="Mesocycle key")
+    name: StrictStr | None = Field(default=None, description="Mesocycle name")
+    key: StrictStr | None = Field(default=None, description="Mesocycle key")
     set_groups: list[list[ExerciseHistorySet]] | None = Field(
         default=None, alias="setGroups"
     )
@@ -37,7 +37,6 @@ class ExerciseHistoryInner(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -87,7 +86,7 @@ class ExerciseHistoryInner(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of ExerciseHistoryInner from a dict"""
         if obj is None:
             return None

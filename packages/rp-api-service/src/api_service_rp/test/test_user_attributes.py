@@ -39,8 +39,8 @@ class TestUserAttributes(unittest.TestCase):
                 training_preference_exercise_types = '',
                 attribution_survey = '',
                 created_on_platform = '',
-                training_feature_auto_apply_weights = '',
-                training_apply_exercise_types = ''
+                training_feature_auto_apply_weights = None,
+                training_apply_exercise_types = None
             )
         else:
             return UserAttributes(

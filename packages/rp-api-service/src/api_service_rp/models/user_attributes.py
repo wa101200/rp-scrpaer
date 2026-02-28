@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 
 
 class UserAttributes(BaseModel):
@@ -24,20 +24,24 @@ class UserAttributes(BaseModel):
     UserAttributes
     """  # noqa: E501
 
-    birthdate: str | None = Field(default=None, alias="BIRTHDATE")
-    sex: str | None = Field(default=None, alias="SEX")
-    training_years: str | None = Field(default=None, alias="TRAINING_YEARS")
-    training_preference_exercise_types: str | None = Field(
+    birthdate: StrictStr | None = Field(default=None, alias="BIRTHDATE")
+    sex: StrictStr | None = Field(default=None, alias="SEX")
+    training_years: StrictStr | None = Field(default=None, alias="TRAINING_YEARS")
+    training_preference_exercise_types: StrictStr | None = Field(
         default=None,
         description="JSON-encoded string",
         alias="TRAINING_PREFERENCE_EXERCISE_TYPES",
     )
-    attribution_survey: str | None = Field(default=None, alias="ATTRIBUTION_SURVEY")
-    created_on_platform: str | None = Field(default=None, alias="CREATED_ON_PLATFORM")
-    training_feature_auto_apply_weights: str | int | bool | None = Field(
+    attribution_survey: StrictStr | None = Field(
+        default=None, alias="ATTRIBUTION_SURVEY"
+    )
+    created_on_platform: StrictStr | None = Field(
+        default=None, alias="CREATED_ON_PLATFORM"
+    )
+    training_feature_auto_apply_weights: StrictBool | None = Field(
         default=None, alias="TRAINING_FEATURE_AUTO_APPLY_WEIGHTS"
     )
-    training_apply_exercise_types: str | int | bool | None = Field(
+    training_apply_exercise_types: StrictBool | None = Field(
         default=None, alias="TRAINING_APPLY_EXERCISE_TYPES"
     )
     __properties: ClassVar[list[str]] = [
@@ -55,7 +59,6 @@ class UserAttributes(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -92,7 +95,7 @@ class UserAttributes(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of UserAttributes from a dict"""
         if obj is None:
             return None

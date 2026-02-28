@@ -5,13 +5,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
 **name** | **str** |  | [optional] 
-**muscle_group_id** | **str** |  | [optional] 
+**muscle_group_id** | **int** |  | [optional] 
 **mg_sub_type** | **str** | e.g. \&quot;vertical\&quot; | [optional] 
 **exercise_type** | **str** |  | [optional] 
 **youtube_id** | **str** |  | [optional] 
-**user_id** | **str** | null for built-in, user ID for custom | [optional] 
+**user_id** | **int** | null for built-in, user ID for custom | [optional] 
 **notes** | **List[object]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 

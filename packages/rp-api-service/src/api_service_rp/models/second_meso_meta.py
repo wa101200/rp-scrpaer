@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 
 class SecondMesoMeta(BaseModel):
@@ -25,7 +25,7 @@ class SecondMesoMeta(BaseModel):
     SecondMesoMeta
     """  # noqa: E501
 
-    key: str | None = None
+    key: StrictStr | None = None
     started_at: datetime | None = Field(default=None, alias="startedAt")
     __properties: ClassVar[list[str]] = ["key", "startedAt"]
 
@@ -33,7 +33,6 @@ class SecondMesoMeta(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -70,7 +69,7 @@ class SecondMesoMeta(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of SecondMesoMeta from a dict"""
         if obj is None:
             return None

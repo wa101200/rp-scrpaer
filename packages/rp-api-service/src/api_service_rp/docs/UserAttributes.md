@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **training_preference_exercise_types** | **str** | JSON-encoded string | [optional] 
 **attribution_survey** | **str** |  | [optional] 
 **created_on_platform** | **str** |  | [optional] 
-**training_feature_auto_apply_weights** | **str** |  | [optional] 
-**training_apply_exercise_types** | **str** |  | [optional] 
+**training_feature_auto_apply_weights** | **bool** |  | [optional] 
+**training_apply_exercise_types** | **bool** |  | [optional] 
 
 ## Example
 

@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
-**meso_id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
+**meso_id** | **int** |  | [optional] 
 **week** | **int** |  | [optional] 
 **position** | **int** |  | [optional] 
 **bodyweight** | **float** |  | [optional] 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **finished_at** | **datetime** |  | [optional] 
 **status** | **str** |  | [optional] 
 **notes** | **List[object]** |  | [optional] 
-**muscle_groups** | **List[str]** |  | [optional] 
+**muscle_groups** | **List[object]** |  | [optional] 
 **exercises** | [**List[DayExercise]**](DayExercise.md) |  | [optional] 
 
 ## Example

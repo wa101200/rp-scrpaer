@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
-**muscle_group_id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
+**muscle_group_id** | **int** |  | [optional] 
 **mg_priority_type** | **str** |  | [optional] 
 
 ## Example

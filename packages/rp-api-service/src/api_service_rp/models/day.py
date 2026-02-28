@@ -17,11 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-)
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 
 from api_service_rp.models.day_exercise import DayExercise
 
@@ -31,16 +27,16 @@ class Day(BaseModel):
     Day
     """  # noqa: E501
 
-    id: str | None = None
-    meso_id: str | None = Field(default=None, alias="mesoId")
-    week: int | None = None
-    position: int | None = None
-    bodyweight: float | int | None = None
+    id: StrictInt | None = None
+    meso_id: StrictInt | None = Field(default=None, alias="mesoId")
+    week: StrictInt | None = None
+    position: StrictInt | None = None
+    bodyweight: StrictFloat | StrictInt | None = None
     bodyweight_at: datetime | None = Field(default=None, alias="bodyweightAt")
-    unit: str | None = None
-    label: str | None = None
+    unit: StrictStr | None = None
+    label: StrictStr | None = None
     finished_at: datetime | None = Field(default=None, alias="finishedAt")
-    status: str | None = None
+    status: StrictStr | None = None
     notes: list[dict[str, Any]] | None = None
     muscle_groups: list[dict[str, Any]] | None = Field(
         default=None, alias="muscleGroups"
@@ -66,7 +62,6 @@ class Day(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -125,7 +120,7 @@ class Day(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of Day from a dict"""
         if obj is None:
             return None

@@ -33,14 +33,14 @@ class TestUserProfile(unittest.TestCase):
         model = UserProfile()
         if include_optional:
             return UserProfile(
-                id = '',
+                id = None,
                 email = '',
                 display_name = '',
                 photo_url = '',
                 google_id = '',
                 apple_id = '',
                 facebook_id = '',
-                role_id = '',
+                role_id = None,
                 stripe_id = '',
                 klaviyo_id = '',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
@@ -53,8 +53,8 @@ class TestUserProfile(unittest.TestCase):
                     training_preference_exercise_types = '', 
                     attribution_survey = '', 
                     created_on_platform = '', 
-                    training_feature_auto_apply_weights = '', 
-                    training_apply_exercise_types = '', )
+                    training_feature_auto_apply_weights = null, 
+                    training_apply_exercise_types = null, )
             )
         else:
             return UserProfile(

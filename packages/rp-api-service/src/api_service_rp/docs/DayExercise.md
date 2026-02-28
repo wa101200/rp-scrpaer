@@ -5,13 +5,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
-**day_id** | **str** |  | [optional] 
-**exercise_id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
+**day_id** | **int** |  | [optional] 
+**exercise_id** | **int** |  | [optional] 
 **position** | **int** |  | [optional] 
-**joint_pain** | **bool** |  | [optional] 
-**muscle_group_id** | **str** |  | [optional] 
-**source_day_exercise_id** | **str** |  | [optional] 
+**joint_pain** | **int** |  | [optional] 
+**muscle_group_id** | **int** |  | [optional] 
+**source_day_exercise_id** | **int** |  | [optional] 
 **status** | **str** |  | [optional] 
 **sets** | [**List[Set]**](Set.md) |  | [optional] 
 

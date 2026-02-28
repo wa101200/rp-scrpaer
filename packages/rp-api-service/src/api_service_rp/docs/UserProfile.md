@@ -5,14 +5,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
 **email** | **str** |  | [optional] 
 **display_name** | **str** |  | [optional] 
 **photo_url** | **str** |  | [optional] 
 **google_id** | **str** |  | [optional] 
 **apple_id** | **str** |  | [optional] 
 **facebook_id** | **str** |  | [optional] 
-**role_id** | **str** |  | [optional] 
+**role_id** | **int** |  | [optional] 
 **stripe_id** | **str** |  | [optional] 
 **klaviyo_id** | **str** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

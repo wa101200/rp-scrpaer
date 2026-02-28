@@ -16,13 +16,9 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Self
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-)
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 
-from api_service_rp.models.set import Set
+from api_service_rp.models.set import Set as SetModel
 
 
 class DayExercise(BaseModel):
@@ -30,17 +26,17 @@ class DayExercise(BaseModel):
     DayExercise
     """  # noqa: E501
 
-    id: str | None = None
-    day_id: str | None = Field(default=None, alias="dayId")
-    exercise_id: str | None = Field(default=None, alias="exerciseId")
-    position: int | None = None
-    joint_pain: int | bool | None = Field(default=None, alias="jointPain")
-    muscle_group_id: str | None = Field(default=None, alias="muscleGroupId")
-    source_day_exercise_id: str | None = Field(
+    id: StrictInt | None = None
+    day_id: StrictInt | None = Field(default=None, alias="dayId")
+    exercise_id: StrictInt | None = Field(default=None, alias="exerciseId")
+    position: StrictInt | None = None
+    joint_pain: StrictInt | None = Field(default=None, alias="jointPain")
+    muscle_group_id: StrictInt | None = Field(default=None, alias="muscleGroupId")
+    source_day_exercise_id: StrictInt | None = Field(
         default=None, alias="sourceDayExerciseId"
     )
-    status: str | None = None
-    sets: list[Set] | None = None
+    status: StrictStr | None = None
+    sets: list[SetModel] | None = None
     __properties: ClassVar[list[str]] = [
         "id",
         "dayId",
@@ -57,7 +53,6 @@ class DayExercise(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -114,7 +109,7 @@ class DayExercise(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of DayExercise from a dict"""
         if obj is None:
             return None
@@ -132,7 +127,7 @@ class DayExercise(BaseModel):
                 "muscleGroupId": obj.get("muscleGroupId"),
                 "sourceDayExerciseId": obj.get("sourceDayExerciseId"),
                 "status": obj.get("status"),
-                "sets": [Set.from_dict(_item) for _item in obj["sets"]]
+                "sets": [SetModel.from_dict(_item) for _item in obj["sets"]]
                 if obj.get("sets") is not None
                 else None,
             }

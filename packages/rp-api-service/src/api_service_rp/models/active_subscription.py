@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 
 
 class ActiveSubscription(BaseModel):
@@ -25,21 +25,21 @@ class ActiveSubscription(BaseModel):
     ActiveSubscription
     """  # noqa: E501
 
-    platform: str | None = None
-    iap_id: str | None = Field(default=None, alias="iapId")
-    iap_purchase_type: str | None = Field(default=None, alias="iapPurchaseType")
-    iap_platform_id: str | None = Field(default=None, alias="iapPlatformId")
-    iap_name: str | None = Field(default=None, alias="iapName")
-    is_free_trial: int | bool | None = Field(default=None, alias="isFreeTrial")
-    is_intro_priced: int | bool | None = Field(default=None, alias="isIntroPriced")
-    referral_id: str | None = Field(default=None, alias="referralId")
-    referral_code: str | None = Field(default=None, alias="referralCode")
-    referral_type: str | None = Field(default=None, alias="referralType")
+    platform: StrictStr | None = None
+    iap_id: StrictInt | None = Field(default=None, alias="iapId")
+    iap_purchase_type: StrictStr | None = Field(default=None, alias="iapPurchaseType")
+    iap_platform_id: StrictStr | None = Field(default=None, alias="iapPlatformId")
+    iap_name: StrictStr | None = Field(default=None, alias="iapName")
+    is_free_trial: StrictBool | None = Field(default=None, alias="isFreeTrial")
+    is_intro_priced: StrictBool | None = Field(default=None, alias="isIntroPriced")
+    referral_id: StrictInt | None = Field(default=None, alias="referralId")
+    referral_code: StrictStr | None = Field(default=None, alias="referralCode")
+    referral_type: StrictStr | None = Field(default=None, alias="referralType")
     purchase_date: datetime | None = Field(default=None, alias="purchaseDate")
     expiration_date: datetime | None = Field(default=None, alias="expirationDate")
     cancellation_date: datetime | None = Field(default=None, alias="cancellationDate")
-    access: list[str] | None = None
-    subscription_id: str | None = Field(default=None, alias="subscriptionId")
+    access: list[StrictStr] | None = None
+    subscription_id: StrictStr | None = Field(default=None, alias="subscriptionId")
     __properties: ClassVar[list[str]] = [
         "platform",
         "iapId",
@@ -62,7 +62,6 @@ class ActiveSubscription(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -122,7 +121,7 @@ class ActiveSubscription(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of ActiveSubscription from a dict"""
         if obj is None:
             return None

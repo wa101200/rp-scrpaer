@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from api_service_rp.models.active_subscription import ActiveSubscription
 from api_service_rp.models.consumed_iap import ConsumedIap
@@ -32,7 +32,7 @@ class UserSubscriptions(BaseModel):
         default=None, alias="activeSubscriptions"
     )
     consumed_iaps: list[ConsumedIap] | None = Field(default=None, alias="consumedIaps")
-    stripe_ids: list[str] | None = Field(default=None, alias="stripeIds")
+    stripe_ids: list[StrictStr] | None = Field(default=None, alias="stripeIds")
     training_last_access_added_at: datetime | None = Field(
         default=None, alias="trainingLastAccessAddedAt"
     )
@@ -47,7 +47,6 @@ class UserSubscriptions(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -98,7 +97,7 @@ class UserSubscriptions(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of UserSubscriptions from a dict"""
         if obj is None:
             return None

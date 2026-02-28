@@ -6,13 +6,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **platform** | **str** |  | [optional] 
-**iap_id** | **str** |  | [optional] 
+**iap_id** | **int** |  | [optional] 
 **iap_purchase_type** | **str** |  | [optional] 
 **iap_platform_id** | **str** |  | [optional] 
 **iap_name** | **str** |  | [optional] 
 **is_free_trial** | **bool** |  | [optional] 
 **is_intro_priced** | **bool** |  | [optional] 
-**referral_id** | **str** |  | [optional] 
+**referral_id** | **int** |  | [optional] 
 **referral_code** | **str** |  | [optional] 
 **referral_type** | **str** |  | [optional] 
 **purchase_date** | **datetime** |  | [optional] 

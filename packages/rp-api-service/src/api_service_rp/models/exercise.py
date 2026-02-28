@@ -17,7 +17,7 @@ import re  # noqa: F401
 from datetime import datetime
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 
 
 class Exercise(BaseModel):
@@ -25,15 +25,15 @@ class Exercise(BaseModel):
     Exercise
     """  # noqa: E501
 
-    id: str | None = None
-    name: str | None = None
-    muscle_group_id: str | None = Field(default=None, alias="muscleGroupId")
-    mg_sub_type: str | None = Field(
+    id: StrictInt | None = None
+    name: StrictStr | None = None
+    muscle_group_id: StrictInt | None = Field(default=None, alias="muscleGroupId")
+    mg_sub_type: StrictStr | None = Field(
         default=None, description='e.g. "vertical"', alias="mgSubType"
     )
-    exercise_type: str | None = Field(default=None, alias="exerciseType")
-    youtube_id: str | None = Field(default=None, alias="youtubeId")
-    user_id: str | None = Field(
+    exercise_type: StrictStr | None = Field(default=None, alias="exerciseType")
+    youtube_id: StrictStr | None = Field(default=None, alias="youtubeId")
+    user_id: StrictInt | None = Field(
         default=None,
         description="null for built-in, user ID for custom",
         alias="userId",
@@ -60,7 +60,6 @@ class Exercise(BaseModel):
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
-        coerce_numbers_to_str=True,
     )
 
     def to_str(self) -> str:
@@ -117,7 +116,7 @@ class Exercise(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Any | None) -> Self | None:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of Exercise from a dict"""
         if obj is None:
             return None

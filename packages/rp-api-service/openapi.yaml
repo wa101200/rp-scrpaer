@@ -2,9 +2,7 @@ openapi: 3.0.3
 info:
   title: RP Strength Training API
   version: 1.0.0
-  description:
-    RP Strength Training API for workout data, user profiles, subscriptions,
-    and training management.
+  description: RP Strength Training API for workout data, user profiles, subscriptions, and training management.
 servers:
   - url: https://training.rpstrength.com/api
 security:
@@ -480,9 +478,7 @@ components:
           type: integer
     BootstrapResponse:
       type: object
-      description:
-        Full exercise catalog + all mesocycles (summary) + current mesocycle
-        with complete weeks/days/exercises/sets (~235KB)
+      description: Full exercise catalog + all mesocycles (summary) + current mesocycle with complete weeks/days/exercises/sets (~235KB)
     SecondMesoMeta:
       type: object
       properties:
@@ -497,9 +493,7 @@ paths:
       tags:
         - User
       summary: Get user profile
-      description:
-        Profile data (email, name, photo, Google/Apple/Facebook IDs, role,
-        attributes, preferences)
+      description: Profile data (email, name, photo, Google/Apple/Facebook IDs, role, attributes, preferences)
       operationId: getUserProfile
       responses:
         "200":
@@ -513,9 +507,7 @@ paths:
       tags:
         - User
       summary: Get user subscriptions
-      description:
-        Active subscriptions, purchase history, Stripe customer IDs, consumed
-        IAPs
+      description: Active subscriptions, purchase history, Stripe customer IDs, consumed IAPs
       operationId: getUserSubscriptions
       responses:
         "200":
@@ -549,9 +541,7 @@ paths:
       tags:
         - Training Data
       summary: Get bootstrap data
-      description:
-        Full exercise catalog + all mesocycles (summary) + current mesocycle
-        with complete weeks/days/exercises/sets (~235KB)
+      description: Full exercise catalog + all mesocycles (summary) + current mesocycle with complete weeks/days/exercises/sets (~235KB)
       operationId: getBootstrap
       responses:
         "200":
@@ -565,9 +555,7 @@ paths:
       tags:
         - Training Data
       summary: Get all exercises
-      description:
-        Full exercise catalog (315 exercises with name, muscleGroupId,
-        youtubeId, exerciseType, mgSubType)
+      description: Full exercise catalog (315 exercises with name, muscleGroupId, youtubeId, exerciseType, mgSubType)
       operationId: getExercises
       responses:
         "200":
@@ -630,9 +618,7 @@ paths:
       tags:
         - Training Data
       summary: Get exercise history
-      description:
-        Set history for a specific exercise across all mesocycles (grouped
-        by meso, includes weight, reps, targets, week, day)
+      description: Set history for a specific exercise across all mesocycles (grouped by meso, includes weight, reps, targets, week, day)
       operationId: getExerciseHistory
       parameters:
         - name: id
@@ -716,9 +702,7 @@ paths:
       tags:
         - Training Data
       summary: List all mesocycles
-      description:
-        List of all mesocycles (summary - id, key, name, days, weeks, unit,
-        timestamps)
+      description: List of all mesocycles (summary - id, key, name, days, weeks, unit, timestamps)
       operationId: getMesocycles
       responses:
         "200":
@@ -747,9 +731,7 @@ paths:
       tags:
         - Training Data
       summary: Get full mesocycle detail
-      description:
-        Full mesocycle detail (~150-185KB) - weeks > days > exercises >
-        sets with weight, reps, targets, bodyweight, timestamps
+      description: Full mesocycle detail (~150-185KB) - weeks > days > exercises > sets with weight, reps, targets, bodyweight, timestamps
       operationId: getMesocycle
       parameters:
         - name: key
@@ -1170,9 +1152,7 @@ paths:
       tags:
         - Training Data
       summary: Get all templates
-      description:
-        All training templates (113 templates with id, key, name, emphasis,
-        sex, frequency)
+      description: All training templates (113 templates with id, key, name, emphasis, sex, frequency)
       operationId: getTemplates
       responses:
         "200":
@@ -1398,9 +1378,7 @@ paths:
       tags:
         - App
       summary: Get product catalog
-      description:
-        Subscription product/pricing catalog (Stripe product IDs, prices,
-        billing periods)
+      description: Subscription product/pricing catalog (Stripe product IDs, prices, billing periods)
       operationId: getProducts
       parameters:
         - name: apps
