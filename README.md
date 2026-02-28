@@ -8,18 +8,6 @@ Extract workout data from the RP Hypertrophy app and convert it to [STRONG](http
 
 The defining principle of this repo is that **`.mise.toml` + `mise.lock` are the single source of truth** for every tool version — on your laptop, in Docker, and in CI. There is no second place where Python 3.12 or uv 0.10.7 is declared. Every environment reads the same two files:
 
-```
-                    .mise.toml + mise.lock
-                    (tool versions + checksums)
-                           |
-            +--------------+--------------+
-            |              |              |
-        Local dev       Dockerfile     GitHub Actions
-       mise install    COPY .mise.toml  jdx/mise-action
-                       COPY mise.lock
-                       RUN mise install
-```
-
 Change `python = "3.13"` in `.mise.toml` and **every developer machine, every Docker image, and every CI run** picks it up. Zero drift, zero duplication.
 
 ⁠![Diagram](Diagram.webp)
