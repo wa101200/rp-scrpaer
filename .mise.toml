@@ -23,7 +23,7 @@ yamlfmt = "latest"
 pinact = "latest"
 zizmor = "latest"
 github-cli = "latest"
-
+hadolint = "latest"
 [tasks.lint]
 run = "hk run pre-commit"
 

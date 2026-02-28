@@ -7,6 +7,10 @@ backend = "aqua:cli/cli"
 "platforms.macos-x64" = { checksum = "sha256:ced7094d05702eb54a63542abd8a1dc570b7e5ae94951844eb1626ba74bc2c60", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_macOS_amd64.zip"}
 "platforms.windows-x64" = { checksum = "sha256:983c74a8c594366b198485187cd6d4d07638f0bf9a9948d51a2a81a5164d8bfd", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_windows_amd64.zip"}
 
+[[tools.hadolint]]
+version = "2.14.0"
+backend = "aqua:hadolint/hadolint"
+
 [[tools.hk]]
 version = "1.36.0"
 backend = "aqua:jdx/hk"
