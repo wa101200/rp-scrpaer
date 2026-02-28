@@ -1,4 +1,4 @@
-# rp-to-strong-api-consumer
+# rp-to-strong-rp-api-service
 
 Async Python client library for the [RP Strength Training API](https://training.rpstrength.com). Provides type-safe access to user profiles, subscriptions, mesocycles, exercises, templates, and exercise history — with a single `export_all()` call to retrieve everything in parallel.
 

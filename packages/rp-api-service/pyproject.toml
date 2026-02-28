@@ -1,5 +1,5 @@
 [project]
-name = "rp-to-strong-api-consumer"
+name = "rp-to-strong-rp-api-service"
 version = "0.1.0"
 description = "API consumer for training.rpstrength.com"
 requires-python = ">=3.12"
