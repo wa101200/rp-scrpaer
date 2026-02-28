@@ -1,5 +1,6 @@
 [settings]
 pipx.uvx = true
+auto_install = true
 
 [tools]
 java = "21"
