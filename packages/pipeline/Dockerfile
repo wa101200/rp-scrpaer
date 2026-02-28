@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.7-labs
+# syntax=docker/dockerfile:1.13-labs
 
 # --- Mise binary ---
 FROM jdxcode/mise:2026.2.23 AS mise
