@@ -48,6 +48,5 @@ openapi-generator-cli generate \
   -o src \
   --package-name api_service_rp \
   --additional-properties=generateSourceCodeOnly=true
-  --mapNumberTo float
 """
 depends_post = ["//:format"]
