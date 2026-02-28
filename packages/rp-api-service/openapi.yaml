@@ -152,7 +152,7 @@ components:
         trainingLastAccessAddedAt:
           type: string
           format: date-time
-    Set:
+    ExerciseSet:
       type: object
       properties:
         id:
@@ -220,7 +220,7 @@ components:
         sets:
           type: array
           items:
-            $ref: "#/components/schemas/Set"
+            $ref: "#/components/schemas/ExerciseSet"
     Day:
       type: object
       properties:

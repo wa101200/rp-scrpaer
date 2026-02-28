@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **muscle_group_id** | **int** |  | [optional] 
 **source_day_exercise_id** | **int** |  | [optional] 
 **status** | **str** |  | [optional] 
-**sets** | [**List[Set]**](Set.md) |  | [optional] 
+**sets** | [**List[ExerciseSet]**](ExerciseSet.md) |  | [optional] 
 
 ## Example
 

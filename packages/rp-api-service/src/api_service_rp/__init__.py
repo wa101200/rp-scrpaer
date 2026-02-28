@@ -39,11 +39,11 @@ __all__ = [
     "Exercise",
     "ExerciseHistoryInner",
     "ExerciseHistorySet",
+    "ExerciseSet",
     "Mesocycle",
     "MesocycleSummary",
     "MuscleGroupPriority",
     "SecondMesoMeta",
-    "Set",
     "Template",
     "UserAttributes",
     "UserProfile",
@@ -84,13 +84,13 @@ from api_service_rp.models.exercise_history_inner import (
 from api_service_rp.models.exercise_history_set import (
     ExerciseHistorySet as ExerciseHistorySet,
 )
+from api_service_rp.models.exercise_set import ExerciseSet as ExerciseSet
 from api_service_rp.models.mesocycle import Mesocycle as Mesocycle
 from api_service_rp.models.mesocycle_summary import MesocycleSummary as MesocycleSummary
 from api_service_rp.models.muscle_group_priority import (
     MuscleGroupPriority as MuscleGroupPriority,
 )
 from api_service_rp.models.second_meso_meta import SecondMesoMeta as SecondMesoMeta
-from api_service_rp.models.set import Set as Set
 from api_service_rp.models.template import Template as Template
 from api_service_rp.models.user_attributes import UserAttributes as UserAttributes
 from api_service_rp.models.user_profile import UserProfile as UserProfile

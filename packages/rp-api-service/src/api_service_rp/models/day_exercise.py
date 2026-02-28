@@ -18,6 +18,8 @@ from typing import Any, ClassVar, Self
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 
+from api_service_rp.models.exercise_set import ExerciseSet
+
 
 class DayExercise(BaseModel):
     """
@@ -34,7 +36,7 @@ class DayExercise(BaseModel):
         default=None, alias="sourceDayExerciseId"
     )
     status: StrictStr | None = None
-    sets: list[set] | None = None
+    sets: list[ExerciseSet] | None = None
     __properties: ClassVar[list[str]] = [
         "id",
         "dayId",
@@ -125,7 +127,7 @@ class DayExercise(BaseModel):
                 "muscleGroupId": obj.get("muscleGroupId"),
                 "sourceDayExerciseId": obj.get("sourceDayExerciseId"),
                 "status": obj.get("status"),
-                "sets": [set.from_dict(_item) for _item in obj["sets"]]
+                "sets": [ExerciseSet.from_dict(_item) for _item in obj["sets"]]
                 if obj.get("sets") is not None
                 else None,
             }

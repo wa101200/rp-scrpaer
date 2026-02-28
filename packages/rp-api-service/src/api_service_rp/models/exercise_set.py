@@ -15,14 +15,14 @@ import json
 import pprint
 import re  # noqa: F401
 from datetime import datetime
-from typing import Any, ClassVar, Self, Set
+from typing import Any, ClassVar, Self
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 
 
-class Set(BaseModel):
+class ExerciseSet(BaseModel):
     """
-    Set
+    ExerciseSet
     """  # noqa: E501
 
     id: StrictInt | None = None
@@ -81,7 +81,7 @@ class Set(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self | None:
-        """Create an instance of Set from a JSON string"""
+        """Create an instance of ExerciseSet from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> dict[str, Any]:
@@ -94,7 +94,7 @@ class Set(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -156,7 +156,7 @@ class Set(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
-        """Create an instance of Set from a dict"""
+        """Create an instance of ExerciseSet from a dict"""
         if obj is None:
             return None
 

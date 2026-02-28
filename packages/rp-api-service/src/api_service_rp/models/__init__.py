@@ -20,11 +20,11 @@ from api_service_rp.models.day_exercise import DayExercise
 from api_service_rp.models.exercise import Exercise
 from api_service_rp.models.exercise_history_inner import ExerciseHistoryInner
 from api_service_rp.models.exercise_history_set import ExerciseHistorySet
+from api_service_rp.models.exercise_set import ExerciseSet
 from api_service_rp.models.mesocycle import Mesocycle
 from api_service_rp.models.mesocycle_summary import MesocycleSummary
 from api_service_rp.models.muscle_group_priority import MuscleGroupPriority
 from api_service_rp.models.second_meso_meta import SecondMesoMeta
-from api_service_rp.models.set import Set
 from api_service_rp.models.template import Template
 from api_service_rp.models.user_attributes import UserAttributes
 from api_service_rp.models.user_profile import UserProfile
