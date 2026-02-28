@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.7-labs
 
 # --- Mise binary ---
 FROM jdxcode/mise:2026.2.23 AS mise
@@ -22,6 +22,9 @@ ENV MISE_YES=1 \
 WORKDIR /app
 COPY .mise.toml ./
 COPY mise.lock ./
+COPY packages/cli/.mise.toml packages/cli/.mise.toml
+
+WORKDIR /app/packages/cli
 RUN --mount=type=secret,id=GITHUB_TOKEN \
     GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
     mise install python uv \
@@ -30,35 +33,34 @@ RUN --mount=type=secret,id=GITHUB_TOKEN \
 
 ENV PATH="/opt/python/bin:$PATH"
 
-# Copy workspace layout for dependency resolution
-COPY pyproject.toml uv.lock ./
-COPY packages/pipeline/pyproject.toml packages/pipeline/
-COPY packages/cli/pyproject.toml packages/cli/
+WORKDIR /app
+COPY --parents **/pyproject.toml uv.lock ./
 
-# Copy sources
-COPY packages/pipeline/src packages/pipeline/src
-COPY packages/cli/src packages/cli/src
+# copy packages that cli depends on
+COPY packages/pipeline/ packages/pipeline/
 
-# Install CLI and all its dependencies (including pipeline from workspace)
-RUN uv sync --frozen --package rp-to-strong-cli --no-editable \
-    && uv pip install --no-deps packages/cli/
+RUN uv sync --frozen --package rp-to-strong-cli --no-editable
+
 
 # --- Runtime ---
 FROM debian:trixie-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
+    libffi8 \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -r -s /usr/sbin/nologin -d /app app
 
 COPY --from=builder /opt/python /opt/python
 COPY --from=builder /app/.venv /app/.venv
 
+WORKDIR /app
+COPY packages/cli/src packages/cli/src
+
+
 ENV PATH="/app/.venv/bin:/opt/python/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-WORKDIR /app
-USER app
-
-ENTRYPOINT ["python", "-c", "from rp_to_strong_cli.main import cli; cli()"]
+WORKDIR /app/packages/cli
+ENTRYPOINT ["bash"]

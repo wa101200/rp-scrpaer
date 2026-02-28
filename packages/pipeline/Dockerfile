@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.7-labs
 
 # --- Mise binary ---
 FROM jdxcode/mise:2026.2.23 AS mise
@@ -22,6 +22,9 @@ ENV MISE_YES=1 \
 WORKDIR /app
 COPY .mise.toml ./
 COPY mise.lock ./
+COPY packages/pipeline/.mise.toml packages/pipeline/.mise.toml
+
+WORKDIR /app/packages/pipeline
 RUN --mount=type=secret,id=GITHUB_TOKEN \
     GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
     mise install python uv \
@@ -30,23 +33,11 @@ RUN --mount=type=secret,id=GITHUB_TOKEN \
 
 ENV PATH="/opt/python/bin:$PATH"
 
-# Copy workspace layout for dependency resolution
-COPY pyproject.toml uv.lock ./
-COPY packages/pipeline/pyproject.toml packages/pipeline/
-COPY packages/cli/pyproject.toml packages/cli/
-
-# Stub sources so uv can resolve the workspace
-RUN mkdir -p packages/pipeline/src/rp_to_strong_pipeline \
-    && touch packages/pipeline/src/rp_to_strong_pipeline/__init__.py \
-    && mkdir -p packages/cli/src/rp_to_strong_cli \
-    && touch packages/cli/src/rp_to_strong_cli/__init__.py
-
-# Install external dependencies only (cached layer)
-RUN uv sync --frozen --package rp-to-strong-pipeline --no-install-project
-
-# Copy real source and install the package
-COPY packages/pipeline/src packages/pipeline/src
+WORKDIR /app
+COPY --parents **/pyproject.toml uv.lock ./
 RUN uv sync --frozen --package rp-to-strong-pipeline --no-editable
+COPY packages/pipeline/src packages/pipeline/src
+
 
 # --- Runtime ---
 FROM debian:trixie-slim
@@ -65,7 +56,8 @@ ENV PATH="/app/.venv/bin:/opt/python/bin:$PATH" \
     PYTHONUNBUFFERED=1
 
 WORKDIR /app
-USER app
+COPY packages/pipeline/src packages/pipeline/src
+
 
 EXPOSE 3000
 ENTRYPOINT ["dagster-webserver"]

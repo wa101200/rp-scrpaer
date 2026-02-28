@@ -28,3 +28,6 @@ def export():
 def status():
     """Query Dagster for pipeline run status."""
     click.echo("Status: not yet implemented")
+
+
+print("CLI loaded")
