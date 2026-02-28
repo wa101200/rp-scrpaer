@@ -1,5 +1,8 @@
 experimental_monorepo_root = true
 
+[monorepo]
+config_roots = ["packages/*"]
+
 [settings]
 experimental = true
 
@@ -19,3 +22,6 @@ RP_AUTH_TOKEN = ""
 
 [tasks.lint]
 run = "hk run pre-commit"
+
+[prepare.uv]
+run = "uv sync --all-packages"

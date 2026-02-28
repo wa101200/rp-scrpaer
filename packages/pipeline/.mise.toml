@@ -1,0 +1,5 @@
+[tasks.test]
+run = "echo 'No tests defined'"
+
+[tasks.build]
+run = "echo 'No build steps defined'"
