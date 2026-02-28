@@ -27,12 +27,9 @@ RUN --mount=type=secret,id=GITHUB_TOKEN \
 COPY packages/api-consumer/openapi.yaml /app/packages/api-consumer/openapi.yaml
 RUN mise //packages/api-consumer:compile-openai
 
-FROM nginx:latest
+FROM caddy:2-alpine
 
-RUN sed -i 's/listen\s*80;/listen 8080;/' /etc/nginx/conf.d/default.conf \
- && chown -R nginx:nginx /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
+COPY --from=builder /app/packages/api-consumer/openapi/ /usr/share/caddy/
 
-COPY --from=builder /app/packages/api-consumer/openapi/ /usr/share/nginx/html/
-
-USER nginx
 EXPOSE 8080
+CMD ["caddy", "file-server", "--listen", ":8080", "--root", "/usr/share/caddy"]
