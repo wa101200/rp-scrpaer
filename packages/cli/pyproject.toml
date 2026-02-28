@@ -3,4 +3,10 @@ name = "rp-to-strong-cli"
 version = "0.1.0"
 description = "CLI frontend for RP to STRONG workout data exporter"
 requires-python = ">=3.12"
-dependencies = ["click>=8.1", "rp-to-strong-pipeline"]
+dependencies = [
+  "aiofiles>=25.1.0",
+  "aiohttp>=3.13.3",
+  "click>=8.1",
+  "pydantic>=2.12.5",
+  "rp-to-strong-api-consumer",
+]

@@ -1,6 +1,18 @@
+[env]
+RP_APP_BASE_URL = "https://training.rpstrength.com/api"
+RP_APP_VERSION = "1.1.13"
+
 [tasks.test]
 run = "echo 'No tests defined'"
 
 [tasks.build]
 run = "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} docker build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t rp-to-strong-cli ../.."
 description = "Build the CLI Docker image"
+
+[tasks.swagger]
+run = "npx swagger-ui-watcher --no-open -p 8001 swagger.yaml"
+description = "Serve Swagger UI on port 8001"
+
+[tasks.cli]
+description = "Run CLI"
+run = "uv run ./src/rp_to_strong_cli/main.py"

@@ -73,6 +73,11 @@ backend = "aqua:astral-sh/uv"
 "platforms.macos-x64" = { checksum = "sha256:4fed9d4f4608fb3850db714ee37244436f850a2b6e485bc510795679c2d08866", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-apple-darwin.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:8881afb877996a1373a12e816395122a8d39a3ac06cd066272acdb49510cf0fe", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-pc-windows-msvc.zip"}
 
+[[tools.watchexec]]
+version = "2.5.0"
+backend = "aqua:watchexec/watchexec"
+"platforms.macos-arm64" = { checksum = "sha256:dd77ea998468c128b70c9c8a0e6a59221c9a674151a8d683b1e30055d0eeb1d2", url = "https://github.com/watchexec/watchexec/releases/download/v2.5.0/watchexec-2.5.0-aarch64-apple-darwin.tar.xz"}
+
 [[tools.yamlfmt]]
 version = "0.21.0"
 backend = "aqua:google/yamlfmt"

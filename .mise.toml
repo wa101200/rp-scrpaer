@@ -11,6 +11,7 @@ config_roots = ["packages/*"]
 [settings]
 experimental = true
 lockfile = true
+auto_install = false
 
 [tools]
 python = "3.12"
@@ -24,6 +25,7 @@ pinact = "latest"
 zizmor = "latest"
 github-cli = "latest"
 hadolint = "latest"
+watchexec = "latest"
 [tasks.lint]
 run = "hk run pre-commit"
 
