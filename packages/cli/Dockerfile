@@ -41,7 +41,6 @@ COPY packages/pipeline/ packages/pipeline/
 
 RUN uv sync --frozen --package rp-to-strong-cli --no-editable
 
-
 # --- Runtime ---
 FROM debian:trixie-slim
 
@@ -57,10 +56,11 @@ COPY --from=builder /app/.venv /app/.venv
 WORKDIR /app
 COPY packages/cli/src packages/cli/src
 
-
 ENV PATH="/app/.venv/bin:/opt/python/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
+
+USER app
 
 WORKDIR /app/packages/cli
 ENTRYPOINT ["bash"]

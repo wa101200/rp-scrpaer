@@ -38,7 +38,6 @@ COPY --parents **/pyproject.toml uv.lock ./
 RUN uv sync --frozen --package rp-to-strong-pipeline --no-editable
 COPY packages/pipeline/src packages/pipeline/src
 
-
 # --- Runtime ---
 FROM debian:trixie-slim
 
