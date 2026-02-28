@@ -31,7 +31,7 @@ class AuthApi:
         self.api_client = api_client
 
     @validate_call
-    def create_user(
+    async def create_user(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -82,17 +82,17 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_user_with_http_info(
+    async def create_user_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -143,17 +143,17 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_user_without_preload_content(
+    async def create_user_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -204,7 +204,7 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -268,7 +268,7 @@ class AuthApi:
         )
 
     @validate_call
-    def login(
+    async def login(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -319,17 +319,17 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def login_with_http_info(
+    async def login_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -380,17 +380,17 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def login_without_preload_content(
+    async def login_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -441,7 +441,7 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -505,7 +505,7 @@ class AuthApi:
         )
 
     @validate_call
-    def magic_link_login(
+    async def magic_link_login(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -556,17 +556,17 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def magic_link_login_with_http_info(
+    async def magic_link_login_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -617,17 +617,17 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def magic_link_login_without_preload_content(
+    async def magic_link_login_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -678,7 +678,7 @@ class AuthApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

@@ -44,7 +44,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AppApi(api_client)
     version = 'version_example' # str | 
@@ -52,7 +52,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Get app config
-        api_instance.get_app_config(version, v=v)
+        await api_instance.get_app_config(version, v=v)
     except Exception as e:
         print("Exception when calling AppApi->get_app_config: %s\n" % e)
 ```
@@ -121,14 +121,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AppApi(api_client)
     apps = 'apps_example' # str |  (optional)
 
     try:
         # Get product catalog
-        api_instance.get_products(apps=apps)
+        await api_instance.get_products(apps=apps)
     except Exception as e:
         print("Exception when calling AppApi->get_products: %s\n" % e)
 ```
@@ -194,13 +194,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AppApi(api_client)
 
     try:
         # Get user review data
-        api_instance.get_user_review()
+        await api_instance.get_user_review()
     except Exception as e:
         print("Exception when calling AppApi->get_user_review: %s\n" % e)
 ```
@@ -263,14 +263,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AppApi(api_client)
     v = 'v_example' # str |  (optional)
 
     try:
         # Get PWA web manifest
-        api_instance.get_web_manifest(v=v)
+        await api_instance.get_web_manifest(v=v)
     except Exception as e:
         print("Exception when calling AppApi->get_web_manifest: %s\n" % e)
 ```
@@ -336,14 +336,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AppApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Submit user review
-        api_instance.submit_user_review(body=body)
+        await api_instance.submit_user_review(body=body)
     except Exception as e:
         print("Exception when calling AppApi->submit_user_review: %s\n" % e)
 ```

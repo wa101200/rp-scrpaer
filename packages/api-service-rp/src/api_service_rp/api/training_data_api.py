@@ -38,7 +38,7 @@ class TrainingDataApi:
         self.api_client = api_client
 
     @validate_call
-    def get_bootstrap(
+    async def get_bootstrap(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -86,17 +86,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "object",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_bootstrap_with_http_info(
+    async def get_bootstrap_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -144,17 +144,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "object",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_bootstrap_without_preload_content(
+    async def get_bootstrap_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -202,7 +202,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "object",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -259,7 +259,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_exercise_history(
+    async def get_exercise_history(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -311,17 +311,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[ExerciseHistoryInner]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_exercise_history_with_http_info(
+    async def get_exercise_history_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -373,17 +373,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[ExerciseHistoryInner]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_exercise_history_without_preload_content(
+    async def get_exercise_history_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -435,7 +435,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[ExerciseHistoryInner]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -495,7 +495,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_exercises(
+    async def get_exercises(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -543,17 +543,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[Exercise]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_exercises_with_http_info(
+    async def get_exercises_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -601,17 +601,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[Exercise]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_exercises_without_preload_content(
+    async def get_exercises_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -659,7 +659,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[Exercise]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -716,7 +716,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_mesocycle(
+    async def get_mesocycle(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -768,17 +768,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Mesocycle",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_mesocycle_with_http_info(
+    async def get_mesocycle_with_http_info(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -830,17 +830,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Mesocycle",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_mesocycle_without_preload_content(
+    async def get_mesocycle_without_preload_content(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -892,7 +892,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Mesocycle",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -952,7 +952,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_mesocycles(
+    async def get_mesocycles(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1000,17 +1000,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[MesocycleSummary]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_mesocycles_with_http_info(
+    async def get_mesocycles_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1058,17 +1058,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[MesocycleSummary]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_mesocycles_without_preload_content(
+    async def get_mesocycles_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1116,7 +1116,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[MesocycleSummary]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1173,7 +1173,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_second_meso_meta(
+    async def get_second_meso_meta(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1221,17 +1221,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "SecondMesoMeta",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_second_meso_meta_with_http_info(
+    async def get_second_meso_meta_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1279,17 +1279,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "SecondMesoMeta",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_second_meso_meta_without_preload_content(
+    async def get_second_meso_meta_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1337,7 +1337,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "SecondMesoMeta",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1394,7 +1394,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_template(
+    async def get_template(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -1445,17 +1445,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Template",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_template_with_http_info(
+    async def get_template_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -1506,17 +1506,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Template",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_template_without_preload_content(
+    async def get_template_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -1567,7 +1567,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Template",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1627,7 +1627,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_templates(
+    async def get_templates(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1675,17 +1675,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[Template]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_templates_with_http_info(
+    async def get_templates_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1733,17 +1733,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[Template]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_templates_without_preload_content(
+    async def get_templates_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1791,7 +1791,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "List[Template]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1848,7 +1848,7 @@ class TrainingDataApi:
         )
 
     @validate_call
-    def get_user_exercise_history(
+    async def get_user_exercise_history(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1896,17 +1896,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Dict[str, datetime]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_user_exercise_history_with_http_info(
+    async def get_user_exercise_history_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -1954,17 +1954,17 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Dict[str, datetime]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_user_exercise_history_without_preload_content(
+    async def get_user_exercise_history_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -2012,7 +2012,7 @@ class TrainingDataApi:
         _response_types_map: dict[str, str | None] = {
             "200": "Dict[str, datetime]",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

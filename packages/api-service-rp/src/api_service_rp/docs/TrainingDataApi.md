@@ -48,13 +48,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
 
     try:
         # Get bootstrap data
-        api_response = api_instance.get_bootstrap()
+        api_response = await api_instance.get_bootstrap()
         print("The response of TrainingDataApi->get_bootstrap:\n")
         pprint(api_response)
     except Exception as e:
@@ -122,14 +122,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
     id = 'id_example' # str | 
 
     try:
         # Get exercise history
-        api_response = api_instance.get_exercise_history(id)
+        api_response = await api_instance.get_exercise_history(id)
         print("The response of TrainingDataApi->get_exercise_history:\n")
         pprint(api_response)
     except Exception as e:
@@ -200,13 +200,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
 
     try:
         # Get all exercises
-        api_response = api_instance.get_exercises()
+        api_response = await api_instance.get_exercises()
         print("The response of TrainingDataApi->get_exercises:\n")
         pprint(api_response)
     except Exception as e:
@@ -274,14 +274,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
     key = 'key_example' # str | 
 
     try:
         # Get full mesocycle detail
-        api_response = api_instance.get_mesocycle(key)
+        api_response = await api_instance.get_mesocycle(key)
         print("The response of TrainingDataApi->get_mesocycle:\n")
         pprint(api_response)
     except Exception as e:
@@ -352,13 +352,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
 
     try:
         # List all mesocycles
-        api_response = api_instance.get_mesocycles()
+        api_response = await api_instance.get_mesocycles()
         print("The response of TrainingDataApi->get_mesocycles:\n")
         pprint(api_response)
     except Exception as e:
@@ -426,13 +426,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
 
     try:
         # Get second mesocycle meta info
-        api_response = api_instance.get_second_meso_meta()
+        api_response = await api_instance.get_second_meso_meta()
         print("The response of TrainingDataApi->get_second_meso_meta:\n")
         pprint(api_response)
     except Exception as e:
@@ -498,14 +498,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
     id = 'id_example' # str | 
 
     try:
         # Get a specific template
-        api_response = api_instance.get_template(id)
+        api_response = await api_instance.get_template(id)
         print("The response of TrainingDataApi->get_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -576,13 +576,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
 
     try:
         # Get all templates
-        api_response = api_instance.get_templates()
+        api_response = await api_instance.get_templates()
         print("The response of TrainingDataApi->get_templates:\n")
         pprint(api_response)
     except Exception as e:
@@ -649,13 +649,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingDataApi(api_client)
 
     try:
         # Get user exercise history
-        api_response = api_instance.get_user_exercise_history()
+        api_response = await api_instance.get_user_exercise_history()
         print("The response of TrainingDataApi->get_user_exercise_history:\n")
         pprint(api_response)
     except Exception as e:

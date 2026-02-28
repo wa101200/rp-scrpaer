@@ -43,13 +43,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.UserApi(api_client)
 
     try:
         # Get user profile
-        api_response = api_instance.get_user_profile()
+        api_response = await api_instance.get_user_profile()
         print("The response of UserApi->get_user_profile:\n")
         pprint(api_response)
     except Exception as e:
@@ -117,13 +117,13 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.UserApi(api_client)
 
     try:
         # Get user subscriptions
-        api_response = api_instance.get_user_subscriptions()
+        api_response = await api_instance.get_user_subscriptions()
         print("The response of UserApi->get_user_subscriptions:\n")
         pprint(api_response)
     except Exception as e:
@@ -188,7 +188,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.UserApi(api_client)
     id = 'id_example' # str | 
@@ -196,7 +196,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update user profile
-        api_instance.update_user_profile(id, body=body)
+        await api_instance.update_user_profile(id, body=body)
     except Exception as e:
         print("Exception when calling UserApi->update_user_profile: %s\n" % e)
 ```

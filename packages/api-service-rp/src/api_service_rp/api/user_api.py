@@ -33,7 +33,7 @@ class UserApi:
         self.api_client = api_client
 
     @validate_call
-    def get_user_profile(
+    async def get_user_profile(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -81,17 +81,17 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": "UserProfile",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_user_profile_with_http_info(
+    async def get_user_profile_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -139,17 +139,17 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": "UserProfile",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_user_profile_without_preload_content(
+    async def get_user_profile_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -197,7 +197,7 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": "UserProfile",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -254,7 +254,7 @@ class UserApi:
         )
 
     @validate_call
-    def get_user_subscriptions(
+    async def get_user_subscriptions(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -302,17 +302,17 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": "UserSubscriptions",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_user_subscriptions_with_http_info(
+    async def get_user_subscriptions_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -360,17 +360,17 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": "UserSubscriptions",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_user_subscriptions_without_preload_content(
+    async def get_user_subscriptions_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -418,7 +418,7 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": "UserSubscriptions",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -475,7 +475,7 @@ class UserApi:
         )
 
     @validate_call
-    def update_user_profile(
+    async def update_user_profile(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -530,17 +530,17 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_user_profile_with_http_info(
+    async def update_user_profile_with_http_info(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -595,17 +595,17 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_user_profile_without_preload_content(
+    async def update_user_profile_without_preload_content(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -660,7 +660,7 @@ class UserApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

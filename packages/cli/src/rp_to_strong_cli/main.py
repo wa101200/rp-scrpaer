@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from pathlib import Path
 
@@ -46,27 +47,29 @@ def _write_json(data: object, output: Path) -> None:
     click.echo(f"Wrote {output}")
 
 
-def _export(token: str, export_type: str, output: Path) -> None:
+async def _export(token: str, export_type: str, output: Path) -> None:
     config = Configuration(access_token=token)
-    with ApiClient(config) as client:
+    async with ApiClient(config) as client:
         user_api = UserApi(client)
         training_api = TrainingDataApi(client)
 
         if export_type == "all":
+            summaries = await training_api.get_mesocycles()
             data = {
-                "profile": user_api.get_user_profile(),
-                "subscriptions": user_api.get_user_subscriptions(),
-                "exercises": sorted(training_api.get_exercises(), key=lambda e: e.id),
-                "mesocycles": sorted(
-                    [
-                        training_api.get_mesocycle(m.key)
-                        for m in training_api.get_mesocycles()
-                    ],
-                    key=lambda m: m.created_at,
-                    reverse=True
+                "profile": await user_api.get_user_profile(),
+                "subscriptions": await user_api.get_user_subscriptions(),
+                "exercises": sorted(
+                    await training_api.get_exercises(), key=lambda e: e.id
                 ),
-                "templates": sorted(training_api.get_templates(), key=lambda t: t.id),
-                "exercise_history": training_api.get_user_exercise_history(),
+                "mesocycles": sorted(
+                    [await training_api.get_mesocycle(m.key) for m in summaries],
+                    key=lambda m: m.created_at,
+                    reverse=True,
+                ),
+                "templates": sorted(
+                    await training_api.get_templates(), key=lambda t: t.id
+                ),
+                "exercise_history": await training_api.get_user_exercise_history(),
             }
             if output.suffix == ".json":
                 _write_json(data, output)
@@ -76,18 +79,20 @@ def _export(token: str, export_type: str, output: Path) -> None:
                 for key, value in data.items():
                     _write_json(value, out_dir / f"{key}.json")
         elif export_type == "profile":
-            _write_json(user_api.get_user_profile(), output)
+            _write_json(await user_api.get_user_profile(), output)
         elif export_type == "subscriptions":
-            _write_json(user_api.get_user_subscriptions(), output)
+            _write_json(await user_api.get_user_subscriptions(), output)
         elif export_type == "exercises":
-            _write_json(training_api.get_exercises(), output)
+            _write_json(await training_api.get_exercises(), output)
         elif export_type == "mesocycles":
-            summaries = training_api.get_mesocycles()
-            _write_json([training_api.get_mesocycle(m.key) for m in summaries], output)
+            summaries = await training_api.get_mesocycles()
+            _write_json(
+                [await training_api.get_mesocycle(m.key) for m in summaries], output
+            )
         elif export_type == "templates":
-            _write_json(training_api.get_templates(), output)
+            _write_json(await training_api.get_templates(), output)
         elif export_type == "exercise-history":
-            _write_json(training_api.get_user_exercise_history(), output)
+            _write_json(await training_api.get_user_exercise_history(), output)
 
 
 @click.group()
@@ -123,7 +128,7 @@ def export(token_file: str, export_type: str, output: str | None):
     else:
         output_path = Path(output)
 
-    _export(token, export_type, output_path)
+    asyncio.run(_export(token, export_type, output_path))
 
 
 if __name__ == "__main__":

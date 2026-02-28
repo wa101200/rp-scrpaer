@@ -20,6 +20,8 @@ To be able to use it, you will need these dependencies in your own package that 
 
 * urllib3 >= 2.1.0, < 3.0.0
 * python-dateutil >= 2.8.2
+* aiohttp >= 3.8.4
+* aiohttp-retry >= 2.8.3
 * pydantic >= 2
 * typing-extensions >= 4.7.1
 
@@ -52,7 +54,7 @@ configuration = api_service_rp.Configuration(
 
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AppApi(api_client)
     version = 'version_example' # str | 
@@ -60,7 +62,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Get app config
-        api_instance.get_app_config(version, v=v)
+        await api_instance.get_app_config(version, v=v)
     except ApiException as e:
         print("Exception when calling AppApi->get_app_config: %s\n" % e)
 

@@ -69,7 +69,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -77,7 +77,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Add an exercise to a training day
-        api_instance.add_day_exercise(day_id, body=body)
+        await api_instance.add_day_exercise(day_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->add_day_exercise: %s\n" % e)
 ```
@@ -144,7 +144,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -152,7 +152,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Add a note to a training day
-        api_instance.add_day_note(day_id, body=body)
+        await api_instance.add_day_note(day_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->add_day_note: %s\n" % e)
 ```
@@ -219,7 +219,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     exercise_id = 'exercise_id_example' # str | 
@@ -227,7 +227,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Add a note to an exercise
-        api_instance.add_exercise_note(exercise_id, body=body)
+        await api_instance.add_exercise_note(exercise_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->add_exercise_note: %s\n" % e)
 ```
@@ -294,7 +294,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -302,7 +302,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Add a note to a mesocycle
-        api_instance.add_meso_note(key, body=body)
+        await api_instance.add_meso_note(key, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->add_meso_note: %s\n" % e)
 ```
@@ -369,7 +369,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -377,7 +377,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Add a micro-cycle (week) to a mesocycle
-        api_instance.add_micro_cycle(key, body=body)
+        await api_instance.add_micro_cycle(key, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->add_micro_cycle: %s\n" % e)
 ```
@@ -444,7 +444,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -453,7 +453,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Add sets to an exercise
-        api_instance.add_sets(day_id, day_exercise_id, body=body)
+        await api_instance.add_sets(day_id, day_exercise_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->add_sets: %s\n" % e)
 ```
@@ -521,7 +521,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -529,7 +529,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Bulk delete exercises from mesocycle days
-        api_instance.bulk_delete_day_exercises(key, body=body)
+        await api_instance.bulk_delete_day_exercises(key, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->bulk_delete_day_exercises: %s\n" % e)
 ```
@@ -596,14 +596,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Create a custom exercise
-        api_instance.create_exercise(body=body)
+        await api_instance.create_exercise(body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->create_exercise: %s\n" % e)
 ```
@@ -669,14 +669,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Create a new mesocycle
-        api_instance.create_mesocycle(body=body)
+        await api_instance.create_mesocycle(body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->create_mesocycle: %s\n" % e)
 ```
@@ -742,14 +742,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Create a training template
-        api_instance.create_template(body=body)
+        await api_instance.create_template(body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->create_template: %s\n" % e)
 ```
@@ -815,7 +815,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -823,7 +823,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Delete a day note
-        api_instance.delete_day_note(day_id, note_id)
+        await api_instance.delete_day_note(day_id, note_id)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_day_note: %s\n" % e)
 ```
@@ -890,14 +890,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     id = 'id_example' # str | 
 
     try:
         # Delete a custom exercise
-        api_instance.delete_exercise(id)
+        await api_instance.delete_exercise(id)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_exercise: %s\n" % e)
 ```
@@ -963,7 +963,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     exercise_id = 'exercise_id_example' # str | 
@@ -971,7 +971,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Delete an exercise note
-        api_instance.delete_exercise_note(exercise_id, note_id)
+        await api_instance.delete_exercise_note(exercise_id, note_id)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_exercise_note: %s\n" % e)
 ```
@@ -1038,7 +1038,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -1046,7 +1046,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Delete a mesocycle note
-        api_instance.delete_meso_note(key, note_id)
+        await api_instance.delete_meso_note(key, note_id)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_meso_note: %s\n" % e)
 ```
@@ -1113,14 +1113,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
 
     try:
         # Delete a mesocycle
-        api_instance.delete_mesocycle(key)
+        await api_instance.delete_mesocycle(key)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_mesocycle: %s\n" % e)
 ```
@@ -1186,14 +1186,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     set_id = 'set_id_example' # str | 
 
     try:
         # Delete a set
-        api_instance.delete_set(set_id)
+        await api_instance.delete_set(set_id)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_set: %s\n" % e)
 ```
@@ -1259,14 +1259,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     id = 'id_example' # str | 
 
     try:
         # Delete a template
-        api_instance.delete_template(id)
+        await api_instance.delete_template(id)
     except Exception as e:
         print("Exception when calling TrainingApi->delete_template: %s\n" % e)
 ```
@@ -1332,7 +1332,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -1341,7 +1341,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Move exercise position within a day
-        api_instance.move_day_exercise(day_id, day_exercise_id, body=body)
+        await api_instance.move_day_exercise(day_id, day_exercise_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->move_day_exercise: %s\n" % e)
 ```
@@ -1409,14 +1409,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
 
     try:
         # Remove a micro-cycle (week)
-        api_instance.remove_micro_cycle(key)
+        await api_instance.remove_micro_cycle(key)
     except Exception as e:
         print("Exception when calling TrainingApi->remove_micro_cycle: %s\n" % e)
 ```
@@ -1482,14 +1482,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Track/log a training event
-        api_instance.track_training(body=body)
+        await api_instance.track_training(body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->track_training: %s\n" % e)
 ```
@@ -1555,7 +1555,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -1563,7 +1563,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update a training day
-        api_instance.update_day(day_id, body=body)
+        await api_instance.update_day(day_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_day: %s\n" % e)
 ```
@@ -1630,7 +1630,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -1638,7 +1638,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update bodyweight for a day
-        api_instance.update_day_bodyweight(day_id, body=body)
+        await api_instance.update_day_bodyweight(day_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_day_bodyweight: %s\n" % e)
 ```
@@ -1705,7 +1705,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -1714,7 +1714,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update a day exercise
-        api_instance.update_day_exercise(day_id, day_exercise_id, body=body)
+        await api_instance.update_day_exercise(day_id, day_exercise_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_day_exercise: %s\n" % e)
 ```
@@ -1782,7 +1782,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     day_id = 'day_id_example' # str | 
@@ -1790,7 +1790,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update day label
-        api_instance.update_day_label(day_id, body=body)
+        await api_instance.update_day_label(day_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_day_label: %s\n" % e)
 ```
@@ -1857,7 +1857,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     id = 'id_example' # str | 
@@ -1865,7 +1865,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update an exercise
-        api_instance.update_exercise(id, body=body)
+        await api_instance.update_exercise(id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_exercise: %s\n" % e)
 ```
@@ -1932,7 +1932,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     exercise_id = 'exercise_id_example' # str | 
@@ -1941,7 +1941,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update an exercise note
-        api_instance.update_exercise_note(exercise_id, note_id, body=body)
+        await api_instance.update_exercise_note(exercise_id, note_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_exercise_note: %s\n" % e)
 ```
@@ -2009,7 +2009,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -2018,7 +2018,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update a mesocycle note
-        api_instance.update_meso_note(key, note_id, body=body)
+        await api_instance.update_meso_note(key, note_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_meso_note: %s\n" % e)
 ```
@@ -2086,7 +2086,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -2094,7 +2094,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update muscle group priorities
-        api_instance.update_meso_priorities(key, body=body)
+        await api_instance.update_meso_priorities(key, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_meso_priorities: %s\n" % e)
 ```
@@ -2161,7 +2161,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     key = 'key_example' # str | 
@@ -2169,7 +2169,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update mesocycle metadata
-        api_instance.update_mesocycle(key, body=body)
+        await api_instance.update_mesocycle(key, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_mesocycle: %s\n" % e)
 ```
@@ -2236,7 +2236,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     set_id = 'set_id_example' # str | 
@@ -2244,7 +2244,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update a set (weight, reps, etc.)
-        api_instance.update_set(set_id, body=body)
+        await api_instance.update_set(set_id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_set: %s\n" % e)
 ```
@@ -2311,7 +2311,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     id = 'id_example' # str | 
@@ -2319,7 +2319,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Update a template
-        api_instance.update_template(id, body=body)
+        await api_instance.update_template(id, body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_template: %s\n" % e)
 ```
@@ -2386,14 +2386,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.TrainingApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Update user attributes
-        api_instance.update_user_attributes(body=body)
+        await api_instance.update_user_attributes(body=body)
     except Exception as e:
         print("Exception when calling TrainingApi->update_user_attributes: %s\n" % e)
 ```

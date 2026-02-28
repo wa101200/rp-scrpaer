@@ -40,14 +40,14 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AuthApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Create/update user
-        api_instance.create_user(body=body)
+        await api_instance.create_user(body=body)
     except Exception as e:
         print("Exception when calling AuthApi->create_user: %s\n" % e)
 ```
@@ -103,14 +103,14 @@ configuration = api_service_rp.Configuration(
 
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AuthApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Login
-        api_instance.login(body=body)
+        await api_instance.login(body=body)
     except Exception as e:
         print("Exception when calling AuthApi->login: %s\n" % e)
 ```
@@ -166,14 +166,14 @@ configuration = api_service_rp.Configuration(
 
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.AuthApi(api_client)
     body = None # object |  (optional)
 
     try:
         # Magic link login
-        api_instance.magic_link_login(body=body)
+        await api_instance.magic_link_login(body=body)
     except Exception as e:
         print("Exception when calling AuthApi->magic_link_login: %s\n" % e)
 ```

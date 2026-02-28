@@ -31,7 +31,7 @@ class AppApi:
         self.api_client = api_client
 
     @validate_call
-    def get_app_config(
+    async def get_app_config(
         self,
         version: StrictStr,
         v: StrictStr | None = None,
@@ -87,17 +87,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_app_config_with_http_info(
+    async def get_app_config_with_http_info(
         self,
         version: StrictStr,
         v: StrictStr | None = None,
@@ -153,17 +153,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_app_config_without_preload_content(
+    async def get_app_config_without_preload_content(
         self,
         version: StrictStr,
         v: StrictStr | None = None,
@@ -219,7 +219,7 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -277,7 +277,7 @@ class AppApi:
         )
 
     @validate_call
-    def get_products(
+    async def get_products(
         self,
         apps: StrictStr | None = None,
         _request_timeout: None
@@ -329,17 +329,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_products_with_http_info(
+    async def get_products_with_http_info(
         self,
         apps: StrictStr | None = None,
         _request_timeout: None
@@ -391,17 +391,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_products_without_preload_content(
+    async def get_products_without_preload_content(
         self,
         apps: StrictStr | None = None,
         _request_timeout: None
@@ -453,7 +453,7 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -508,7 +508,7 @@ class AppApi:
         )
 
     @validate_call
-    def get_user_review(
+    async def get_user_review(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -555,17 +555,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_user_review_with_http_info(
+    async def get_user_review_with_http_info(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -612,17 +612,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_user_review_without_preload_content(
+    async def get_user_review_without_preload_content(
         self,
         _request_timeout: None
         | Annotated[StrictFloat, Field(gt=0)]
@@ -669,7 +669,7 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -720,7 +720,7 @@ class AppApi:
         )
 
     @validate_call
-    def get_web_manifest(
+    async def get_web_manifest(
         self,
         v: StrictStr | None = None,
         _request_timeout: None
@@ -771,17 +771,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_web_manifest_with_http_info(
+    async def get_web_manifest_with_http_info(
         self,
         v: StrictStr | None = None,
         _request_timeout: None
@@ -832,17 +832,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_web_manifest_without_preload_content(
+    async def get_web_manifest_without_preload_content(
         self,
         v: StrictStr | None = None,
         _request_timeout: None
@@ -893,7 +893,7 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -948,7 +948,7 @@ class AppApi:
         )
 
     @validate_call
-    def submit_user_review(
+    async def submit_user_review(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -999,17 +999,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def submit_user_review_with_http_info(
+    async def submit_user_review_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -1060,17 +1060,17 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def submit_user_review_without_preload_content(
+    async def submit_user_review_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -1121,7 +1121,7 @@ class AppApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

@@ -41,7 +41,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.PurchasesApi(api_client)
     id = 'id_example' # str | 
@@ -49,7 +49,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Complete a purchase
-        api_instance.complete_purchase(id, body=body)
+        await api_instance.complete_purchase(id, body=body)
     except Exception as e:
         print("Exception when calling PurchasesApi->complete_purchase: %s\n" % e)
 ```
@@ -116,7 +116,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.PurchasesApi(api_client)
     code = 'code_example' # str | 
@@ -126,7 +126,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Enter a referral code
-        api_instance.enter_referral(code, is_user_entry=is_user_entry, associate_only=associate_only, body=body)
+        await api_instance.enter_referral(code, is_user_entry=is_user_entry, associate_only=associate_only, body=body)
     except Exception as e:
         print("Exception when calling PurchasesApi->enter_referral: %s\n" % e)
 ```
@@ -195,7 +195,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.PurchasesApi(api_client)
     redirect = 'redirect_example' # str |  (optional)
@@ -203,7 +203,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Start checkout flow
-        api_instance.start_checkout(redirect=redirect, body=body)
+        await api_instance.start_checkout(redirect=redirect, body=body)
     except Exception as e:
         print("Exception when calling PurchasesApi->start_checkout: %s\n" % e)
 ```
@@ -270,7 +270,7 @@ configuration = api_service_rp.Configuration(
 )
 
 # Enter a context with an instance of the API client
-with api_service_rp.ApiClient(configuration) as api_client:
+async with api_service_rp.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = api_service_rp.PurchasesApi(api_client)
     platform = 'platform_example' # str | 
@@ -278,7 +278,7 @@ with api_service_rp.ApiClient(configuration) as api_client:
 
     try:
         # Verify IAP transactions
-        api_instance.verify_transactions(platform, body=body)
+        await api_instance.verify_transactions(platform, body=body)
     except Exception as e:
         print("Exception when calling PurchasesApi->verify_transactions: %s\n" % e)
 ```

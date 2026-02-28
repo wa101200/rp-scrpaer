@@ -31,7 +31,7 @@ class TrainingApi:
         self.api_client = api_client
 
     @validate_call
-    def add_day_exercise(
+    async def add_day_exercise(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -86,17 +86,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def add_day_exercise_with_http_info(
+    async def add_day_exercise_with_http_info(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -151,17 +151,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def add_day_exercise_without_preload_content(
+    async def add_day_exercise_without_preload_content(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -216,7 +216,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -283,7 +283,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def add_day_note(
+    async def add_day_note(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -338,17 +338,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def add_day_note_with_http_info(
+    async def add_day_note_with_http_info(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -403,17 +403,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def add_day_note_without_preload_content(
+    async def add_day_note_without_preload_content(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -468,7 +468,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -535,7 +535,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def add_exercise_note(
+    async def add_exercise_note(
         self,
         exercise_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -590,17 +590,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def add_exercise_note_with_http_info(
+    async def add_exercise_note_with_http_info(
         self,
         exercise_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -655,17 +655,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def add_exercise_note_without_preload_content(
+    async def add_exercise_note_without_preload_content(
         self,
         exercise_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -720,7 +720,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -787,7 +787,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def add_meso_note(
+    async def add_meso_note(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -842,17 +842,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def add_meso_note_with_http_info(
+    async def add_meso_note_with_http_info(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -907,17 +907,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def add_meso_note_without_preload_content(
+    async def add_meso_note_without_preload_content(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -972,7 +972,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1039,7 +1039,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def add_micro_cycle(
+    async def add_micro_cycle(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1094,17 +1094,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def add_micro_cycle_with_http_info(
+    async def add_micro_cycle_with_http_info(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1159,17 +1159,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def add_micro_cycle_without_preload_content(
+    async def add_micro_cycle_without_preload_content(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1224,7 +1224,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1291,7 +1291,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def add_sets(
+    async def add_sets(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -1350,17 +1350,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def add_sets_with_http_info(
+    async def add_sets_with_http_info(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -1419,17 +1419,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def add_sets_without_preload_content(
+    async def add_sets_without_preload_content(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -1488,7 +1488,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1558,7 +1558,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def bulk_delete_day_exercises(
+    async def bulk_delete_day_exercises(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1613,17 +1613,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def bulk_delete_day_exercises_with_http_info(
+    async def bulk_delete_day_exercises_with_http_info(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1678,17 +1678,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def bulk_delete_day_exercises_without_preload_content(
+    async def bulk_delete_day_exercises_without_preload_content(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1743,7 +1743,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1810,7 +1810,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def create_exercise(
+    async def create_exercise(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -1861,17 +1861,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_exercise_with_http_info(
+    async def create_exercise_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -1922,17 +1922,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_exercise_without_preload_content(
+    async def create_exercise_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -1983,7 +1983,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -2047,7 +2047,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def create_mesocycle(
+    async def create_mesocycle(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -2098,17 +2098,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_mesocycle_with_http_info(
+    async def create_mesocycle_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -2159,17 +2159,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_mesocycle_without_preload_content(
+    async def create_mesocycle_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -2220,7 +2220,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -2284,7 +2284,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def create_template(
+    async def create_template(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -2335,17 +2335,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_template_with_http_info(
+    async def create_template_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -2396,17 +2396,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_template_without_preload_content(
+    async def create_template_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -2457,7 +2457,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "201": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -2521,7 +2521,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_day_note(
+    async def delete_day_note(
         self,
         day_id: StrictStr,
         note_id: StrictStr,
@@ -2576,17 +2576,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_day_note_with_http_info(
+    async def delete_day_note_with_http_info(
         self,
         day_id: StrictStr,
         note_id: StrictStr,
@@ -2641,17 +2641,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_day_note_without_preload_content(
+    async def delete_day_note_without_preload_content(
         self,
         day_id: StrictStr,
         note_id: StrictStr,
@@ -2706,7 +2706,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -2763,7 +2763,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_exercise(
+    async def delete_exercise(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -2814,17 +2814,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_exercise_with_http_info(
+    async def delete_exercise_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -2875,17 +2875,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_exercise_without_preload_content(
+    async def delete_exercise_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -2936,7 +2936,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -2990,7 +2990,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_exercise_note(
+    async def delete_exercise_note(
         self,
         exercise_id: StrictStr,
         note_id: StrictStr,
@@ -3045,17 +3045,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_exercise_note_with_http_info(
+    async def delete_exercise_note_with_http_info(
         self,
         exercise_id: StrictStr,
         note_id: StrictStr,
@@ -3110,17 +3110,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_exercise_note_without_preload_content(
+    async def delete_exercise_note_without_preload_content(
         self,
         exercise_id: StrictStr,
         note_id: StrictStr,
@@ -3175,7 +3175,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -3232,7 +3232,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_meso_note(
+    async def delete_meso_note(
         self,
         key: StrictStr,
         note_id: StrictStr,
@@ -3287,17 +3287,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_meso_note_with_http_info(
+    async def delete_meso_note_with_http_info(
         self,
         key: StrictStr,
         note_id: StrictStr,
@@ -3352,17 +3352,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_meso_note_without_preload_content(
+    async def delete_meso_note_without_preload_content(
         self,
         key: StrictStr,
         note_id: StrictStr,
@@ -3417,7 +3417,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -3474,7 +3474,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_mesocycle(
+    async def delete_mesocycle(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -3525,17 +3525,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_mesocycle_with_http_info(
+    async def delete_mesocycle_with_http_info(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -3586,17 +3586,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_mesocycle_without_preload_content(
+    async def delete_mesocycle_without_preload_content(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -3647,7 +3647,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -3701,7 +3701,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_set(
+    async def delete_set(
         self,
         set_id: StrictStr,
         _request_timeout: None
@@ -3752,17 +3752,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_set_with_http_info(
+    async def delete_set_with_http_info(
         self,
         set_id: StrictStr,
         _request_timeout: None
@@ -3813,17 +3813,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_set_without_preload_content(
+    async def delete_set_without_preload_content(
         self,
         set_id: StrictStr,
         _request_timeout: None
@@ -3874,7 +3874,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -3928,7 +3928,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def delete_template(
+    async def delete_template(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -3979,17 +3979,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def delete_template_with_http_info(
+    async def delete_template_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -4040,17 +4040,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def delete_template_without_preload_content(
+    async def delete_template_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: None
@@ -4101,7 +4101,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -4155,7 +4155,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def move_day_exercise(
+    async def move_day_exercise(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -4214,17 +4214,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def move_day_exercise_with_http_info(
+    async def move_day_exercise_with_http_info(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -4283,17 +4283,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def move_day_exercise_without_preload_content(
+    async def move_day_exercise_without_preload_content(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -4352,7 +4352,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -4422,7 +4422,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def remove_micro_cycle(
+    async def remove_micro_cycle(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -4473,17 +4473,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def remove_micro_cycle_with_http_info(
+    async def remove_micro_cycle_with_http_info(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -4534,17 +4534,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def remove_micro_cycle_without_preload_content(
+    async def remove_micro_cycle_without_preload_content(
         self,
         key: StrictStr,
         _request_timeout: None
@@ -4595,7 +4595,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "204": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -4649,7 +4649,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def track_training(
+    async def track_training(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -4700,17 +4700,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def track_training_with_http_info(
+    async def track_training_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -4761,17 +4761,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def track_training_without_preload_content(
+    async def track_training_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -4822,7 +4822,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -4886,7 +4886,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_day(
+    async def update_day(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -4941,17 +4941,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_day_with_http_info(
+    async def update_day_with_http_info(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5006,17 +5006,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_day_without_preload_content(
+    async def update_day_without_preload_content(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5071,7 +5071,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -5138,7 +5138,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_day_bodyweight(
+    async def update_day_bodyweight(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5193,17 +5193,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_day_bodyweight_with_http_info(
+    async def update_day_bodyweight_with_http_info(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5258,17 +5258,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_day_bodyweight_without_preload_content(
+    async def update_day_bodyweight_without_preload_content(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5323,7 +5323,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -5390,7 +5390,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_day_exercise(
+    async def update_day_exercise(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -5449,17 +5449,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_day_exercise_with_http_info(
+    async def update_day_exercise_with_http_info(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -5518,17 +5518,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_day_exercise_without_preload_content(
+    async def update_day_exercise_without_preload_content(
         self,
         day_id: StrictStr,
         day_exercise_id: StrictStr,
@@ -5587,7 +5587,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -5657,7 +5657,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_day_label(
+    async def update_day_label(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5712,17 +5712,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_day_label_with_http_info(
+    async def update_day_label_with_http_info(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5777,17 +5777,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_day_label_without_preload_content(
+    async def update_day_label_without_preload_content(
         self,
         day_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5842,7 +5842,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -5909,7 +5909,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_exercise(
+    async def update_exercise(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -5964,17 +5964,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_exercise_with_http_info(
+    async def update_exercise_with_http_info(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -6029,17 +6029,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_exercise_without_preload_content(
+    async def update_exercise_without_preload_content(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -6094,7 +6094,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -6161,7 +6161,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_exercise_note(
+    async def update_exercise_note(
         self,
         exercise_id: StrictStr,
         note_id: StrictStr,
@@ -6220,17 +6220,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_exercise_note_with_http_info(
+    async def update_exercise_note_with_http_info(
         self,
         exercise_id: StrictStr,
         note_id: StrictStr,
@@ -6289,17 +6289,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_exercise_note_without_preload_content(
+    async def update_exercise_note_without_preload_content(
         self,
         exercise_id: StrictStr,
         note_id: StrictStr,
@@ -6358,7 +6358,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -6428,7 +6428,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_meso_note(
+    async def update_meso_note(
         self,
         key: StrictStr,
         note_id: StrictStr,
@@ -6487,17 +6487,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_meso_note_with_http_info(
+    async def update_meso_note_with_http_info(
         self,
         key: StrictStr,
         note_id: StrictStr,
@@ -6556,17 +6556,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_meso_note_without_preload_content(
+    async def update_meso_note_without_preload_content(
         self,
         key: StrictStr,
         note_id: StrictStr,
@@ -6625,7 +6625,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -6695,7 +6695,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_meso_priorities(
+    async def update_meso_priorities(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -6750,17 +6750,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_meso_priorities_with_http_info(
+    async def update_meso_priorities_with_http_info(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -6815,17 +6815,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_meso_priorities_without_preload_content(
+    async def update_meso_priorities_without_preload_content(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -6880,7 +6880,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -6947,7 +6947,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_mesocycle(
+    async def update_mesocycle(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7002,17 +7002,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_mesocycle_with_http_info(
+    async def update_mesocycle_with_http_info(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7067,17 +7067,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_mesocycle_without_preload_content(
+    async def update_mesocycle_without_preload_content(
         self,
         key: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7132,7 +7132,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -7199,7 +7199,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_set(
+    async def update_set(
         self,
         set_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7254,17 +7254,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_set_with_http_info(
+    async def update_set_with_http_info(
         self,
         set_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7319,17 +7319,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_set_without_preload_content(
+    async def update_set_without_preload_content(
         self,
         set_id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7384,7 +7384,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -7451,7 +7451,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_template(
+    async def update_template(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7506,17 +7506,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_template_with_http_info(
+    async def update_template_with_http_info(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7571,17 +7571,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_template_without_preload_content(
+    async def update_template_without_preload_content(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -7636,7 +7636,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -7703,7 +7703,7 @@ class TrainingApi:
         )
 
     @validate_call
-    def update_user_attributes(
+    async def update_user_attributes(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -7754,17 +7754,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_user_attributes_with_http_info(
+    async def update_user_attributes_with_http_info(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -7815,17 +7815,17 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_user_attributes_without_preload_content(
+    async def update_user_attributes_without_preload_content(
         self,
         body: dict[str, Any] | None = None,
         _request_timeout: None
@@ -7876,7 +7876,7 @@ class TrainingApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

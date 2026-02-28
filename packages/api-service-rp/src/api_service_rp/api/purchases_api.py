@@ -31,7 +31,7 @@ class PurchasesApi:
         self.api_client = api_client
 
     @validate_call
-    def complete_purchase(
+    async def complete_purchase(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -86,17 +86,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def complete_purchase_with_http_info(
+    async def complete_purchase_with_http_info(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -151,17 +151,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def complete_purchase_without_preload_content(
+    async def complete_purchase_without_preload_content(
         self,
         id: StrictStr,
         body: dict[str, Any] | None = None,
@@ -216,7 +216,7 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -283,7 +283,7 @@ class PurchasesApi:
         )
 
     @validate_call
-    def enter_referral(
+    async def enter_referral(
         self,
         code: StrictStr,
         is_user_entry: StrictInt | None = None,
@@ -346,17 +346,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def enter_referral_with_http_info(
+    async def enter_referral_with_http_info(
         self,
         code: StrictStr,
         is_user_entry: StrictInt | None = None,
@@ -419,17 +419,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def enter_referral_without_preload_content(
+    async def enter_referral_without_preload_content(
         self,
         code: StrictStr,
         is_user_entry: StrictInt | None = None,
@@ -492,7 +492,7 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -567,7 +567,7 @@ class PurchasesApi:
         )
 
     @validate_call
-    def start_checkout(
+    async def start_checkout(
         self,
         redirect: StrictStr | None = None,
         body: dict[str, Any] | None = None,
@@ -622,17 +622,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def start_checkout_with_http_info(
+    async def start_checkout_with_http_info(
         self,
         redirect: StrictStr | None = None,
         body: dict[str, Any] | None = None,
@@ -687,17 +687,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def start_checkout_without_preload_content(
+    async def start_checkout_without_preload_content(
         self,
         redirect: StrictStr | None = None,
         body: dict[str, Any] | None = None,
@@ -752,7 +752,7 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -820,7 +820,7 @@ class PurchasesApi:
         )
 
     @validate_call
-    def verify_transactions(
+    async def verify_transactions(
         self,
         platform: StrictStr,
         body: dict[str, Any] | None = None,
@@ -875,17 +875,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def verify_transactions_with_http_info(
+    async def verify_transactions_with_http_info(
         self,
         platform: StrictStr,
         body: dict[str, Any] | None = None,
@@ -940,17 +940,17 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def verify_transactions_without_preload_content(
+    async def verify_transactions_without_preload_content(
         self,
         platform: StrictStr,
         body: dict[str, Any] | None = None,
@@ -1005,7 +1005,7 @@ class PurchasesApi:
         _response_types_map: dict[str, str | None] = {
             "200": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

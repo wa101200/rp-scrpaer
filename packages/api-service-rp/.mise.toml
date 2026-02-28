@@ -45,6 +45,7 @@ openapi-generator-cli generate \
   -g python \
   -o src \
   --package-name api_service_rp \
-  --additional-properties=generateSourceCodeOnly=true
+  --additional-properties=generateSourceCodeOnly=true \
+  --additional-properties=library=asyncio
 """
 depends_post = ["//:format"]
