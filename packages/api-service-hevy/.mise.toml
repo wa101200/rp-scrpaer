@@ -11,15 +11,14 @@ HEVY_API_BASE_URL = "https://api.hevyapp.com"
 [tasks.test]
 run = "echo 'No tests defined'"
 
-[tasks.generate-models]
+[tasks.generate-models-hevy]
 description = "Generate Python SDK from OpenAPI spec"
 run = """
 openapi-generator-cli generate \
-  -i openapi.yaml \
+  -i openapi/hevy.openapi.yaml \
   -g python \
   -o src \
   --package-name hevy_api_service \
   --additional-properties=generateSourceCodeOnly=true \
   --additional-properties=library=asyncio
 """
-depends_post = ["//:format"]
