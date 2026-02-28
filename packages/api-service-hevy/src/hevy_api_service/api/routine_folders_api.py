@@ -39,7 +39,7 @@ class RoutineFoldersApi:
         self.api_client = api_client
 
     @validate_call
-    def create_routine_folder(
+    async def create_routine_folder(
         self,
         api_key: UUID,
         post_routine_folder_request_body: PostRoutineFolderRequestBody,
@@ -95,17 +95,17 @@ class RoutineFoldersApi:
             "201": "RoutineFolder",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_routine_folder_with_http_info(
+    async def create_routine_folder_with_http_info(
         self,
         api_key: UUID,
         post_routine_folder_request_body: PostRoutineFolderRequestBody,
@@ -161,17 +161,17 @@ class RoutineFoldersApi:
             "201": "RoutineFolder",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_routine_folder_without_preload_content(
+    async def create_routine_folder_without_preload_content(
         self,
         api_key: UUID,
         post_routine_folder_request_body: PostRoutineFolderRequestBody,
@@ -227,7 +227,7 @@ class RoutineFoldersApi:
             "201": "RoutineFolder",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -300,7 +300,7 @@ class RoutineFoldersApi:
         )
 
     @validate_call
-    def get_routine_folder_by_id(
+    async def get_routine_folder_by_id(
         self,
         api_key: UUID,
         folder_id: Annotated[
@@ -358,17 +358,17 @@ class RoutineFoldersApi:
             "200": "RoutineFolder",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_routine_folder_by_id_with_http_info(
+    async def get_routine_folder_by_id_with_http_info(
         self,
         api_key: UUID,
         folder_id: Annotated[
@@ -426,17 +426,17 @@ class RoutineFoldersApi:
             "200": "RoutineFolder",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_routine_folder_by_id_without_preload_content(
+    async def get_routine_folder_by_id_without_preload_content(
         self,
         api_key: UUID,
         folder_id: Annotated[
@@ -494,7 +494,7 @@ class RoutineFoldersApi:
             "200": "RoutineFolder",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -557,7 +557,7 @@ class RoutineFoldersApi:
         )
 
     @validate_call
-    def get_routine_folders(
+    async def get_routine_folders(
         self,
         api_key: UUID,
         page: Annotated[
@@ -622,17 +622,17 @@ class RoutineFoldersApi:
             "200": "GetRoutineFolders200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_routine_folders_with_http_info(
+    async def get_routine_folders_with_http_info(
         self,
         api_key: UUID,
         page: Annotated[
@@ -697,17 +697,17 @@ class RoutineFoldersApi:
             "200": "GetRoutineFolders200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_routine_folders_without_preload_content(
+    async def get_routine_folders_without_preload_content(
         self,
         api_key: UUID,
         page: Annotated[
@@ -772,7 +772,7 @@ class RoutineFoldersApi:
             "200": "GetRoutineFolders200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

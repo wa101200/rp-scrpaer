@@ -32,7 +32,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseTemplatesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -40,7 +40,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Create a new custom exercise template.
-        api_response = api_instance.create_custom_exercise_template(api_key, create_custom_exercise_request_body)
+        api_response = await api_instance.create_custom_exercise_template(api_key, create_custom_exercise_request_body)
         print("The response of ExerciseTemplatesApi->create_custom_exercise_template:\n")
         pprint(api_response)
     except Exception as e:
@@ -102,7 +102,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseTemplatesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -110,7 +110,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a single exercise template by id.
-        api_response = api_instance.get_exercise_template_by_id(api_key, exercise_template_id)
+        api_response = await api_instance.get_exercise_template_by_id(api_key, exercise_template_id)
         print("The response of ExerciseTemplatesApi->get_exercise_template_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -171,7 +171,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseTemplatesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -180,7 +180,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a paginated list of exercise templates available on the account.
-        api_response = api_instance.get_exercise_templates(api_key, page=page, page_size=page_size)
+        api_response = await api_instance.get_exercise_templates(api_key, page=page, page_size=page_size)
         print("The response of ExerciseTemplatesApi->get_exercise_templates:\n")
         pprint(api_response)
     except Exception as e:

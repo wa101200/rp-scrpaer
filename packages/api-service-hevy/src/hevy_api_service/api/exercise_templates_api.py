@@ -42,7 +42,7 @@ class ExerciseTemplatesApi:
         self.api_client = api_client
 
     @validate_call
-    def create_custom_exercise_template(
+    async def create_custom_exercise_template(
         self,
         api_key: UUID,
         create_custom_exercise_request_body: Annotated[
@@ -102,17 +102,17 @@ class ExerciseTemplatesApi:
             "400": "CreateCustomExerciseTemplate400Response",
             "403": "CreateCustomExerciseTemplate403Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_custom_exercise_template_with_http_info(
+    async def create_custom_exercise_template_with_http_info(
         self,
         api_key: UUID,
         create_custom_exercise_request_body: Annotated[
@@ -172,17 +172,17 @@ class ExerciseTemplatesApi:
             "400": "CreateCustomExerciseTemplate400Response",
             "403": "CreateCustomExerciseTemplate403Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_custom_exercise_template_without_preload_content(
+    async def create_custom_exercise_template_without_preload_content(
         self,
         api_key: UUID,
         create_custom_exercise_request_body: Annotated[
@@ -242,7 +242,7 @@ class ExerciseTemplatesApi:
             "400": "CreateCustomExerciseTemplate400Response",
             "403": "CreateCustomExerciseTemplate403Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -315,7 +315,7 @@ class ExerciseTemplatesApi:
         )
 
     @validate_call
-    def get_exercise_template_by_id(
+    async def get_exercise_template_by_id(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -373,17 +373,17 @@ class ExerciseTemplatesApi:
             "200": "ExerciseTemplate",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_exercise_template_by_id_with_http_info(
+    async def get_exercise_template_by_id_with_http_info(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -441,17 +441,17 @@ class ExerciseTemplatesApi:
             "200": "ExerciseTemplate",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_exercise_template_by_id_without_preload_content(
+    async def get_exercise_template_by_id_without_preload_content(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -509,7 +509,7 @@ class ExerciseTemplatesApi:
             "200": "ExerciseTemplate",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -572,7 +572,7 @@ class ExerciseTemplatesApi:
         )
 
     @validate_call
-    def get_exercise_templates(
+    async def get_exercise_templates(
         self,
         api_key: UUID,
         page: Annotated[
@@ -637,17 +637,17 @@ class ExerciseTemplatesApi:
             "200": "GetExerciseTemplates200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_exercise_templates_with_http_info(
+    async def get_exercise_templates_with_http_info(
         self,
         api_key: UUID,
         page: Annotated[
@@ -712,17 +712,17 @@ class ExerciseTemplatesApi:
             "200": "GetExerciseTemplates200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_exercise_templates_without_preload_content(
+    async def get_exercise_templates_without_preload_content(
         self,
         api_key: UUID,
         page: Annotated[
@@ -787,7 +787,7 @@ class ExerciseTemplatesApi:
             "200": "GetExerciseTemplates200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

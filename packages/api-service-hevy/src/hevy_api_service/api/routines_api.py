@@ -39,7 +39,7 @@ class RoutinesApi:
         self.api_client = api_client
 
     @validate_call
-    def create_routine(
+    async def create_routine(
         self,
         api_key: UUID,
         post_routines_request_body: PostRoutinesRequestBody,
@@ -96,17 +96,17 @@ class RoutinesApi:
             "400": "CreateWorkout400Response",
             "403": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_routine_with_http_info(
+    async def create_routine_with_http_info(
         self,
         api_key: UUID,
         post_routines_request_body: PostRoutinesRequestBody,
@@ -163,17 +163,17 @@ class RoutinesApi:
             "400": "CreateWorkout400Response",
             "403": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_routine_without_preload_content(
+    async def create_routine_without_preload_content(
         self,
         api_key: UUID,
         post_routines_request_body: PostRoutinesRequestBody,
@@ -230,7 +230,7 @@ class RoutinesApi:
             "400": "CreateWorkout400Response",
             "403": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -303,7 +303,7 @@ class RoutinesApi:
         )
 
     @validate_call
-    def get_routine_by_id(
+    async def get_routine_by_id(
         self,
         api_key: UUID,
         routine_id: Annotated[StrictStr, Field(description="The id of the routine")],
@@ -359,17 +359,17 @@ class RoutinesApi:
             "200": "GetRoutineById200Response",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_routine_by_id_with_http_info(
+    async def get_routine_by_id_with_http_info(
         self,
         api_key: UUID,
         routine_id: Annotated[StrictStr, Field(description="The id of the routine")],
@@ -425,17 +425,17 @@ class RoutinesApi:
             "200": "GetRoutineById200Response",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_routine_by_id_without_preload_content(
+    async def get_routine_by_id_without_preload_content(
         self,
         api_key: UUID,
         routine_id: Annotated[StrictStr, Field(description="The id of the routine")],
@@ -491,7 +491,7 @@ class RoutinesApi:
             "200": "GetRoutineById200Response",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -554,7 +554,7 @@ class RoutinesApi:
         )
 
     @validate_call
-    def get_routines(
+    async def get_routines(
         self,
         api_key: UUID,
         page: Annotated[
@@ -619,17 +619,17 @@ class RoutinesApi:
             "200": "GetRoutines200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_routines_with_http_info(
+    async def get_routines_with_http_info(
         self,
         api_key: UUID,
         page: Annotated[
@@ -694,17 +694,17 @@ class RoutinesApi:
             "200": "GetRoutines200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_routines_without_preload_content(
+    async def get_routines_without_preload_content(
         self,
         api_key: UUID,
         page: Annotated[
@@ -769,7 +769,7 @@ class RoutinesApi:
             "200": "GetRoutines200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -837,7 +837,7 @@ class RoutinesApi:
         )
 
     @validate_call
-    def update_routine(
+    async def update_routine(
         self,
         api_key: UUID,
         routine_id: Annotated[StrictStr, Field(description="The id of the routine")],
@@ -898,17 +898,17 @@ class RoutinesApi:
             "400": "CreateWorkout400Response",
             "404": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_routine_with_http_info(
+    async def update_routine_with_http_info(
         self,
         api_key: UUID,
         routine_id: Annotated[StrictStr, Field(description="The id of the routine")],
@@ -969,17 +969,17 @@ class RoutinesApi:
             "400": "CreateWorkout400Response",
             "404": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_routine_without_preload_content(
+    async def update_routine_without_preload_content(
         self,
         api_key: UUID,
         routine_id: Annotated[StrictStr, Field(description="The id of the routine")],
@@ -1040,7 +1040,7 @@ class RoutinesApi:
             "400": "CreateWorkout400Response",
             "404": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

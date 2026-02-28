@@ -36,7 +36,7 @@ class ExerciseHistoryApi:
         self.api_client = api_client
 
     @validate_call
-    def get_exercise_history(
+    async def get_exercise_history(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -112,17 +112,17 @@ class ExerciseHistoryApi:
             "200": "GetExerciseHistory200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_exercise_history_with_http_info(
+    async def get_exercise_history_with_http_info(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -198,17 +198,17 @@ class ExerciseHistoryApi:
             "200": "GetExerciseHistory200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_exercise_history_without_preload_content(
+    async def get_exercise_history_without_preload_content(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -284,7 +284,7 @@ class ExerciseHistoryApi:
             "200": "GetExerciseHistory200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

@@ -48,15 +48,20 @@ def _write_json(data: object, output: Path) -> None:
 
 
 async def _fetch_all(user_api: UserApi, training_api: TrainingDataApi) -> dict:
-    profile, subscriptions, exercises, summaries, templates, exercise_history = (
-        await asyncio.gather(
-            user_api.get_user_profile(),
-            user_api.get_user_subscriptions(),
-            training_api.get_exercises(),
-            training_api.get_mesocycles(),
-            training_api.get_templates(),
-            training_api.get_user_exercise_history(),
-        )
+    (
+        profile,
+        subscriptions,
+        exercises,
+        summaries,
+        templates,
+        exercise_history,
+    ) = await asyncio.gather(
+        user_api.get_user_profile(),
+        user_api.get_user_subscriptions(),
+        training_api.get_exercises(),
+        training_api.get_mesocycles(),
+        training_api.get_templates(),
+        training_api.get_user_exercise_history(),
     )
     mesocycles = await asyncio.gather(
         *(training_api.get_mesocycle(m.key) for m in summaries)
@@ -74,9 +79,7 @@ async def _fetch_all(user_api: UserApi, training_api: TrainingDataApi) -> dict:
 async def _fetch_mesocycles(training_api: TrainingDataApi) -> list:
     summaries = await training_api.get_mesocycles()
     return list(
-        await asyncio.gather(
-            *(training_api.get_mesocycle(m.key) for m in summaries)
-        )
+        await asyncio.gather(*(training_api.get_mesocycle(m.key) for m in summaries))
     )
 
 

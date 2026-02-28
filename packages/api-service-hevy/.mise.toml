@@ -19,6 +19,7 @@ openapi-generator-cli generate \
   -g python \
   -o src \
   --package-name hevy_api_service \
-  --additional-properties=generateSourceCodeOnly=true
+  --additional-properties=generateSourceCodeOnly=true \
+  --additional-properties=library=asyncio
 """
 depends_post = ["//:format"]

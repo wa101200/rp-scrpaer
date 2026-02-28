@@ -32,7 +32,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutineFoldersApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -40,7 +40,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
-        api_response = api_instance.create_routine_folder(api_key, post_routine_folder_request_body)
+        api_response = await api_instance.create_routine_folder(api_key, post_routine_folder_request_body)
         print("The response of RoutineFoldersApi->create_routine_folder:\n")
         pprint(api_response)
     except Exception as e:
@@ -101,7 +101,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutineFoldersApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -109,7 +109,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a single routine folder by id.
-        api_response = api_instance.get_routine_folder_by_id(api_key, folder_id)
+        api_response = await api_instance.get_routine_folder_by_id(api_key, folder_id)
         print("The response of RoutineFoldersApi->get_routine_folder_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -170,7 +170,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutineFoldersApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -179,7 +179,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a paginated list of routine folders available on the account.
-        api_response = api_instance.get_routine_folders(api_key, page=page, page_size=page_size)
+        api_response = await api_instance.get_routine_folders(api_key, page=page, page_size=page_size)
         print("The response of RoutineFoldersApi->get_routine_folders:\n")
         pprint(api_response)
     except Exception as e:

@@ -33,7 +33,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -41,7 +41,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Create a new routine
-        api_response = api_instance.create_routine(api_key, post_routines_request_body)
+        api_response = await api_instance.create_routine(api_key, post_routines_request_body)
         print("The response of RoutinesApi->create_routine:\n")
         pprint(api_response)
     except Exception as e:
@@ -103,7 +103,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -111,7 +111,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a routine by its Id
-        api_response = api_instance.get_routine_by_id(api_key, routine_id)
+        api_response = await api_instance.get_routine_by_id(api_key, routine_id)
         print("The response of RoutinesApi->get_routine_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -172,7 +172,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -181,7 +181,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a paginated list of routines
-        api_response = api_instance.get_routines(api_key, page=page, page_size=page_size)
+        api_response = await api_instance.get_routines(api_key, page=page, page_size=page_size)
         print("The response of RoutinesApi->get_routines:\n")
         pprint(api_response)
     except Exception as e:
@@ -244,7 +244,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -253,7 +253,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Update an existing routine
-        api_response = api_instance.update_routine(api_key, routine_id, put_routines_request_body)
+        api_response = await api_instance.update_routine(api_key, routine_id, put_routines_request_body)
         print("The response of RoutinesApi->update_routine:\n")
         pprint(api_response)
     except Exception as e:

@@ -39,7 +39,7 @@ class WorkoutsApi:
         self.api_client = api_client
 
     @validate_call
-    def create_workout(
+    async def create_workout(
         self,
         api_key: UUID,
         post_workouts_request_body: PostWorkoutsRequestBody,
@@ -95,17 +95,17 @@ class WorkoutsApi:
             "201": "Workout",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def create_workout_with_http_info(
+    async def create_workout_with_http_info(
         self,
         api_key: UUID,
         post_workouts_request_body: PostWorkoutsRequestBody,
@@ -161,17 +161,17 @@ class WorkoutsApi:
             "201": "Workout",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def create_workout_without_preload_content(
+    async def create_workout_without_preload_content(
         self,
         api_key: UUID,
         post_workouts_request_body: PostWorkoutsRequestBody,
@@ -227,7 +227,7 @@ class WorkoutsApi:
             "201": "Workout",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -300,7 +300,7 @@ class WorkoutsApi:
         )
 
     @validate_call
-    def get_workout_by_id(
+    async def get_workout_by_id(
         self,
         api_key: UUID,
         workout_id: Annotated[StrictStr, Field(description="The id of the workout")],
@@ -356,17 +356,17 @@ class WorkoutsApi:
             "200": "Workout",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_workout_by_id_with_http_info(
+    async def get_workout_by_id_with_http_info(
         self,
         api_key: UUID,
         workout_id: Annotated[StrictStr, Field(description="The id of the workout")],
@@ -422,17 +422,17 @@ class WorkoutsApi:
             "200": "Workout",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_workout_by_id_without_preload_content(
+    async def get_workout_by_id_without_preload_content(
         self,
         api_key: UUID,
         workout_id: Annotated[StrictStr, Field(description="The id of the workout")],
@@ -488,7 +488,7 @@ class WorkoutsApi:
             "200": "Workout",
             "404": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -551,7 +551,7 @@ class WorkoutsApi:
         )
 
     @validate_call
-    def get_workout_count(
+    async def get_workout_count(
         self,
         api_key: UUID,
         _request_timeout: None
@@ -602,17 +602,17 @@ class WorkoutsApi:
         _response_types_map: dict[str, str | None] = {
             "200": "GetWorkoutCount200Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_workout_count_with_http_info(
+    async def get_workout_count_with_http_info(
         self,
         api_key: UUID,
         _request_timeout: None
@@ -663,17 +663,17 @@ class WorkoutsApi:
         _response_types_map: dict[str, str | None] = {
             "200": "GetWorkoutCount200Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_workout_count_without_preload_content(
+    async def get_workout_count_without_preload_content(
         self,
         api_key: UUID,
         _request_timeout: None
@@ -724,7 +724,7 @@ class WorkoutsApi:
         _response_types_map: dict[str, str | None] = {
             "200": "GetWorkoutCount200Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -784,7 +784,7 @@ class WorkoutsApi:
         )
 
     @validate_call
-    def get_workout_events(
+    async def get_workout_events(
         self,
         api_key: UUID,
         page: Annotated[
@@ -854,17 +854,17 @@ class WorkoutsApi:
             "200": "PaginatedWorkoutEvents",
             "500": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_workout_events_with_http_info(
+    async def get_workout_events_with_http_info(
         self,
         api_key: UUID,
         page: Annotated[
@@ -934,17 +934,17 @@ class WorkoutsApi:
             "200": "PaginatedWorkoutEvents",
             "500": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_workout_events_without_preload_content(
+    async def get_workout_events_without_preload_content(
         self,
         api_key: UUID,
         page: Annotated[
@@ -1014,7 +1014,7 @@ class WorkoutsApi:
             "200": "PaginatedWorkoutEvents",
             "500": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1086,7 +1086,7 @@ class WorkoutsApi:
         )
 
     @validate_call
-    def get_workouts(
+    async def get_workouts(
         self,
         api_key: UUID,
         page: Annotated[
@@ -1151,17 +1151,17 @@ class WorkoutsApi:
             "200": "GetWorkouts200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_workouts_with_http_info(
+    async def get_workouts_with_http_info(
         self,
         api_key: UUID,
         page: Annotated[
@@ -1226,17 +1226,17 @@ class WorkoutsApi:
             "200": "GetWorkouts200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_workouts_without_preload_content(
+    async def get_workouts_without_preload_content(
         self,
         api_key: UUID,
         page: Annotated[
@@ -1301,7 +1301,7 @@ class WorkoutsApi:
             "200": "GetWorkouts200Response",
             "400": None,
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
@@ -1369,7 +1369,7 @@ class WorkoutsApi:
         )
 
     @validate_call
-    def update_workout(
+    async def update_workout(
         self,
         api_key: UUID,
         workout_id: Annotated[StrictStr, Field(description="The id of the workout")],
@@ -1429,17 +1429,17 @@ class WorkoutsApi:
             "200": "Workout",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def update_workout_with_http_info(
+    async def update_workout_with_http_info(
         self,
         api_key: UUID,
         workout_id: Annotated[StrictStr, Field(description="The id of the workout")],
@@ -1499,17 +1499,17 @@ class WorkoutsApi:
             "200": "Workout",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def update_workout_without_preload_content(
+    async def update_workout_without_preload_content(
         self,
         api_key: UUID,
         workout_id: Annotated[StrictStr, Field(description="The id of the workout")],
@@ -1569,7 +1569,7 @@ class WorkoutsApi:
             "200": "Workout",
             "400": "CreateWorkout400Response",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response

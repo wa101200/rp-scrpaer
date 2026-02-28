@@ -29,14 +29,14 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.UsersApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get user info
-        api_response = api_instance.get_user_info(api_key)
+        api_response = await api_instance.get_user_info(api_key)
         print("The response of UsersApi->get_user_info:\n")
         pprint(api_response)
     except Exception as e:

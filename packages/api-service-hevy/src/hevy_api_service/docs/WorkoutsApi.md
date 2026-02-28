@@ -35,7 +35,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -43,7 +43,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Create a new workout
-        api_response = api_instance.create_workout(api_key, post_workouts_request_body)
+        api_response = await api_instance.create_workout(api_key, post_workouts_request_body)
         print("The response of WorkoutsApi->create_workout:\n")
         pprint(api_response)
     except Exception as e:
@@ -104,7 +104,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -112,7 +112,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a single workout’s complete details by the workoutId
-        api_response = api_instance.get_workout_by_id(api_key, workout_id)
+        api_response = await api_instance.get_workout_by_id(api_key, workout_id)
         print("The response of WorkoutsApi->get_workout_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -173,14 +173,14 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get the total number of workouts on the account
-        api_response = api_instance.get_workout_count(api_key)
+        api_response = await api_instance.get_workout_count(api_key)
         print("The response of WorkoutsApi->get_workout_count:\n")
         pprint(api_response)
     except Exception as e:
@@ -241,7 +241,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -251,7 +251,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
-        api_response = api_instance.get_workout_events(api_key, page=page, page_size=page_size, since=since)
+        api_response = await api_instance.get_workout_events(api_key, page=page, page_size=page_size, since=since)
         print("The response of WorkoutsApi->get_workout_events:\n")
         pprint(api_response)
     except Exception as e:
@@ -314,7 +314,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -323,7 +323,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get a paginated list of workouts
-        api_response = api_instance.get_workouts(api_key, page=page, page_size=page_size)
+        api_response = await api_instance.get_workouts(api_key, page=page, page_size=page_size)
         print("The response of WorkoutsApi->get_workouts:\n")
         pprint(api_response)
     except Exception as e:
@@ -386,7 +386,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -395,7 +395,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Update an existing workout
-        api_response = api_instance.update_workout(api_key, workout_id, post_workouts_request_body)
+        api_response = await api_instance.update_workout(api_key, workout_id, post_workouts_request_body)
         print("The response of WorkoutsApi->update_workout:\n")
         pprint(api_response)
     except Exception as e:

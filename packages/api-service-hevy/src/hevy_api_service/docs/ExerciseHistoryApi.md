@@ -29,7 +29,7 @@ configuration = hevy_api_service.Configuration(
 
 
 # Enter a context with an instance of the API client
-with hevy_api_service.ApiClient(configuration) as api_client:
+async with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseHistoryApi(api_client)
     api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
@@ -39,7 +39,7 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get exercise history for a specific exercise template
-        api_response = api_instance.get_exercise_history(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
+        api_response = await api_instance.get_exercise_history(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
         print("The response of ExerciseHistoryApi->get_exercise_history:\n")
         pprint(api_response)
     except Exception as e:
