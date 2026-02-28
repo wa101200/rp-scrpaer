@@ -688,10 +688,10 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aenum" },
-    { name = "pydantic" },
-    { name = "python-dateutil" },
-    { name = "urllib3" },
+    { name = "aenum", specifier = "~=3.1" },
+    { name = "pydantic", specifier = "~=2.12" },
+    { name = "python-dateutil", specifier = "~=2.9" },
+    { name = "urllib3", specifier = "~=2.6" },
 ]
 
 [[package]]
