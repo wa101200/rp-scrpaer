@@ -17,19 +17,19 @@ ENV MISE_YES=1 \
 
 WORKDIR /app
 COPY .mise.toml mise.lock ./
-COPY packages/hevy-api-service/.mise.toml packages/hevy-api-service/.mise.toml
+COPY packages/api-service-hevy/.mise.toml packages/api-service-hevy/.mise.toml
 
-WORKDIR /app/packages/hevy-api-service
+WORKDIR /app/packages/api-service-hevy
 RUN --mount=type=secret,id=GITHUB_TOKEN \
     GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
     mise install node bun npm:@redocly/cli
 
-COPY packages/hevy-api-service/openapi.yaml /app/packages/hevy-api-service/openapi.yaml
-RUN mise //packages/hevy-api-service:compile-openai
+COPY packages/api-service-hevy/openapi.yaml /app/packages/api-service-hevy/openapi.yaml
+RUN mise //packages/api-service-hevy:compile-openai
 
 FROM caddy:2-alpine
 
-COPY --from=builder /app/packages/hevy-api-service/openapi/ /usr/share/caddy/
+COPY --from=builder /app/packages/api-service-hevy/openapi/ /usr/share/caddy/
 
 EXPOSE 8080
 CMD ["caddy", "file-server", "--listen", ":8080", "--root", "/usr/share/caddy"]
