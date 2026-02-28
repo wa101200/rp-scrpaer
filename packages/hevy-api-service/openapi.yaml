@@ -6,6 +6,7 @@ info:
 paths:
   /v1/workouts:
     get:
+      operationId: getWorkouts
       summary: Get a paginated list of workouts
       tags:
         - Workouts
@@ -51,6 +52,7 @@ paths:
         "400":
           description: Invalid page size
     post:
+      operationId: createWorkout
       summary: Create a new workout
       tags:
         - Workouts
@@ -86,6 +88,7 @@ paths:
                     description: Error message
   /v1/workouts/count:
     get:
+      operationId: getWorkoutCount
       summary: Get the total number of workouts on the account
       tags:
         - Workouts
@@ -110,6 +113,7 @@ paths:
                     description: The total number of workouts
   /v1/workouts/events:
     get:
+      operationId: getWorkoutEvents
       summary: Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
       tags:
         - Workouts
@@ -149,6 +153,7 @@ paths:
           description: Internal Server Error
   /v1/workouts/{workoutId}:
     get:
+      operationId: getWorkoutById
       tags:
         - Workouts
       summary: Get a single workout’s complete details by the workoutId
@@ -173,6 +178,7 @@ paths:
         "404":
           description: Workout not found
     put:
+      operationId: updateWorkout
       summary: Update an existing workout
       tags:
         - Workouts
@@ -212,6 +218,7 @@ paths:
                     description: Error message
   /v1/user/info:
     get:
+      operationId: getUserInfo
       summary: Get user info
       tags:
         - Users
@@ -233,6 +240,7 @@ paths:
           description: User not found
   /v1/routines:
     get:
+      operationId: getRoutines
       summary: Get a paginated list of routines
       tags:
         - Routines
@@ -278,6 +286,7 @@ paths:
         "400":
           description: Invalid page size
     post:
+      operationId: createRoutine
       summary: Create a new routine
       tags:
         - Routines
@@ -323,6 +332,7 @@ paths:
                     description: Error message
   /v1/routines/{routineId}:
     get:
+      operationId: getRoutineById
       summary: Get a routine by its Id
       tags:
         - Routines
@@ -358,6 +368,7 @@ paths:
                     type: string
                     description: Error message
     put:
+      operationId: updateRoutine
       summary: Update an existing routine
       tags:
         - Routines
@@ -407,6 +418,7 @@ paths:
                     description: Error message
   /v1/exercise_templates:
     get:
+      operationId: getExerciseTemplates
       summary: Get a paginated list of exercise templates available on the account.
       tags:
         - ExerciseTemplates
@@ -452,6 +464,7 @@ paths:
         "400":
           description: Invalid page size
     post:
+      operationId: createCustomExerciseTemplate
       summary: Create a new custom exercise template.
       tags:
         - ExerciseTemplates
@@ -505,6 +518,7 @@ paths:
                     example: exceeds-custom-exercise-limit
   /v1/exercise_templates/{exerciseTemplateId}:
     get:
+      operationId: getExerciseTemplateById
       tags:
         - ExerciseTemplates
       summary: Get a single exercise template by id.
@@ -530,6 +544,7 @@ paths:
           description: Exercise template not found
   /v1/routine_folders:
     get:
+      operationId: getRoutineFolders
       summary: Get a paginated list of routine folders available on the account.
       tags:
         - RoutineFolders
@@ -575,6 +590,7 @@ paths:
         "400":
           description: Invalid page size
     post:
+      operationId: createRoutineFolder
       summary: Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
       tags:
         - RoutineFolders
@@ -610,6 +626,7 @@ paths:
                     description: Error message
   /v1/routine_folders/{folderId}:
     get:
+      operationId: getRoutineFolderById
       tags:
         - RoutineFolders
       summary: Get a single routine folder by id.
@@ -635,6 +652,7 @@ paths:
           description: Routine folder not found
   /v1/exercise_history/{exerciseTemplateId}:
     get:
+      operationId: getExerciseHistory
       summary: Get exercise history for a specific exercise template
       tags:
         - ExerciseHistory
