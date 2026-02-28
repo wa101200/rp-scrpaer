@@ -1,20 +1,5 @@
 [
   {
-    "id": 164228,
-    "key": "itbei1n4bm83",
-    "name": "Hard training 5/7",
-    "emphasis": "Upper Body",
-    "sex": "male",
-    "userId": 1588211,
-    "sourceTemplateId": 55,
-    "sourceMesoId": null,
-    "prevTemplateId": null,
-    "createdAt": "2025-07-04T10:05:21.940000Z",
-    "updatedAt": "2025-07-04T10:05:21.940000Z",
-    "deletedAt": null,
-    "frequency": 5
-  },
-  {
     "id": 1,
     "key": "whole-body-daily-male-2x",
     "name": "Whole Body Daily",
@@ -1556,6 +1541,21 @@
     "prevTemplateId": null,
     "createdAt": "2025-06-24T20:13:51.310000Z",
     "updatedAt": "2025-06-24T20:15:32.476000Z",
+    "deletedAt": null,
+    "frequency": 5
+  },
+  {
+    "id": 164228,
+    "key": "itbei1n4bm83",
+    "name": "Hard training 5/7",
+    "emphasis": "Upper Body",
+    "sex": "male",
+    "userId": 1588211,
+    "sourceTemplateId": 55,
+    "sourceMesoId": null,
+    "prevTemplateId": null,
+    "createdAt": "2025-07-04T10:05:21.940000Z",
+    "updatedAt": "2025-07-04T10:05:21.940000Z",
     "deletedAt": null,
     "frequency": 5
   },

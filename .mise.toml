@@ -11,6 +11,7 @@ config_roots = ["packages/*"]
 [settings]
 experimental = true
 lockfile = true
+auto_install = false
 
 [tools]
 python = "3.12"

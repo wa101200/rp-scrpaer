@@ -124,8 +124,12 @@ class RPClient:
         return {
             "profile": profile,
             "subscriptions": subscriptions,
-            "exercises": bootstrap.exercises,
-            "mesocycles": list(mesocycles),
-            "templates": templates,
+            "exercises": sorted(bootstrap.exercises, key=lambda e: e.id),
+            "mesocycles": sorted(
+                list(mesocycles),
+                key=lambda m: m.created_at.timestamp(),
+                reverse=True,
+            ),
+            "templates": sorted(templates, key=lambda t: t.id),
             "exercise_history": exercise_history,
         }
