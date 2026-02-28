@@ -25,9 +25,7 @@ sources = ["openapi.yaml", "Dockerfile"]
 [tasks.compile-openai]
 tools = { "npm:redocly" = "2.20.0" }
 run = "redocly build-docs openapi.yaml --output openapi/index.html"
-sources = ["openapi.yaml"]
 description = "Compile OpenAPI docs"
-outputs = ["openapi/index.html"]
 
 [tasks.serve-openapi]
 depends = ["compile-openai"]
