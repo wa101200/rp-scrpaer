@@ -26,8 +26,15 @@ zizmor = "latest"
 github-cli = "latest"
 hadolint = "latest"
 watchexec = "latest"
+
+[tasks.pre-commit]
+run = "hk run pre-commit -a"
+
+[tasks.format]
+run = "hk run fix -a"
+
 [tasks.lint]
-run = "hk run pre-commit"
+run = "hk run check -a"
 
 [prepare.uv]
 run = "uv sync --all-packages"

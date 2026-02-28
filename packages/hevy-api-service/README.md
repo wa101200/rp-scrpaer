@@ -1,82 +1,123 @@
-# rp-to-strong-hevy-api-service
-
-Async Python client library for the [RP Strength Training API](https://training.rpstrength.com). Provides type-safe access to user profiles, subscriptions, mesocycles, exercises, templates, and exercise history — with a single `export_all()` call to retrieve everything in parallel.
-
-Also ships an OpenAPI 3.0.3 specification and a Dockerized [Redocly](https://redocly.com/) documentation viewer.
+# hevy-api-docs-client
+A client library for accessing Hevy API Docs
 
 ## Usage
+First, create a client:
 
 ```python
-import asyncio
-from rp_to_strong_api_consumer.service import RPClient
+from hevy_api_docs_client import Client
 
-async def main():
-    async with RPClient(token="<bearer-token>") as client:
-        profile = await client.get_user_profile()
-        mesocycles = await client.get_all_mesocycles()
-
-        # Or grab everything at once
-        data = await client.export_all()
-
-asyncio.run(main())
+client = Client(base_url="https://api.example.com")
 ```
 
-## API Coverage
+If the endpoints you're going to hit require authentication, use `AuthenticatedClient` instead:
 
-| Method | Endpoint | Returns |
-| --- | --- | --- |
-| `get_user_profile()` | `GET /user/profile` | `UserProfile` |
-| `get_user_subscriptions()` | `GET /user/subscriptions` | `UserSubscriptions` |
-| `get_bootstrap()` | `GET /training/bootstrap` | `BootstrapResponse` |
-| `get_exercises()` | `GET /training/exercises` | `list[Exercise]` |
-| `get_mesocycles()` | `GET /training/mesocycles` | `list[MesocycleSummary]` |
-| `get_mesocycle(key)` | `GET /training/mesocycles/{key}` | `MesocycleDetail` |
-| `get_all_mesocycles()` | parallel fetch of all mesocycles | `list[MesocycleDetail]` |
-| `get_templates()` | `GET /training/templates` | `list[TemplateSummary]` |
-| `get_exercise_history(id)` | `GET /training/exercises/{id}/history` | `list[ExerciseHistoryEntry]` |
-| `get_user_exercise_history()` | `GET /training/user-exercise-history` | `dict[str, str]` |
-| `get_second_meso_meta()` | `GET /training/second-meso-meta` | `SecondMesoMeta` |
-| `export_all()` | all of the above | `dict` |
+```python
+from hevy_api_docs_client import AuthenticatedClient
 
-## Package Structure
-
-```
-src/rp_to_strong_api_consumer/
-  models.py    # Pydantic models with automatic camelCase <-> snake_case conversion
-  service.py   # RPClient — async HTTP client built on aiohttp
-openapi.yaml   # OpenAPI 3.0.3 specification (60+ endpoints)
-external-api.md # Endpoint and data-model reference notes
+client = AuthenticatedClient(base_url="https://api.example.com", token="SuperSecretToken")
 ```
 
-## Dependencies
+Now call your endpoint and use your models:
 
-| Package | Purpose |
-| --- | --- |
-| `aiohttp` >=3.13 | Async HTTP client |
-| `aiofiles` >=25.1 | Async file I/O |
-| `pydantic` >=2.12 | Data validation and serialization |
+```python
+from hevy_api_docs_client.models import MyDataModel
+from hevy_api_docs_client.api.my_tag import get_my_data_model
+from hevy_api_docs_client.types import Response
 
-Requires **Python >= 3.12**.
-
-## OpenAPI Documentation
-
-Compile and serve the spec locally:
-
-```bash
-mise run compile-openai   # builds openapi/index.html via Redocly
-mise run serve-openapi    # serves on http://localhost:8000
+with client as client:
+    my_data: MyDataModel = get_my_data_model.sync(client=client)
+    # or if you need more info (e.g. status_code)
+    response: Response[MyDataModel] = get_my_data_model.sync_detailed(client=client)
 ```
 
-Or run the Dockerized viewer:
+Or do the same thing with an async version:
 
-```bash
-mise run build            # multi-stage Docker build (Caddy)
-mise run run-docker       # serves on http://localhost:8080
+```python
+from hevy_api_docs_client.models import MyDataModel
+from hevy_api_docs_client.api.my_tag import get_my_data_model
+from hevy_api_docs_client.types import Response
+
+async with client as client:
+    my_data: MyDataModel = await get_my_data_model.asyncio(client=client)
+    response: Response[MyDataModel] = await get_my_data_model.asyncio_detailed(client=client)
 ```
 
-## Environment Variables
+By default, when you're calling an HTTPS API it will attempt to verify that SSL is working correctly. Using certificate verification is highly recommended most of the time, but sometimes you may need to authenticate to a server (especially an internal server) using a custom certificate bundle.
 
-| Variable | Default | Description |
-| --- | --- | --- |
-| `RP_APP_BASE_URL` | `https://training.rpstrength.com/api` | API base URL |
-| `RP_APP_VERSION` | `1.1.13` | `accept-version` header value |
+```python
+client = AuthenticatedClient(
+    base_url="https://internal_api.example.com", 
+    token="SuperSecretToken",
+    verify_ssl="/path/to/certificate_bundle.pem",
+)
+```
+
+You can also disable certificate validation altogether, but beware that **this is a security risk**.
+
+```python
+client = AuthenticatedClient(
+    base_url="https://internal_api.example.com", 
+    token="SuperSecretToken", 
+    verify_ssl=False
+)
+```
+
+Things to know:
+1. Every path/method combo becomes a Python module with four functions:
+    1. `sync`: Blocking request that returns parsed data (if successful) or `None`
+    1. `sync_detailed`: Blocking request that always returns a `Request`, optionally with `parsed` set if the request was successful.
+    1. `asyncio`: Like `sync` but async instead of blocking
+    1. `asyncio_detailed`: Like `sync_detailed` but async instead of blocking
+
+1. All path/query params, and bodies become method arguments.
+1. If your endpoint had any tags on it, the first tag will be used as a module name for the function (my_tag above)
+1. Any endpoint which did not have a tag will be in `hevy_api_docs_client.api.default`
+
+## Advanced customizations
+
+There are more settings on the generated `Client` class which let you control more runtime behavior, check out the docstring on that class for more info. You can also customize the underlying `httpx.Client` or `httpx.AsyncClient` (depending on your use-case):
+
+```python
+from hevy_api_docs_client import Client
+
+def log_request(request):
+    print(f"Request event hook: {request.method} {request.url} - Waiting for response")
+
+def log_response(response):
+    request = response.request
+    print(f"Response event hook: {request.method} {request.url} - Status {response.status_code}")
+
+client = Client(
+    base_url="https://api.example.com",
+    httpx_args={"event_hooks": {"request": [log_request], "response": [log_response]}},
+)
+
+# Or get the underlying httpx client to modify directly with client.get_httpx_client() or client.get_async_httpx_client()
+```
+
+You can even set the httpx client directly, but beware that this will override any existing settings (e.g., base_url):
+
+```python
+import httpx
+from hevy_api_docs_client import Client
+
+client = Client(
+    base_url="https://api.example.com",
+)
+# Note that base_url needs to be re-set, as would any shared cookies, headers, etc.
+client.set_httpx_client(httpx.Client(base_url="https://api.example.com", proxies="http://localhost:8030"))
+```
+
+## Building / publishing this package
+This project uses [uv](https://github.com/astral-sh/uv) to manage dependencies and packaging. Here are the basics:
+1. Update the metadata in `pyproject.toml` (e.g. authors, version).
+2. If you're using a private repository: https://docs.astral.sh/uv/guides/integration/alternative-indexes/
+3. Build a distribution with `uv build`, builds `sdist` and `wheel` by default.
+1. Publish the client with `uv publish`, see documentation for publishing to private indexes.
+
+If you want to install this client into another project without publishing it (e.g. for development) then:
+1. If that project **is using uv**, you can simply do `uv add <path-to-this-client>` from that project
+1. If that project is not using uv:
+    1. Build a wheel with `uv build --wheel`.
+    1. Install that wheel from the other project `pip install <path-to-wheel>`.

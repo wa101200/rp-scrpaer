@@ -168,6 +168,8 @@ paths:
           in: path
           description: The id of the workout
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success
@@ -193,6 +195,8 @@ paths:
           name: workoutId
           description: The id of the workout
           required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -347,6 +351,8 @@ paths:
           name: routineId
           description: The id of the routine
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: The routine with the provided id
@@ -383,6 +389,8 @@ paths:
           name: routineId
           description: The id of the routine
           required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -533,6 +541,8 @@ paths:
           in: path
           description: The id of the exercise template
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success
@@ -641,6 +651,8 @@ paths:
           in: path
           description: The id of the routine folder
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success
@@ -667,6 +679,8 @@ paths:
           name: exerciseTemplateId
           description: The id of the exercise template
           required: true
+          schema:
+            type: string
         - in: query
           name: start_date
           schema:
@@ -739,16 +753,7 @@ components:
         rpe:
           type: number
           nullable: true
-          description: The Rating of Perceived Exertion (RPE).
-          enum:
-            - 6
-            - 7
-            - 7.5
-            - 8
-            - 8.5
-            - 9
-            - 9.5
-            - 10
+          description: "The Rating of Perceived Exertion (RPE). Allowed values: 6, 7, 7.5, 8, 8.5, 9, 9.5, 10."
           example: null
     PostWorkoutsRequestExercise:
       type: object

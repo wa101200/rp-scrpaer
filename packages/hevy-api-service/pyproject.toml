@@ -1,6 +1,6 @@
 [project]
-name = "rp-to-strong-hevy-api-service"
+name = "hevy-api-service"
 version = "0.1.0"
-description = "API consumer for training.rpstrength.com"
+description = "Hevy API service with generated Python SDK"
 requires-python = ">=3.12"
-dependencies = ["aiofiles>=25.1.0", "aiohttp>=3.13.3", "pydantic>=2.12.5"]
+dependencies = ["pydantic"]

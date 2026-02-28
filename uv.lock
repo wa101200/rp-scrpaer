@@ -8,10 +8,11 @@ resolution-markers = [
 
 [manifest]
 members = [
+    "hevy-api-service",
     "rp-to-strong",
-    "rp-to-strong-rp-api-service",
     "rp-to-strong-cli",
     "rp-to-strong-pipeline",
+    "rp-to-strong-rp-api-service",
 ]
 
 [[package]]
@@ -664,6 +665,17 @@ sdist = { url = "https://files.pythonhosted.org/packages/01/ee/02a2c011bdab74c6f
 wheels = [
     { url = "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl", hash = "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86", size = 37515, upload-time = "2025-04-24T03:35:24.344Z" },
 ]
+
+[[package]]
+name = "hevy-api-service"
+version = "0.1.0"
+source = { virtual = "packages/hevy-api-service" }
+dependencies = [
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pydantic" }]
 
 [[package]]
 name = "httpcore"
@@ -1360,23 +1372,6 @@ version = "0.1.0"
 source = { virtual = "." }
 
 [[package]]
-name = "rp-to-strong-rp-api-service"
-version = "0.1.0"
-source = { editable = "packages/rp-api-service" }
-dependencies = [
-    { name = "aiofiles" },
-    { name = "aiohttp" },
-    { name = "pydantic" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "aiofiles", specifier = ">=25.1.0" },
-    { name = "aiohttp", specifier = ">=3.13.3" },
-    { name = "pydantic", specifier = ">=2.12.5" },
-]
-
-[[package]]
 name = "rp-to-strong-cli"
 version = "0.1.0"
 source = { virtual = "packages/cli" }
@@ -1414,6 +1409,23 @@ requires-dist = [
     { name = "dagster-webserver", specifier = ">=1.9" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "polars", specifier = ">=1.0" },
+]
+
+[[package]]
+name = "rp-to-strong-rp-api-service"
+version = "0.1.0"
+source = { editable = "packages/rp-api-service" }
+dependencies = [
+    { name = "aiofiles" },
+    { name = "aiohttp" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aiofiles", specifier = ">=25.1.0" },
+    { name = "aiohttp", specifier = ">=3.13.3" },
+    { name = "pydantic", specifier = ">=2.12.5" },
 ]
 
 [[package]]
