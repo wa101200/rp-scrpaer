@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: RP Strength Training API
   version: 1.0.0
-  description: RP Strength Training API for workout data, user profiles, subscriptions, and training management.
+  description:
+    RP Strength Training API for workout data, user profiles, subscriptions,
+    and training management.
 servers:
   - url: https://training.rpstrength.com/api
 security:
@@ -17,7 +19,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         email:
           type: string
         displayName:
@@ -34,7 +36,7 @@ components:
           type: string
           nullable: true
         roleId:
-          type: string
+          type: integer
         stripeId:
           type: string
           nullable: true
@@ -69,16 +71,16 @@ components:
         CREATED_ON_PLATFORM:
           type: string
         TRAINING_FEATURE_AUTO_APPLY_WEIGHTS:
-          type: string
+          type: boolean
         TRAINING_APPLY_EXERCISE_TYPES:
-          type: string
+          type: boolean
     ActiveSubscription:
       type: object
       properties:
         platform:
           type: string
         iapId:
-          type: string
+          type: integer
         iapPurchaseType:
           type: string
         iapPlatformId:
@@ -90,7 +92,7 @@ components:
         isIntroPriced:
           type: boolean
         referralId:
-          type: string
+          type: integer
           nullable: true
         referralCode:
           type: string
@@ -156,14 +158,13 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         dayExerciseId:
-          type: string
+          type: integer
         position:
           type: integer
         setType:
           type: string
-          enum: [regular]
         weight:
           type: number
           nullable: true
@@ -194,7 +195,6 @@ components:
         status:
           type: string
           nullable: true
-          enum: [skipped]
         createdAt:
           type: string
           format: date-time
@@ -202,24 +202,23 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         dayId:
-          type: string
+          type: integer
         exerciseId:
-          type: string
+          type: integer
         position:
           type: integer
         jointPain:
-          type: boolean
+          type: integer
           nullable: true
         muscleGroupId:
-          type: string
+          type: integer
         sourceDayExerciseId:
-          type: string
+          type: integer
           nullable: true
         status:
           type: string
-          enum: [complete, skipped]
         sets:
           type: array
           items:
@@ -228,9 +227,9 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         mesoId:
-          type: string
+          type: integer
         week:
           type: integer
         position:
@@ -252,7 +251,6 @@ components:
           nullable: true
         status:
           type: string
-          enum: [complete, skipped]
         notes:
           type: array
           items:
@@ -260,7 +258,7 @@ components:
         muscleGroups:
           type: array
           items:
-            type: string
+            type: object
         exercises:
           type: array
           items:
@@ -276,16 +274,16 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         muscleGroupId:
-          type: string
+          type: integer
         mgPriorityType:
           type: string
     MesocycleSummary:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         key:
           type: string
         name:
@@ -306,11 +304,11 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         key:
           type: string
         userId:
-          type: string
+          type: integer
         name:
           type: string
         days:
@@ -321,13 +319,13 @@ components:
           type: integer
           description: Number of weeks in the mesocycle
         sourceTemplateId:
-          type: string
+          type: integer
           nullable: true
         sourceMesoId:
-          type: string
+          type: integer
           nullable: true
         microRirs:
-          type: object
+          type: integer
         createdAt:
           type: string
           format: date-time
@@ -360,7 +358,6 @@ components:
             type: object
         status:
           type: string
-          enum: [complete, ready]
         generatedFrom:
           type: string
           nullable: true
@@ -372,25 +369,24 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         name:
           type: string
         muscleGroupId:
-          type: string
+          type: integer
         mgSubType:
           type: string
           nullable: true
           description: e.g. "vertical"
         exerciseType:
           type: string
-          enum: [cable, barbell, dumbbell, machine, bodyweight-only]
         youtubeId:
           type: string
           nullable: true
         userId:
-          type: string
+          type: integer
           nullable: true
-          description: "null for built-in, user ID for custom"
+          description: null for built-in, user ID for custom
         notes:
           type: array
           items:
@@ -409,14 +405,13 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         dayExerciseId:
-          type: string
+          type: integer
         position:
           type: integer
         setType:
           type: string
-          enum: [regular]
         weight:
           type: number
           nullable: true
@@ -472,7 +467,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         key:
           type: string
         name:
@@ -485,7 +480,9 @@ components:
           type: integer
     BootstrapResponse:
       type: object
-      description: "Full exercise catalog + all mesocycles (summary) + current mesocycle with complete weeks/days/exercises/sets (~235KB)"
+      description:
+        Full exercise catalog + all mesocycles (summary) + current mesocycle
+        with complete weeks/days/exercises/sets (~235KB)
     SecondMesoMeta:
       type: object
       properties:
@@ -497,9 +494,12 @@ components:
 paths:
   /user/profile:
     get:
-      tags: [User]
+      tags:
+        - User
       summary: Get user profile
-      description: Profile data (email, name, photo, Google/Apple/Facebook IDs, role, attributes, preferences)
+      description:
+        Profile data (email, name, photo, Google/Apple/Facebook IDs, role,
+        attributes, preferences)
       operationId: getUserProfile
       responses:
         "200":
@@ -510,9 +510,12 @@ paths:
                 $ref: "#/components/schemas/UserProfile"
   /user/subscriptions:
     get:
-      tags: [User]
+      tags:
+        - User
       summary: Get user subscriptions
-      description: Active subscriptions, purchase history, Stripe customer IDs, consumed IAPs
+      description:
+        Active subscriptions, purchase history, Stripe customer IDs, consumed
+        IAPs
       operationId: getUserSubscriptions
       responses:
         "200":
@@ -523,7 +526,8 @@ paths:
                 $ref: "#/components/schemas/UserSubscriptions"
   /user/{id}:
     put:
-      tags: [User]
+      tags:
+        - User
       summary: Update user profile
       operationId: updateUserProfile
       parameters:
@@ -542,9 +546,12 @@ paths:
           description: Updated user
   /training/bootstrap:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get bootstrap data
-      description: "Full exercise catalog + all mesocycles (summary) + current mesocycle with complete weeks/days/exercises/sets (~235KB)"
+      description:
+        Full exercise catalog + all mesocycles (summary) + current mesocycle
+        with complete weeks/days/exercises/sets (~235KB)
       operationId: getBootstrap
       responses:
         "200":
@@ -555,9 +562,12 @@ paths:
                 $ref: "#/components/schemas/BootstrapResponse"
   /training/exercises:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get all exercises
-      description: Full exercise catalog (315 exercises with name, muscleGroupId, youtubeId, exerciseType, mgSubType)
+      description:
+        Full exercise catalog (315 exercises with name, muscleGroupId,
+        youtubeId, exerciseType, mgSubType)
       operationId: getExercises
       responses:
         "200":
@@ -569,7 +579,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/Exercise"
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Create a custom exercise
       operationId: createExercise
       requestBody:
@@ -582,7 +593,8 @@ paths:
           description: Created exercise
   /training/exercises/{id}:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update an exercise
       operationId: updateExercise
       parameters:
@@ -600,7 +612,8 @@ paths:
         "200":
           description: Updated exercise
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete a custom exercise
       operationId: deleteExercise
       parameters:
@@ -614,9 +627,12 @@ paths:
           description: Deleted
   /training/exercises/{id}/history:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get exercise history
-      description: Set history for a specific exercise across all mesocycles (grouped by meso, includes weight, reps, targets, week, day)
+      description:
+        Set history for a specific exercise across all mesocycles (grouped
+        by meso, includes weight, reps, targets, week, day)
       operationId: getExerciseHistory
       parameters:
         - name: id
@@ -633,7 +649,8 @@ paths:
                 $ref: "#/components/schemas/ExerciseHistory"
   /training/exercises/{exerciseId}/notes:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Add a note to an exercise
       operationId: addExerciseNote
       parameters:
@@ -652,7 +669,8 @@ paths:
           description: Created note
   /training/exercises/{exerciseId}/notes/{noteId}:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update an exercise note
       operationId: updateExerciseNote
       parameters:
@@ -675,7 +693,8 @@ paths:
         "200":
           description: Updated note
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete an exercise note
       operationId: deleteExerciseNote
       parameters:
@@ -694,9 +713,12 @@ paths:
           description: Deleted
   /training/mesocycles:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: List all mesocycles
-      description: List of all mesocycles (summary - id, key, name, days, weeks, unit, timestamps)
+      description:
+        List of all mesocycles (summary - id, key, name, days, weeks, unit,
+        timestamps)
       operationId: getMesocycles
       responses:
         "200":
@@ -708,7 +730,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/MesocycleSummary"
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Create a new mesocycle
       operationId: createMesocycle
       requestBody:
@@ -721,9 +744,12 @@ paths:
           description: Created mesocycle
   /training/mesocycles/{key}:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get full mesocycle detail
-      description: "Full mesocycle detail (~150-185KB) - weeks > days > exercises > sets with weight, reps, targets, bodyweight, timestamps"
+      description:
+        Full mesocycle detail (~150-185KB) - weeks > days > exercises >
+        sets with weight, reps, targets, bodyweight, timestamps
       operationId: getMesocycle
       parameters:
         - name: key
@@ -739,7 +765,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/Mesocycle"
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update mesocycle metadata
       operationId: updateMesocycle
       parameters:
@@ -757,7 +784,8 @@ paths:
         "200":
           description: Updated mesocycle
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete a mesocycle
       operationId: deleteMesocycle
       parameters:
@@ -771,7 +799,8 @@ paths:
           description: Deleted
   /training/mesocycles/{key}/add-micro:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Add a micro-cycle (week) to a mesocycle
       operationId: addMicroCycle
       parameters:
@@ -790,7 +819,8 @@ paths:
           description: Added micro-cycle
   /training/mesocycles/{key}/remove-micro:
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Remove a micro-cycle (week)
       operationId: removeMicroCycle
       parameters:
@@ -804,7 +834,8 @@ paths:
           description: Removed
   /training/mesocycles/{key}/day-exercises/delete:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Bulk delete exercises from mesocycle days
       operationId: bulkDeleteDayExercises
       parameters:
@@ -823,7 +854,8 @@ paths:
           description: Deleted exercises
   /training/mesocycles/{key}/priorities:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update muscle group priorities
       operationId: updateMesoPriorities
       parameters:
@@ -842,7 +874,8 @@ paths:
           description: Updated priorities
   /training/mesocycles/{key}/notes:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Add a note to a mesocycle
       operationId: addMesoNote
       parameters:
@@ -861,7 +894,8 @@ paths:
           description: Created note
   /training/mesocycles/{key}/notes/{noteId}:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update a mesocycle note
       operationId: updateMesoNote
       parameters:
@@ -884,7 +918,8 @@ paths:
         "200":
           description: Updated note
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete a mesocycle note
       operationId: deleteMesoNote
       parameters:
@@ -903,7 +938,8 @@ paths:
           description: Deleted
   /training/days/{dayId}:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update a training day
       operationId: updateDay
       parameters:
@@ -922,7 +958,8 @@ paths:
           description: Updated day
   /training/days/{dayId}/bodyweight:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update bodyweight for a day
       operationId: updateDayBodyweight
       parameters:
@@ -941,7 +978,8 @@ paths:
           description: Updated bodyweight
   /training/days/{dayId}/label:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update day label
       operationId: updateDayLabel
       parameters:
@@ -960,7 +998,8 @@ paths:
           description: Updated label
   /training/days/{dayId}/exercises:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Add an exercise to a training day
       operationId: addDayExercise
       parameters:
@@ -979,7 +1018,8 @@ paths:
           description: Added exercise
   /training/days/{dayId}/exercises/{dayExerciseId}:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update a day exercise
       operationId: updateDayExercise
       parameters:
@@ -1003,7 +1043,8 @@ paths:
           description: Updated exercise
   /training/days/{dayId}/exercises/{dayExerciseId}/move:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Move exercise position within a day
       operationId: moveDayExercise
       parameters:
@@ -1027,7 +1068,8 @@ paths:
           description: Moved exercise
   /training/days/{dayId}/exercises/{dayExerciseId}/sets:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Add sets to an exercise
       operationId: addSets
       parameters:
@@ -1051,7 +1093,8 @@ paths:
           description: Added sets
   /training/days/{dayId}/notes:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Add a note to a training day
       operationId: addDayNote
       parameters:
@@ -1070,7 +1113,8 @@ paths:
           description: Created note
   /training/days/{dayId}/notes/{noteId}:
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete a day note
       operationId: deleteDayNote
       parameters:
@@ -1089,7 +1133,8 @@ paths:
           description: Deleted
   /training/sets/{setId}:
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update a set (weight, reps, etc.)
       operationId: updateSet
       parameters:
@@ -1107,7 +1152,8 @@ paths:
         "200":
           description: Updated set
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete a set
       operationId: deleteSet
       parameters:
@@ -1121,9 +1167,12 @@ paths:
           description: Deleted
   /training/templates:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get all templates
-      description: All training templates (113 templates with id, key, name, emphasis, sex, frequency)
+      description:
+        All training templates (113 templates with id, key, name, emphasis,
+        sex, frequency)
       operationId: getTemplates
       responses:
         "200":
@@ -1135,7 +1184,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/Template"
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Create a training template
       operationId: createTemplate
       requestBody:
@@ -1148,7 +1198,8 @@ paths:
           description: Created template
   /training/templates/{id}:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get a specific template
       operationId: getTemplate
       parameters:
@@ -1165,7 +1216,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/Template"
     put:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update a template
       operationId: updateTemplate
       parameters:
@@ -1183,7 +1235,8 @@ paths:
         "200":
           description: Updated template
     delete:
-      tags: [Training]
+      tags:
+        - Training
       summary: Delete a template
       operationId: deleteTemplate
       parameters:
@@ -1197,7 +1250,8 @@ paths:
           description: Deleted
   /training/track:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Track/log a training event
       operationId: trackTraining
       requestBody:
@@ -1210,7 +1264,8 @@ paths:
           description: Tracked
   /training/user-attributes:
     post:
-      tags: [Training]
+      tags:
+        - Training
       summary: Update user attributes
       operationId: updateUserAttributes
       requestBody:
@@ -1223,7 +1278,8 @@ paths:
           description: Updated
   /training/user-exercise-history:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get user exercise history
       description: Map of exerciseId to last performed timestamp
       operationId: getUserExerciseHistory
@@ -1239,7 +1295,8 @@ paths:
                   format: date-time
   /training/meta/second-meso:
     get:
-      tags: [Training Data]
+      tags:
+        - Training Data
       summary: Get second mesocycle meta info
       description: Meta info about second mesocycle (key, startedAt)
       operationId: getSecondMesoMeta
@@ -1252,7 +1309,8 @@ paths:
                 $ref: "#/components/schemas/SecondMesoMeta"
   /login:
     post:
-      tags: [Auth]
+      tags:
+        - Auth
       summary: Login
       operationId: login
       security: []
@@ -1266,7 +1324,8 @@ paths:
           description: Login response
   /login/link:
     post:
-      tags: [Auth]
+      tags:
+        - Auth
       summary: Magic link login
       operationId: magicLinkLogin
       security: []
@@ -1280,7 +1339,8 @@ paths:
           description: Magic link sent
   /user:
     post:
-      tags: [Auth]
+      tags:
+        - Auth
       summary: Create/update user
       operationId: createUser
       requestBody:
@@ -1293,14 +1353,16 @@ paths:
           description: User created/updated
   /userReview:
     get:
-      tags: [App]
+      tags:
+        - App
       summary: Get user review data
       operationId: getUserReview
       responses:
         "200":
           description: User review data
     post:
-      tags: [App]
+      tags:
+        - App
       summary: Submit user review
       operationId: submitUserReview
       requestBody:
@@ -1313,7 +1375,8 @@ paths:
           description: Review submitted
   /apps/training/rp/{version}/config.json:
     get:
-      tags: [App]
+      tags:
+        - App
       summary: Get app config
       description: App config, version changelog, feature flags, latest client version
       operationId: getAppConfig
@@ -1332,9 +1395,12 @@ paths:
           description: App config
   /products.json:
     get:
-      tags: [App]
+      tags:
+        - App
       summary: Get product catalog
-      description: Subscription product/pricing catalog (Stripe product IDs, prices, billing periods)
+      description:
+        Subscription product/pricing catalog (Stripe product IDs, prices,
+        billing periods)
       operationId: getProducts
       parameters:
         - name: apps
@@ -1346,7 +1412,8 @@ paths:
           description: Product catalog
   /training/app.webmanifest:
     get:
-      tags: [App]
+      tags:
+        - App
       summary: Get PWA web manifest
       operationId: getWebManifest
       parameters:
@@ -1359,7 +1426,8 @@ paths:
           description: Web manifest
   /apps/training/{platform}/verifyTransactions:
     post:
-      tags: [Purchases]
+      tags:
+        - Purchases
       summary: Verify IAP transactions
       operationId: verifyTransactions
       parameters:
@@ -1378,7 +1446,8 @@ paths:
           description: Verification result
   /purchase/checkout:
     post:
-      tags: [Purchases]
+      tags:
+        - Purchases
       summary: Start checkout flow
       operationId: startCheckout
       parameters:
@@ -1396,7 +1465,8 @@ paths:
           description: Checkout started
   /purchase/complete/{id}:
     post:
-      tags: [Purchases]
+      tags:
+        - Purchases
       summary: Complete a purchase
       operationId: completePurchase
       parameters:
@@ -1415,7 +1485,8 @@ paths:
           description: Purchase completed
   /referrals/enter/{code}:
     post:
-      tags: [Purchases]
+      tags:
+        - Purchases
       summary: Enter a referral code
       operationId: enterReferral
       parameters:
@@ -1428,12 +1499,16 @@ paths:
           in: query
           schema:
             type: integer
-            enum: [0, 1]
+            enum:
+              - 0
+              - 1
         - name: associateOnly
           in: query
           schema:
             type: integer
-            enum: [0, 1]
+            enum:
+              - 0
+              - 1
       requestBody:
         content:
           application/json:
