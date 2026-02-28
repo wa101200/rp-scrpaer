@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import asyncio
+import os
 
 import aiohttp
-
 from rp_to_strong_cli.models import (
     BootstrapResponse,
     Exercise,
@@ -16,8 +16,11 @@ from rp_to_strong_cli.models import (
     UserSubscriptions,
 )
 
-BASE_URL = "https://training.rpstrength.com/api"
-APP_VERSION = "1.1.13"
+RP_APP_BASE_URL = os.environ.get("RP_APP_BASE_URL")
+RPP_APP_VERSION = os.environ.get("RP_APP_VERSION")
+
+assert RP_APP_BASE_URL is not None
+assert RPP_APP_VERSION is not None
 
 
 class RPClient:
@@ -29,7 +32,7 @@ class RPClient:
         self._session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self._token}",
-                "accept-version": APP_VERSION,
+                "accept-version": RPP_APP_VERSION,
             },
         )
         return self
@@ -40,8 +43,8 @@ class RPClient:
 
     async def _get(self, path: str, **params: str) -> dict | list:
         assert self._session is not None
-        params.setdefault("v", APP_VERSION)
-        async with self._session.get(f"{BASE_URL}{path}", params=params) as resp:
+        params.setdefault("v", RPP_APP_VERSION)
+        async with self._session.get(f"{RP_APP_BASE_URL}{path}", params=params) as resp:
             resp.raise_for_status()
             return await resp.json()
 

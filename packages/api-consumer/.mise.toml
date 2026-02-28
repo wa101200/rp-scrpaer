@@ -1,0 +1,33 @@
+[settings]
+npm.package_manager = "bun"
+
+[tools]
+"node" = "latest"
+"bun" = "latest"
+"npm:swagger-ui-watcher" = "2.1.14"
+
+[env]
+RP_APP_BASE_URL = "https://training.rpstrength.com/api"
+RP_APP_VERSION = "1.1.13"
+
+[tasks.test]
+run = "echo 'No tests defined'"
+
+[tasks.build]
+run = "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} docker build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t rp-to-strong-api-consumer ../.."
+description = "Build the CLI Docker image"
+
+[tasks.swagger]
+run = "swagger-ui-watcher --no-open -p 8001 swagger.yaml"
+description = "Serve Swagger UI on port 8001"
+
+[tasks.compile-openai]
+run = "redocly build-docs openapi.yaml --output openapi/index.html"
+sources = ["openapi.yaml"]
+description = "Compile OpenAPI docs"
+outputs = ["openapi/index.html"]
+
+[tasks.serve-openapi]
+depends = ["compile-openai"]
+run = "python -m http.server --directory openapi"
+description = "Serve OpenAPI docs"

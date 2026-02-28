@@ -9,6 +9,7 @@ resolution-markers = [
 [manifest]
 members = [
     "rp-to-strong",
+    "rp-to-strong-api-consumer",
     "rp-to-strong-cli",
     "rp-to-strong-pipeline",
 ]
@@ -1359,6 +1360,23 @@ version = "0.1.0"
 source = { virtual = "." }
 
 [[package]]
+name = "rp-to-strong-api-consumer"
+version = "0.1.0"
+source = { editable = "packages/api-consumer" }
+dependencies = [
+    { name = "aiofiles" },
+    { name = "aiohttp" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aiofiles", specifier = ">=25.1.0" },
+    { name = "aiohttp", specifier = ">=3.13.3" },
+    { name = "pydantic", specifier = ">=2.12.5" },
+]
+
+[[package]]
 name = "rp-to-strong-cli"
 version = "0.1.0"
 source = { virtual = "packages/cli" }
@@ -1367,7 +1385,7 @@ dependencies = [
     { name = "aiohttp" },
     { name = "click" },
     { name = "pydantic" },
-    { name = "rp-to-strong-pipeline" },
+    { name = "rp-to-strong-api-consumer" },
 ]
 
 [package.metadata]
@@ -1376,7 +1394,7 @@ requires-dist = [
     { name = "aiohttp", specifier = ">=3.13.3" },
     { name = "click", specifier = ">=8.1" },
     { name = "pydantic", specifier = ">=2.12.5" },
-    { name = "rp-to-strong-pipeline", editable = "packages/pipeline" },
+    { name = "rp-to-strong-api-consumer", editable = "packages/api-consumer" },
 ]
 
 [[package]]

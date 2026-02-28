@@ -5,8 +5,7 @@ import json
 from pathlib import Path
 
 import click
-
-from rp_to_strong_cli.service import RPClient
+from rp_to_strong_api_consumer.service import RPClient
 
 EXPORT_TYPES = [
     "all",
