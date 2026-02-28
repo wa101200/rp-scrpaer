@@ -1,0 +1,9 @@
+[tools]
+python = "3.12"
+hk = "1.36.0"
+ruff = "latest"
+pkl = "latest"
+
+[env]
+# RP Hypo API auth token - set before running extraction
+RP_AUTH_TOKEN = ""
