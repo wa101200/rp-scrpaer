@@ -27,6 +27,7 @@ local config_linters = new Mapping<String, Step> {
 
 // --- GitHub Actions ---
 local gh_actions_linters = new Mapping<String, Step> {
+  ["pinact"] = Builtins.pinact
   // Pins and updates GitHub Actions to latest commit SHAs
   ["pinact-update"] = Builtins.pinact_update
   // Audits GitHub Actions workflows for security vulnerabilities
