@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.user_info import UserInfo  # noqa: E501
+from hevy_api_service.models.user_info import UserInfo
 
 
 class TestUserInfo(unittest.TestCase):
@@ -25,12 +25,12 @@ class TestUserInfo(unittest.TestCase):
 
     def make_instance(self, include_optional) -> UserInfo:
         """Test UserInfo
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `UserInfo`
         """
-        model = UserInfo()  # noqa: E501
+        model = UserInfo()
         if include_optional:
             return UserInfo(
                 id = '9c465af3-de7d-42bc-9c7c-f0170396358b',

@@ -3,4 +3,4 @@ name = "hevy-api-service"
 version = "0.1.0"
 description = "Hevy API service with generated Python SDK"
 requires-python = ">=3.12"
-dependencies = ["pydantic", "urllib3", "python-dateutil", "aenum"]
+dependencies = ["pydantic==1", "urllib3", "python-dateutil", "aenum"]

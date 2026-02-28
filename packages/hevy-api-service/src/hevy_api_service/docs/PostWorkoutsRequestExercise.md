@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **exercise_template_id** | **str** | The ID of the exercise template. | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of PostWorkoutsRequestExercise from a JSON string
 post_workouts_request_exercise_instance = PostWorkoutsRequestExercise.from_json(json)
 # print the JSON string representation of the object
-print PostWorkoutsRequestExercise.to_json()
+print(PostWorkoutsRequestExercise.to_json())
 
 # convert the object into a dict
 post_workouts_request_exercise_dict = post_workouts_request_exercise_instance.to_dict()

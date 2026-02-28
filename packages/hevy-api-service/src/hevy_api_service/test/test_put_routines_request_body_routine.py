@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.put_routines_request_body_routine import (
-    PutRoutinesRequestBodyRoutine,  # noqa: E501
+    PutRoutinesRequestBodyRoutine,
 )
 
 
@@ -27,12 +27,12 @@ class TestPutRoutinesRequestBodyRoutine(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PutRoutinesRequestBodyRoutine:
         """Test PutRoutinesRequestBodyRoutine
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `PutRoutinesRequestBodyRoutine`
         """
-        model = PutRoutinesRequestBodyRoutine()  # noqa: E501
+        model = PutRoutinesRequestBodyRoutine()
         if include_optional:
             return PutRoutinesRequestBodyRoutine(
                 title = 'April Leg Day 🔥',

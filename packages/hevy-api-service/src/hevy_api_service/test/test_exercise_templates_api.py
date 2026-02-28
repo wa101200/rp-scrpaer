@@ -11,9 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.api.exercise_templates_api import (
-    ExerciseTemplatesApi,  # noqa: E501
-)
+from hevy_api_service.api.exercise_templates_api import ExerciseTemplatesApi
 
 
 class TestExerciseTemplatesApi(unittest.TestCase):
@@ -23,26 +21,26 @@ class TestExerciseTemplatesApi(unittest.TestCase):
         self.api = ExerciseTemplatesApi()
 
     def tearDown(self) -> None:
-        self.api.api_client.close()
+        pass
 
     def test_create_custom_exercise_template(self) -> None:
         """Test case for create_custom_exercise_template
 
-        Create a new custom exercise template.  # noqa: E501
+        Create a new custom exercise template.
         """
         pass
 
     def test_get_exercise_template_by_id(self) -> None:
         """Test case for get_exercise_template_by_id
 
-        Get a single exercise template by id.  # noqa: E501
+        Get a single exercise template by id.
         """
         pass
 
     def test_get_exercise_templates(self) -> None:
         """Test case for get_exercise_templates
 
-        Get a paginated list of exercise templates available on the account.  # noqa: E501
+        Get a paginated list of exercise templates available on the account.
         """
         pass
 

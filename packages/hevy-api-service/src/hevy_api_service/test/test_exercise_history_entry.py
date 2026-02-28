@@ -11,9 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.exercise_history_entry import (
-    ExerciseHistoryEntry,  # noqa: E501
-)
+from hevy_api_service.models.exercise_history_entry import ExerciseHistoryEntry
 
 
 class TestExerciseHistoryEntry(unittest.TestCase):
@@ -27,12 +25,12 @@ class TestExerciseHistoryEntry(unittest.TestCase):
 
     def make_instance(self, include_optional) -> ExerciseHistoryEntry:
         """Test ExerciseHistoryEntry
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `ExerciseHistoryEntry`
         """
-        model = ExerciseHistoryEntry()  # noqa: E501
+        model = ExerciseHistoryEntry()
         if include_optional:
             return ExerciseHistoryEntry(
                 workout_id = 'b459cba5-cd6d-463c-abd6-54f8eafcadcb',

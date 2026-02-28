@@ -12,13 +12,10 @@ Method | HTTP request | Description
 
 Get user info
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.user_info_response import UserInfoResponse
 from hevy_api_service.rest import ApiException
@@ -35,7 +32,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.UsersApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get user info
@@ -50,9 +47,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
 
 ### Return type
 
@@ -68,6 +66,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The authenticated user&#39;s info |  -  |

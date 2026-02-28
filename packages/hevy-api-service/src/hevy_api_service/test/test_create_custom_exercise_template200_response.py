@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.create_custom_exercise_template200_response import (
-    CreateCustomExerciseTemplate200Response,  # noqa: E501
+    CreateCustomExerciseTemplate200Response,
 )
 
 
@@ -29,12 +29,12 @@ class TestCreateCustomExerciseTemplate200Response(unittest.TestCase):
         self, include_optional
     ) -> CreateCustomExerciseTemplate200Response:
         """Test CreateCustomExerciseTemplate200Response
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `CreateCustomExerciseTemplate200Response`
         """
-        model = CreateCustomExerciseTemplate200Response()  # noqa: E501
+        model = CreateCustomExerciseTemplate200Response()
         if include_optional:
             return CreateCustomExerciseTemplate200Response(
                 id = 123

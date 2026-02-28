@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **page** | **int** | Current page number | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of GetRoutines200Response from a JSON string
 get_routines200_response_instance = GetRoutines200Response.from_json(json)
 # print the JSON string representation of the object
-print GetRoutines200Response.to_json()
+print(GetRoutines200Response.to_json())
 
 # convert the object into a dict
 get_routines200_response_dict = get_routines200_response_instance.to_dict()

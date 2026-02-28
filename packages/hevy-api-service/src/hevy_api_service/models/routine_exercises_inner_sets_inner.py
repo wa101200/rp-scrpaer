@@ -14,8 +14,9 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 
 from hevy_api_service.models.put_routines_request_set_rep_range import (
     PutRoutinesRequestSetRepRange,
@@ -25,7 +26,7 @@ from hevy_api_service.models.put_routines_request_set_rep_range import (
 class RoutineExercisesInnerSetsInner(BaseModel):
     """
     RoutineExercisesInnerSetsInner
-    """
+    """  # noqa: E501
 
     index: StrictFloat | StrictInt | None = Field(
         default=None,
@@ -56,7 +57,7 @@ class RoutineExercisesInnerSetsInner(BaseModel):
         default=None,
         description="Custom metric logged for the set (Currently only used to log floors or steps for stair machine exercises)",
     )
-    __properties = [
+    __properties: ClassVar[list[str]] = [
         "index",
         "type",
         "weight_kg",
@@ -68,86 +69,102 @@ class RoutineExercisesInnerSetsInner(BaseModel):
         "custom_metric",
     ]
 
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> RoutineExercisesInnerSetsInner:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of RoutineExercisesInnerSetsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of rep_range
         if self.rep_range:
             _dict["rep_range"] = self.rep_range.to_dict()
         # set to None if weight_kg (nullable) is None
-        # and __fields_set__ contains the field
-        if self.weight_kg is None and "weight_kg" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.weight_kg is None and "weight_kg" in self.model_fields_set:
             _dict["weight_kg"] = None
 
         # set to None if reps (nullable) is None
-        # and __fields_set__ contains the field
-        if self.reps is None and "reps" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.reps is None and "reps" in self.model_fields_set:
             _dict["reps"] = None
 
         # set to None if rep_range (nullable) is None
-        # and __fields_set__ contains the field
-        if self.rep_range is None and "rep_range" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.rep_range is None and "rep_range" in self.model_fields_set:
             _dict["rep_range"] = None
 
         # set to None if distance_meters (nullable) is None
-        # and __fields_set__ contains the field
-        if self.distance_meters is None and "distance_meters" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.distance_meters is None and "distance_meters" in self.model_fields_set:
             _dict["distance_meters"] = None
 
         # set to None if duration_seconds (nullable) is None
-        # and __fields_set__ contains the field
-        if self.duration_seconds is None and "duration_seconds" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if (
+            self.duration_seconds is None
+            and "duration_seconds" in self.model_fields_set
+        ):
             _dict["duration_seconds"] = None
 
         # set to None if rpe (nullable) is None
-        # and __fields_set__ contains the field
-        if self.rpe is None and "rpe" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.rpe is None and "rpe" in self.model_fields_set:
             _dict["rpe"] = None
 
         # set to None if custom_metric (nullable) is None
-        # and __fields_set__ contains the field
-        if self.custom_metric is None and "custom_metric" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.custom_metric is None and "custom_metric" in self.model_fields_set:
             _dict["custom_metric"] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> RoutineExercisesInnerSetsInner:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of RoutineExercisesInnerSetsInner from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return RoutineExercisesInnerSetsInner.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = RoutineExercisesInnerSetsInner.parse_obj(
+        _obj = cls.model_validate(
             {
                 "index": obj.get("index"),
                 "type": obj.get("type"),
                 "weight_kg": obj.get("weight_kg"),
                 "reps": obj.get("reps"),
-                "rep_range": PutRoutinesRequestSetRepRange.from_dict(
-                    obj.get("rep_range")
-                )
+                "rep_range": PutRoutinesRequestSetRepRange.from_dict(obj["rep_range"])
                 if obj.get("rep_range") is not None
                 else None,
                 "distance_meters": obj.get("distance_meters"),

@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.create_custom_exercise_request_body_exercise import (
-    CreateCustomExerciseRequestBodyExercise,  # noqa: E501
+    CreateCustomExerciseRequestBodyExercise,
 )
 
 
@@ -29,12 +29,12 @@ class TestCreateCustomExerciseRequestBodyExercise(unittest.TestCase):
         self, include_optional
     ) -> CreateCustomExerciseRequestBodyExercise:
         """Test CreateCustomExerciseRequestBodyExercise
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `CreateCustomExerciseRequestBodyExercise`
         """
-        model = CreateCustomExerciseRequestBodyExercise()  # noqa: E501
+        model = CreateCustomExerciseRequestBodyExercise()
         if include_optional:
             return CreateCustomExerciseRequestBodyExercise(
                 title = 'Bench Press',

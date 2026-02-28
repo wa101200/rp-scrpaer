@@ -3,6 +3,7 @@
 Range of reps for the set, if applicable
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **start** | **float** | Starting rep count for the range | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of PostRoutinesRequestSetRepRange from a JSON string
 post_routines_request_set_rep_range_instance = PostRoutinesRequestSetRepRange.from_json(json)
 # print the JSON string representation of the object
-print PostRoutinesRequestSetRepRange.to_json()
+print(PostRoutinesRequestSetRepRange.to_json())
 
 # convert the object into a dict
 post_routines_request_set_rep_range_dict = post_routines_request_set_rep_range_instance.to_dict()

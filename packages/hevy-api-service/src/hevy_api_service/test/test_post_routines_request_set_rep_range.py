@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.post_routines_request_set_rep_range import (
-    PostRoutinesRequestSetRepRange,  # noqa: E501
+    PostRoutinesRequestSetRepRange,
 )
 
 
@@ -27,12 +27,12 @@ class TestPostRoutinesRequestSetRepRange(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PostRoutinesRequestSetRepRange:
         """Test PostRoutinesRequestSetRepRange
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `PostRoutinesRequestSetRepRange`
         """
-        model = PostRoutinesRequestSetRepRange()  # noqa: E501
+        model = PostRoutinesRequestSetRepRange()
         if include_optional:
             return PostRoutinesRequestSetRepRange(
                 start = 8,

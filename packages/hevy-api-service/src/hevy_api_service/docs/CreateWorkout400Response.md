@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error** | **str** | Error message | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CreateWorkout400Response from a JSON string
 create_workout400_response_instance = CreateWorkout400Response.from_json(json)
 # print the JSON string representation of the object
-print CreateWorkout400Response.to_json()
+print(CreateWorkout400Response.to_json())
 
 # convert the object into a dict
 create_workout400_response_dict = create_workout400_response_instance.to_dict()

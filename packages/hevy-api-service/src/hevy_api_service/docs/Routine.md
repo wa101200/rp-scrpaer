@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The routine ID. | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of Routine from a JSON string
 routine_instance = Routine.from_json(json)
 # print the JSON string representation of the object
-print Routine.to_json()
+print(Routine.to_json())
 
 # convert the object into a dict
 routine_dict = routine_instance.to_dict()

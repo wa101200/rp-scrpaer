@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.api.users_api import UsersApi  # noqa: E501
+from hevy_api_service.api.users_api import UsersApi
 
 
 class TestUsersApi(unittest.TestCase):
@@ -21,12 +21,12 @@ class TestUsersApi(unittest.TestCase):
         self.api = UsersApi()
 
     def tearDown(self) -> None:
-        self.api.api_client.close()
+        pass
 
     def test_get_user_info(self) -> None:
         """Test case for get_user_info
 
-        Get user info  # noqa: E501
+        Get user info
         """
         pass
 

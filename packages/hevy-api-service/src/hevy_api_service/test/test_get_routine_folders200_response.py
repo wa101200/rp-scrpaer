@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.get_routine_folders200_response import (
-    GetRoutineFolders200Response,  # noqa: E501
+    GetRoutineFolders200Response,
 )
 
 
@@ -27,12 +27,12 @@ class TestGetRoutineFolders200Response(unittest.TestCase):
 
     def make_instance(self, include_optional) -> GetRoutineFolders200Response:
         """Test GetRoutineFolders200Response
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `GetRoutineFolders200Response`
         """
-        model = GetRoutineFolders200Response()  # noqa: E501
+        model = GetRoutineFolders200Response()
         if include_optional:
             return GetRoutineFolders200Response(
                 page = 56,

@@ -14,8 +14,9 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from hevy_api_service.models.workout import Workout
 
@@ -23,54 +24,67 @@ from hevy_api_service.models.workout import Workout
 class UpdatedWorkout(BaseModel):
     """
     UpdatedWorkout
-    """
+    """  # noqa: E501
 
-    type: StrictStr = Field(
-        default=..., description="Indicates the type of the event (updated)"
+    type: StrictStr = Field(description="Indicates the type of the event (updated)")
+    workout: Workout
+    __properties: ClassVar[list[str]] = ["type", "workout"]
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
     )
-    workout: Workout = Field(...)
-    __properties = ["type", "workout"]
-
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> UpdatedWorkout:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of UpdatedWorkout from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of workout
         if self.workout:
             _dict["workout"] = self.workout.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> UpdatedWorkout:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of UpdatedWorkout from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return UpdatedWorkout.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = UpdatedWorkout.parse_obj(
+        _obj = cls.model_validate(
             {
                 "type": obj.get("type"),
-                "workout": Workout.from_dict(obj.get("workout"))
+                "workout": Workout.from_dict(obj["workout"])
                 if obj.get("workout") is not None
                 else None,
             }

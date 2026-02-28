@@ -12,13 +12,10 @@ Method | HTTP request | Description
 
 Get exercise history for a specific exercise template
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_exercise_history200_response import GetExerciseHistory200Response
 from hevy_api_service.rest import ApiException
@@ -35,7 +32,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseHistoryApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     exercise_template_id = 'exercise_template_id_example' # str | The id of the exercise template
     start_date = '2024-01-01T00:00:00Z' # datetime | Optional start date for filtering exercise history (ISO 8601 format) (optional)
     end_date = '2024-12-31T23:59:59Z' # datetime | Optional end date for filtering exercise history (ISO 8601 format) (optional)
@@ -53,9 +50,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **exercise_template_id** | **str**| The id of the exercise template | 
  **start_date** | **datetime**| Optional start date for filtering exercise history (ISO 8601 format) | [optional] 
  **end_date** | **datetime**| Optional end date for filtering exercise history (ISO 8601 format) | [optional] 
@@ -74,6 +72,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of exercise history entries |  -  |

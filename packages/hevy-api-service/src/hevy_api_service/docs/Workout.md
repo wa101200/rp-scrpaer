@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The workout ID. | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of Workout from a JSON string
 workout_instance = Workout.from_json(json)
 # print the JSON string representation of the object
-print Workout.to_json()
+print(Workout.to_json())
 
 # convert the object into a dict
 workout_dict = workout_instance.to_dict()

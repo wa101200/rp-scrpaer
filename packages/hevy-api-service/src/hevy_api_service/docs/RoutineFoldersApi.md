@@ -14,13 +14,10 @@ Method | HTTP request | Description
 
 Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.post_routine_folder_request_body import PostRoutineFolderRequestBody
 from hevy_api_service.models.routine_folder import RoutineFolder
@@ -38,7 +35,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutineFoldersApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     post_routine_folder_request_body = hevy_api_service.PostRoutineFolderRequestBody() # PostRoutineFolderRequestBody | 
 
     try:
@@ -54,9 +51,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **post_routine_folder_request_body** | [**PostRoutineFolderRequestBody**](PostRoutineFolderRequestBody.md)|  | 
 
 ### Return type
@@ -73,6 +71,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The routine folder was successfully created |  -  |
@@ -85,13 +84,10 @@ No authorization required
 
 Get a single routine folder by id.
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.routine_folder import RoutineFolder
 from hevy_api_service.rest import ApiException
@@ -108,7 +104,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutineFoldersApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     folder_id = 'folder_id_example' # str | The id of the routine folder
 
     try:
@@ -124,9 +120,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **folder_id** | **str**| The id of the routine folder | 
 
 ### Return type
@@ -143,6 +140,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -155,13 +153,10 @@ No authorization required
 
 Get a paginated list of routine folders available on the account.
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_routine_folders200_response import GetRoutineFolders200Response
 from hevy_api_service.rest import ApiException
@@ -178,7 +173,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutineFoldersApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     page = 1 # int | Page number (Must be 1 or greater) (optional) (default to 1)
     page_size = 5 # int | Number of items on the requested page (Max 10) (optional) (default to 5)
 
@@ -195,9 +190,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **page** | **int**| Page number (Must be 1 or greater) | [optional] [default to 1]
  **page_size** | **int**| Number of items on the requested page (Max 10) | [optional] [default to 5]
 
@@ -215,6 +211,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A paginated list of routine folders |  -  |

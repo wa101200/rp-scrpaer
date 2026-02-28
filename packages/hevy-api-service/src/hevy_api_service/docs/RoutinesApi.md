@@ -15,13 +15,10 @@ Method | HTTP request | Description
 
 Create a new routine
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.post_routines_request_body import PostRoutinesRequestBody
 from hevy_api_service.models.routine import Routine
@@ -39,7 +36,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     post_routines_request_body = hevy_api_service.PostRoutinesRequestBody() # PostRoutinesRequestBody | 
 
     try:
@@ -55,9 +52,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **post_routines_request_body** | [**PostRoutinesRequestBody**](PostRoutinesRequestBody.md)|  | 
 
 ### Return type
@@ -74,6 +72,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The routine was successfully created |  -  |
@@ -87,13 +86,10 @@ No authorization required
 
 Get a routine by its Id
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_routine_by_id200_response import GetRoutineById200Response
 from hevy_api_service.rest import ApiException
@@ -110,7 +106,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     routine_id = 'routine_id_example' # str | The id of the routine
 
     try:
@@ -126,9 +122,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **routine_id** | **str**| The id of the routine | 
 
 ### Return type
@@ -145,6 +142,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The routine with the provided id |  -  |
@@ -157,13 +155,10 @@ No authorization required
 
 Get a paginated list of routines
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_routines200_response import GetRoutines200Response
 from hevy_api_service.rest import ApiException
@@ -180,7 +175,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     page = 1 # int | Page number (Must be 1 or greater) (optional) (default to 1)
     page_size = 5 # int | Number of items on the requested page (Max 10) (optional) (default to 5)
 
@@ -197,9 +192,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **page** | **int**| Page number (Must be 1 or greater) | [optional] [default to 1]
  **page_size** | **int**| Number of items on the requested page (Max 10) | [optional] [default to 5]
 
@@ -217,6 +213,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A paginated list of routines |  -  |
@@ -229,13 +226,10 @@ No authorization required
 
 Update an existing routine
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.put_routines_request_body import PutRoutinesRequestBody
 from hevy_api_service.models.routine import Routine
@@ -253,7 +247,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.RoutinesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     routine_id = 'routine_id_example' # str | The id of the routine
     put_routines_request_body = hevy_api_service.PutRoutinesRequestBody() # PutRoutinesRequestBody | 
 
@@ -270,9 +264,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **routine_id** | **str**| The id of the routine | 
  **put_routines_request_body** | [**PutRoutinesRequestBody**](PutRoutinesRequestBody.md)|  | 
 
@@ -290,6 +285,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The routine was successfully updated |  -  |

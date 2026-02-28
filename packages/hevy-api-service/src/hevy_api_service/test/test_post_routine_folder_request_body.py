@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.post_routine_folder_request_body import (
-    PostRoutineFolderRequestBody,  # noqa: E501
+    PostRoutineFolderRequestBody,
 )
 
 
@@ -27,12 +27,12 @@ class TestPostRoutineFolderRequestBody(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PostRoutineFolderRequestBody:
         """Test PostRoutineFolderRequestBody
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `PostRoutineFolderRequestBody`
         """
-        model = PostRoutineFolderRequestBody()  # noqa: E501
+        model = PostRoutineFolderRequestBody()
         if include_optional:
             return PostRoutineFolderRequestBody(
                 routine_folder = hevy_api_service.models.post_routine_folder_request_body_routine_folder.PostRoutineFolderRequestBody_routine_folder(

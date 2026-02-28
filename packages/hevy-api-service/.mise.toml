@@ -16,7 +16,7 @@ description = "Generate Python SDK from OpenAPI spec"
 run = """
 openapi-generator-cli generate \
   -i openapi.yaml \
-  -g python-pydantic-v1 \
+  -g python \
   -o src \
   --package-name hevy_api_service \
   --additional-properties=generateSourceCodeOnly=true

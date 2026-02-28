@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **str** | The title of the routine folder. | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of PostRoutineFolderRequestBodyRoutineFolder from a JSON string
 post_routine_folder_request_body_routine_folder_instance = PostRoutineFolderRequestBodyRoutineFolder.from_json(json)
 # print the JSON string representation of the object
-print PostRoutineFolderRequestBodyRoutineFolder.to_json()
+print(PostRoutineFolderRequestBodyRoutineFolder.to_json())
 
 # convert the object into a dict
 post_routine_folder_request_body_routine_folder_dict = post_routine_folder_request_body_routine_folder_instance.to_dict()

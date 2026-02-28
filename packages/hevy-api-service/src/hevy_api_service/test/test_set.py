@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.set import Set  # noqa: E501
+from hevy_api_service.models.set import Set
 
 
 class TestSet(unittest.TestCase):
@@ -25,12 +25,12 @@ class TestSet(unittest.TestCase):
 
     def make_instance(self, include_optional) -> Set:
         """Test Set
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `Set`
         """
-        model = Set()  # noqa: E501
+        model = Set()
         if include_optional:
             return Set(
                 index = 0,

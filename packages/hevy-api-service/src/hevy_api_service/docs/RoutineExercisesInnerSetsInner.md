@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **index** | **float** | Index indicating the order of the set in the routine. | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of RoutineExercisesInnerSetsInner from a JSON string
 routine_exercises_inner_sets_inner_instance = RoutineExercisesInnerSetsInner.from_json(json)
 # print the JSON string representation of the object
-print RoutineExercisesInnerSetsInner.to_json()
+print(RoutineExercisesInnerSetsInner.to_json())
 
 # convert the object into a dict
 routine_exercises_inner_sets_inner_dict = routine_exercises_inner_sets_inner_instance.to_dict()

@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.paginated_workout_events_events_inner import (
-    PaginatedWorkoutEventsEventsInner,  # noqa: E501
+    PaginatedWorkoutEventsEventsInner,
 )
 
 
@@ -27,12 +27,12 @@ class TestPaginatedWorkoutEventsEventsInner(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PaginatedWorkoutEventsEventsInner:
         """Test PaginatedWorkoutEventsEventsInner
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `PaginatedWorkoutEventsEventsInner`
         """
-        model = PaginatedWorkoutEventsEventsInner()  # noqa: E501
+        model = PaginatedWorkoutEventsEventsInner()
         if include_optional:
             return PaginatedWorkoutEventsEventsInner(
                 type = 'deleted',

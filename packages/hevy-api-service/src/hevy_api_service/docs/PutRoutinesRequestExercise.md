@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **exercise_template_id** | **str** | The ID of the exercise template. | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of PutRoutinesRequestExercise from a JSON string
 put_routines_request_exercise_instance = PutRoutinesRequestExercise.from_json(json)
 # print the JSON string representation of the object
-print PutRoutinesRequestExercise.to_json()
+print(PutRoutinesRequestExercise.to_json())
 
 # convert the object into a dict
 put_routines_request_exercise_dict = put_routines_request_exercise_instance.to_dict()

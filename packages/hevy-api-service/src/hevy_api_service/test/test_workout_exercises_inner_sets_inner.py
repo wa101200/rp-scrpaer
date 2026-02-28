@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.workout_exercises_inner_sets_inner import (
-    WorkoutExercisesInnerSetsInner,  # noqa: E501
+    WorkoutExercisesInnerSetsInner,
 )
 
 
@@ -27,12 +27,12 @@ class TestWorkoutExercisesInnerSetsInner(unittest.TestCase):
 
     def make_instance(self, include_optional) -> WorkoutExercisesInnerSetsInner:
         """Test WorkoutExercisesInnerSetsInner
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `WorkoutExercisesInnerSetsInner`
         """
-        model = WorkoutExercisesInnerSetsInner()  # noqa: E501
+        model = WorkoutExercisesInnerSetsInner()
         if include_optional:
             return WorkoutExercisesInnerSetsInner(
                 index = 0,

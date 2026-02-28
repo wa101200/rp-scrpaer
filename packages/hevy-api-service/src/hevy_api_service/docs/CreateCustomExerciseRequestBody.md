@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **exercise** | [**CreateCustomExerciseRequestBodyExercise**](CreateCustomExerciseRequestBodyExercise.md) |  | 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CreateCustomExerciseRequestBody from a JSON string
 create_custom_exercise_request_body_instance = CreateCustomExerciseRequestBody.from_json(json)
 # print the JSON string representation of the object
-print CreateCustomExerciseRequestBody.to_json()
+print(CreateCustomExerciseRequestBody.to_json())
 
 # convert the object into a dict
 create_custom_exercise_request_body_dict = create_custom_exercise_request_body_instance.to_dict()

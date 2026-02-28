@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | The type of the set. | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of PostRoutinesRequestSet from a JSON string
 post_routines_request_set_instance = PostRoutinesRequestSet.from_json(json)
 # print the JSON string representation of the object
-print PostRoutinesRequestSet.to_json()
+print(PostRoutinesRequestSet.to_json())
 
 # convert the object into a dict
 post_routines_request_set_dict = post_routines_request_set_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **index** | **float** | Index indicating the order of the set in the workout. | [optional] 
@@ -23,7 +24,7 @@ json = "{}"
 # create an instance of WorkoutExercisesInnerSetsInner from a JSON string
 workout_exercises_inner_sets_inner_instance = WorkoutExercisesInnerSetsInner.from_json(json)
 # print the JSON string representation of the object
-print WorkoutExercisesInnerSetsInner.to_json()
+print(WorkoutExercisesInnerSetsInner.to_json())
 
 # convert the object into a dict
 workout_exercises_inner_sets_inner_dict = workout_exercises_inner_sets_inner_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Indicates the type of the event (updated) | 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of UpdatedWorkout from a JSON string
 updated_workout_instance = UpdatedWorkout.from_json(json)
 # print the JSON string representation of the object
-print UpdatedWorkout.to_json()
+print(UpdatedWorkout.to_json())
 
 # convert the object into a dict
 updated_workout_dict = updated_workout_instance.to_dict()

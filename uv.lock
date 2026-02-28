@@ -678,7 +678,7 @@ wheels = [
 [[package]]
 name = "hevy-api-service"
 version = "0.1.0"
-source = { virtual = "packages/hevy-api-service" }
+source = { editable = "packages/hevy-api-service" }
 dependencies = [
     { name = "aenum" },
     { name = "pydantic" },
@@ -1396,6 +1396,7 @@ dependencies = [
     { name = "aiofiles" },
     { name = "aiohttp" },
     { name = "click" },
+    { name = "hevy-api-service" },
     { name = "pydantic" },
     { name = "rp-to-strong-rp-api-service" },
 ]
@@ -1405,6 +1406,7 @@ requires-dist = [
     { name = "aiofiles", specifier = ">=25.1.0" },
     { name = "aiohttp", specifier = ">=3.13.3" },
     { name = "click", specifier = ">=8.1" },
+    { name = "hevy-api-service", editable = "packages/hevy-api-service" },
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "rp-to-strong-rp-api-service", editable = "packages/rp-api-service" },
 ]

@@ -14,8 +14,9 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, conlist
+from pydantic import BaseModel, ConfigDict
 
 from hevy_api_service.models.exercise_history_entry import ExerciseHistoryEntry
 
@@ -23,56 +24,71 @@ from hevy_api_service.models.exercise_history_entry import ExerciseHistoryEntry
 class GetExerciseHistory200Response(BaseModel):
     """
     GetExerciseHistory200Response
-    """
+    """  # noqa: E501
 
-    exercise_history: conlist(ExerciseHistoryEntry) | None = None
-    __properties = ["exercise_history"]
+    exercise_history: list[ExerciseHistoryEntry] | None = None
+    __properties: ClassVar[list[str]] = ["exercise_history"]
 
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> GetExerciseHistory200Response:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of GetExerciseHistory200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in exercise_history (list)
         _items = []
         if self.exercise_history:
-            for _item in self.exercise_history:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_exercise_history in self.exercise_history:
+                if _item_exercise_history:
+                    _items.append(_item_exercise_history.to_dict())
             _dict["exercise_history"] = _items
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> GetExerciseHistory200Response:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of GetExerciseHistory200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return GetExerciseHistory200Response.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = GetExerciseHistory200Response.parse_obj(
+        _obj = cls.model_validate(
             {
                 "exercise_history": [
                     ExerciseHistoryEntry.from_dict(_item)
-                    for _item in obj.get("exercise_history")
+                    for _item in obj["exercise_history"]
                 ]
                 if obj.get("exercise_history") is not None
                 else None

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **exercise_history** | [**List[ExerciseHistoryEntry]**](ExerciseHistoryEntry.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of GetExerciseHistory200Response from a JSON string
 get_exercise_history200_response_instance = GetExerciseHistory200Response.from_json(json)
 # print the JSON string representation of the object
-print GetExerciseHistory200Response.to_json()
+print(GetExerciseHistory200Response.to_json())
 
 # convert the object into a dict
 get_exercise_history200_response_dict = get_exercise_history200_response_instance.to_dict()

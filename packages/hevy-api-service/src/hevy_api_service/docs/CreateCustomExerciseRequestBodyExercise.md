@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **str** | The title of the exercise template. | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of CreateCustomExerciseRequestBodyExercise from a JSON string
 create_custom_exercise_request_body_exercise_instance = CreateCustomExerciseRequestBodyExercise.from_json(json)
 # print the JSON string representation of the object
-print CreateCustomExerciseRequestBodyExercise.to_json()
+print(CreateCustomExerciseRequestBodyExercise.to_json())
 
 # convert the object into a dict
 create_custom_exercise_request_body_exercise_dict = create_custom_exercise_request_body_exercise_instance.to_dict()

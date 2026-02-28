@@ -14,13 +14,10 @@ Method | HTTP request | Description
 
 Create a new custom exercise template.
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.create_custom_exercise_request_body import CreateCustomExerciseRequestBody
 from hevy_api_service.models.create_custom_exercise_template200_response import CreateCustomExerciseTemplate200Response
@@ -38,7 +35,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseTemplatesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     create_custom_exercise_request_body = hevy_api_service.CreateCustomExerciseRequestBody() # CreateCustomExerciseRequestBody | The exercise template to create.
 
     try:
@@ -54,9 +51,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **create_custom_exercise_request_body** | [**CreateCustomExerciseRequestBody**](CreateCustomExerciseRequestBody.md)| The exercise template to create. | 
 
 ### Return type
@@ -73,6 +71,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The exercise template was successfully created |  -  |
@@ -86,13 +85,10 @@ No authorization required
 
 Get a single exercise template by id.
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.exercise_template import ExerciseTemplate
 from hevy_api_service.rest import ApiException
@@ -109,7 +105,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseTemplatesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     exercise_template_id = 'exercise_template_id_example' # str | The id of the exercise template
 
     try:
@@ -125,9 +121,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **exercise_template_id** | **str**| The id of the exercise template | 
 
 ### Return type
@@ -144,6 +141,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -156,13 +154,10 @@ No authorization required
 
 Get a paginated list of exercise templates available on the account.
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_exercise_templates200_response import GetExerciseTemplates200Response
 from hevy_api_service.rest import ApiException
@@ -179,7 +174,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.ExerciseTemplatesApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     page = 1 # int | Page number (Must be 1 or greater) (optional) (default to 1)
     page_size = 5 # int | Number of items on the requested page (Max 100) (optional) (default to 5)
 
@@ -196,9 +191,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **page** | **int**| Page number (Must be 1 or greater) | [optional] [default to 1]
  **page_size** | **int**| Number of items on the requested page (Max 100) | [optional] [default to 5]
 
@@ -216,6 +212,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A paginated list of exercise templates |  -  |

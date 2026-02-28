@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data** | [**UserInfo**](UserInfo.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of UserInfoResponse from a JSON string
 user_info_response_instance = UserInfoResponse.from_json(json)
 # print the JSON string representation of the object
-print UserInfoResponse.to_json()
+print(UserInfoResponse.to_json())
 
 # convert the object into a dict
 user_info_response_dict = user_info_response_instance.to_dict()

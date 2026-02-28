@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.deleted_workout import DeletedWorkout  # noqa: E501
+from hevy_api_service.models.deleted_workout import DeletedWorkout
 
 
 class TestDeletedWorkout(unittest.TestCase):
@@ -25,12 +25,12 @@ class TestDeletedWorkout(unittest.TestCase):
 
     def make_instance(self, include_optional) -> DeletedWorkout:
         """Test DeletedWorkout
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `DeletedWorkout`
         """
-        model = DeletedWorkout()  # noqa: E501
+        model = DeletedWorkout()
         if include_optional:
             return DeletedWorkout(
                 type = 'deleted',

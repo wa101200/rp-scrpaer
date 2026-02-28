@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.api.routine_folders_api import RoutineFoldersApi  # noqa: E501
+from hevy_api_service.api.routine_folders_api import RoutineFoldersApi
 
 
 class TestRoutineFoldersApi(unittest.TestCase):
@@ -21,26 +21,26 @@ class TestRoutineFoldersApi(unittest.TestCase):
         self.api = RoutineFoldersApi()
 
     def tearDown(self) -> None:
-        self.api.api_client.close()
+        pass
 
     def test_create_routine_folder(self) -> None:
         """Test case for create_routine_folder
 
-        Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.  # noqa: E501
+        Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
         """
         pass
 
     def test_get_routine_folder_by_id(self) -> None:
         """Test case for get_routine_folder_by_id
 
-        Get a single routine folder by id.  # noqa: E501
+        Get a single routine folder by id.
         """
         pass
 
     def test_get_routine_folders(self) -> None:
         """Test case for get_routine_folders
 
-        Get a paginated list of routine folders available on the account.  # noqa: E501
+        Get a paginated list of routine folders available on the account.
         """
         pass
 

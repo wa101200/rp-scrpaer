@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **str** | The title of the routine. | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of PutRoutinesRequestBodyRoutine from a JSON string
 put_routines_request_body_routine_instance = PutRoutinesRequestBodyRoutine.from_json(json)
 # print the JSON string representation of the object
-print PutRoutinesRequestBodyRoutine.to_json()
+print(PutRoutinesRequestBodyRoutine.to_json())
 
 # convert the object into a dict
 put_routines_request_body_routine_dict = put_routines_request_body_routine_instance.to_dict()

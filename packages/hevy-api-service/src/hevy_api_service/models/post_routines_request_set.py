@@ -14,8 +14,17 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+    field_validator,
+)
 
 from hevy_api_service.models.post_routines_request_set_rep_range import (
     PostRoutinesRequestSetRepRange,
@@ -25,7 +34,7 @@ from hevy_api_service.models.post_routines_request_set_rep_range import (
 class PostRoutinesRequestSet(BaseModel):
     """
     PostRoutinesRequestSet
-    """
+    """  # noqa: E501
 
     type: StrictStr | None = Field(default=None, description="The type of the set.")
     weight_kg: StrictFloat | StrictInt | None = Field(
@@ -45,7 +54,7 @@ class PostRoutinesRequestSet(BaseModel):
         description="A custom metric for the set. Currently used for steps and floors.",
     )
     rep_range: PostRoutinesRequestSetRepRange | None = None
-    __properties = [
+    __properties: ClassVar[list[str]] = [
         "type",
         "weight_kg",
         "reps",
@@ -55,90 +64,103 @@ class PostRoutinesRequestSet(BaseModel):
         "rep_range",
     ]
 
-    @validator("type")
+    @field_validator("type")
     def type_validate_enum(cls, value):
         """Validates the enum"""
         if value is None:
             return value
 
-        if value not in (
-            "warmup",
-            "normal",
-            "failure",
-            "dropset",
-        ):
+        if value not in set(["warmup", "normal", "failure", "dropset"]):
             raise ValueError(
                 "must be one of enum values ('warmup', 'normal', 'failure', 'dropset')"
             )
         return value
 
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> PostRoutinesRequestSet:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of PostRoutinesRequestSet from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of rep_range
         if self.rep_range:
             _dict["rep_range"] = self.rep_range.to_dict()
         # set to None if weight_kg (nullable) is None
-        # and __fields_set__ contains the field
-        if self.weight_kg is None and "weight_kg" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.weight_kg is None and "weight_kg" in self.model_fields_set:
             _dict["weight_kg"] = None
 
         # set to None if reps (nullable) is None
-        # and __fields_set__ contains the field
-        if self.reps is None and "reps" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.reps is None and "reps" in self.model_fields_set:
             _dict["reps"] = None
 
         # set to None if distance_meters (nullable) is None
-        # and __fields_set__ contains the field
-        if self.distance_meters is None and "distance_meters" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.distance_meters is None and "distance_meters" in self.model_fields_set:
             _dict["distance_meters"] = None
 
         # set to None if duration_seconds (nullable) is None
-        # and __fields_set__ contains the field
-        if self.duration_seconds is None and "duration_seconds" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if (
+            self.duration_seconds is None
+            and "duration_seconds" in self.model_fields_set
+        ):
             _dict["duration_seconds"] = None
 
         # set to None if custom_metric (nullable) is None
-        # and __fields_set__ contains the field
-        if self.custom_metric is None and "custom_metric" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.custom_metric is None and "custom_metric" in self.model_fields_set:
             _dict["custom_metric"] = None
 
         # set to None if rep_range (nullable) is None
-        # and __fields_set__ contains the field
-        if self.rep_range is None and "rep_range" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.rep_range is None and "rep_range" in self.model_fields_set:
             _dict["rep_range"] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> PostRoutinesRequestSet:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of PostRoutinesRequestSet from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return PostRoutinesRequestSet.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = PostRoutinesRequestSet.parse_obj(
+        _obj = cls.model_validate(
             {
                 "type": obj.get("type"),
                 "weight_kg": obj.get("weight_kg"),
@@ -146,9 +168,7 @@ class PostRoutinesRequestSet(BaseModel):
                 "distance_meters": obj.get("distance_meters"),
                 "duration_seconds": obj.get("duration_seconds"),
                 "custom_metric": obj.get("custom_metric"),
-                "rep_range": PostRoutinesRequestSetRepRange.from_dict(
-                    obj.get("rep_range")
-                )
+                "rep_range": PostRoutinesRequestSetRepRange.from_dict(obj["rep_range"])
                 if obj.get("rep_range") is not None
                 else None,
             }

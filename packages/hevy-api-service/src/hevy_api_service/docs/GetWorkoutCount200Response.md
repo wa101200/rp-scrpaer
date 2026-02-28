@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **workout_count** | **int** | The total number of workouts | [optional] [default to 42]
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of GetWorkoutCount200Response from a JSON string
 get_workout_count200_response_instance = GetWorkoutCount200Response.from_json(json)
 # print the JSON string representation of the object
-print GetWorkoutCount200Response.to_json()
+print(GetWorkoutCount200Response.to_json())
 
 # convert the object into a dict
 get_workout_count200_response_dict = get_workout_count200_response_instance.to_dict()

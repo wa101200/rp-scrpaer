@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **index** | **float** | Index indicating the order of the exercise in the routine. | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of RoutineExercisesInner from a JSON string
 routine_exercises_inner_instance = RoutineExercisesInner.from_json(json)
 # print the JSON string representation of the object
-print RoutineExercisesInner.to_json()
+print(RoutineExercisesInner.to_json())
 
 # convert the object into a dict
 routine_exercises_inner_dict = routine_exercises_inner_instance.to_dict()

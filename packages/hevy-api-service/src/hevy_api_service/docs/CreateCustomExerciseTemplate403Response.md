@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error** | **str** | Error message | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CreateCustomExerciseTemplate403Response from a JSON string
 create_custom_exercise_template403_response_instance = CreateCustomExerciseTemplate403Response.from_json(json)
 # print the JSON string representation of the object
-print CreateCustomExerciseTemplate403Response.to_json()
+print(CreateCustomExerciseTemplate403Response.to_json())
 
 # convert the object into a dict
 create_custom_exercise_template403_response_dict = create_custom_exercise_template403_response_instance.to_dict()

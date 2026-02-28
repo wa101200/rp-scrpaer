@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.api.exercise_history_api import ExerciseHistoryApi  # noqa: E501
+from hevy_api_service.api.exercise_history_api import ExerciseHistoryApi
 
 
 class TestExerciseHistoryApi(unittest.TestCase):
@@ -21,12 +21,12 @@ class TestExerciseHistoryApi(unittest.TestCase):
         self.api = ExerciseHistoryApi()
 
     def tearDown(self) -> None:
-        self.api.api_client.close()
+        pass
 
     def test_get_exercise_history(self) -> None:
         """Test case for get_exercise_history
 
-        Get exercise history for a specific exercise template  # noqa: E501
+        Get exercise history for a specific exercise template
         """
         pass
 

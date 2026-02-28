@@ -14,8 +14,9 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, Field, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from hevy_api_service.models.put_routines_request_exercise import (
     PutRoutinesRequestExercise,
@@ -25,7 +26,7 @@ from hevy_api_service.models.put_routines_request_exercise import (
 class PutRoutinesRequestBodyRoutine(BaseModel):
     """
     PutRoutinesRequestBodyRoutine
-    """
+    """  # noqa: E501
 
     title: StrictStr | None = Field(
         default=None, description="The title of the routine."
@@ -33,61 +34,76 @@ class PutRoutinesRequestBodyRoutine(BaseModel):
     notes: StrictStr | None = Field(
         default=None, description="Additional notes for the routine."
     )
-    exercises: conlist(PutRoutinesRequestExercise) | None = None
-    __properties = ["title", "notes", "exercises"]
+    exercises: list[PutRoutinesRequestExercise] | None = None
+    __properties: ClassVar[list[str]] = ["title", "notes", "exercises"]
 
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> PutRoutinesRequestBodyRoutine:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of PutRoutinesRequestBodyRoutine from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in exercises (list)
         _items = []
         if self.exercises:
-            for _item in self.exercises:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_exercises in self.exercises:
+                if _item_exercises:
+                    _items.append(_item_exercises.to_dict())
             _dict["exercises"] = _items
         # set to None if notes (nullable) is None
-        # and __fields_set__ contains the field
-        if self.notes is None and "notes" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.notes is None and "notes" in self.model_fields_set:
             _dict["notes"] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> PutRoutinesRequestBodyRoutine:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of PutRoutinesRequestBodyRoutine from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return PutRoutinesRequestBodyRoutine.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = PutRoutinesRequestBodyRoutine.parse_obj(
+        _obj = cls.model_validate(
             {
                 "title": obj.get("title"),
                 "notes": obj.get("notes"),
                 "exercises": [
                     PutRoutinesRequestExercise.from_dict(_item)
-                    for _item in obj.get("exercises")
+                    for _item in obj["exercises"]
                 ]
                 if obj.get("exercises") is not None
                 else None,

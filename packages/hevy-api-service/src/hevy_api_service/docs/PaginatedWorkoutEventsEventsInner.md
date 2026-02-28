@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Indicates the type of the event (deleted) | 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of PaginatedWorkoutEventsEventsInner from a JSON string
 paginated_workout_events_events_inner_instance = PaginatedWorkoutEventsEventsInner.from_json(json)
 # print the JSON string representation of the object
-print PaginatedWorkoutEventsEventsInner.to_json()
+print(PaginatedWorkoutEventsEventsInner.to_json())
 
 # convert the object into a dict
 paginated_workout_events_events_inner_dict = paginated_workout_events_events_inner_instance.to_dict()

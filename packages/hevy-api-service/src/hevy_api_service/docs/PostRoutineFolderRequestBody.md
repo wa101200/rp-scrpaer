@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **routine_folder** | [**PostRoutineFolderRequestBodyRoutineFolder**](PostRoutineFolderRequestBodyRoutineFolder.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of PostRoutineFolderRequestBody from a JSON string
 post_routine_folder_request_body_instance = PostRoutineFolderRequestBody.from_json(json)
 # print the JSON string representation of the object
-print PostRoutineFolderRequestBody.to_json()
+print(PostRoutineFolderRequestBody.to_json())
 
 # convert the object into a dict
 post_routine_folder_request_body_dict = post_routine_folder_request_body_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **float** | The routine folder ID. | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of RoutineFolder from a JSON string
 routine_folder_instance = RoutineFolder.from_json(json)
 # print the JSON string representation of the object
-print RoutineFolder.to_json()
+print(RoutineFolder.to_json())
 
 # convert the object into a dict
 routine_folder_dict = routine_folder_instance.to_dict()

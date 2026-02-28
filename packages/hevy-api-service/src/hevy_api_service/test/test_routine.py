@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.routine import Routine  # noqa: E501
+from hevy_api_service.models.routine import Routine
 
 
 class TestRoutine(unittest.TestCase):
@@ -25,12 +25,12 @@ class TestRoutine(unittest.TestCase):
 
     def make_instance(self, include_optional) -> Routine:
         """Test Routine
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `Routine`
         """
-        model = Routine()  # noqa: E501
+        model = Routine()
         if include_optional:
             return Routine(
                 id = 'b459cba5-cd6d-463c-abd6-54f8eafcadcb',

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **index** | **float** | Index indicating the order of the set in the workout. | [optional] 
@@ -23,7 +24,7 @@ json = "{}"
 # create an instance of Set from a JSON string
 set_instance = Set.from_json(json)
 # print the JSON string representation of the object
-print Set.to_json()
+print(Set.to_json())
 
 # convert the object into a dict
 set_dict = set_instance.to_dict()

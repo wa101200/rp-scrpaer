@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **workout** | [**PostWorkoutsRequestBodyWorkout**](PostWorkoutsRequestBodyWorkout.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of PostWorkoutsRequestBody from a JSON string
 post_workouts_request_body_instance = PostWorkoutsRequestBody.from_json(json)
 # print the JSON string representation of the object
-print PostWorkoutsRequestBody.to_json()
+print(PostWorkoutsRequestBody.to_json())
 
 # convert the object into a dict
 post_workouts_request_body_dict = post_workouts_request_body_instance.to_dict()

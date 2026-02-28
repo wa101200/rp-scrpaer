@@ -17,13 +17,10 @@ Method | HTTP request | Description
 
 Create a new workout
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.post_workouts_request_body import PostWorkoutsRequestBody
 from hevy_api_service.models.workout import Workout
@@ -41,7 +38,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     post_workouts_request_body = hevy_api_service.PostWorkoutsRequestBody() # PostWorkoutsRequestBody | 
 
     try:
@@ -57,9 +54,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **post_workouts_request_body** | [**PostWorkoutsRequestBody**](PostWorkoutsRequestBody.md)|  | 
 
 ### Return type
@@ -76,6 +74,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | The workout was successfully created |  -  |
@@ -88,13 +87,10 @@ No authorization required
 
 Get a single workout’s complete details by the workoutId
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.workout import Workout
 from hevy_api_service.rest import ApiException
@@ -111,7 +107,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     workout_id = 'workout_id_example' # str | The id of the workout
 
     try:
@@ -127,9 +123,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **workout_id** | **str**| The id of the workout | 
 
 ### Return type
@@ -146,6 +143,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
@@ -158,13 +156,10 @@ No authorization required
 
 Get the total number of workouts on the account
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_workout_count200_response import GetWorkoutCount200Response
 from hevy_api_service.rest import ApiException
@@ -181,7 +176,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
 
     try:
         # Get the total number of workouts on the account
@@ -196,9 +191,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
 
 ### Return type
 
@@ -214,6 +210,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The total count of workouts |  -  |
@@ -229,9 +226,8 @@ Returns a paginated array of workout events, indicating updates or deletions.
 
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.paginated_workout_events import PaginatedWorkoutEvents
 from hevy_api_service.rest import ApiException
@@ -248,7 +244,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     page = 1 # int | Page number (Must be 1 or greater) (optional) (default to 1)
     page_size = 5 # int | Number of items on the requested page (Max 10) (optional) (default to 5)
     since = '1970-01-01T00:00:00Z' # str |  (optional) (default to '1970-01-01T00:00:00Z')
@@ -266,9 +262,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **page** | **int**| Page number (Must be 1 or greater) | [optional] [default to 1]
  **page_size** | **int**| Number of items on the requested page (Max 10) | [optional] [default to 5]
  **since** | **str**|  | [optional] [default to &#39;1970-01-01T00:00:00Z&#39;]
@@ -287,6 +284,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A paginated list of workout events |  -  |
@@ -299,13 +297,10 @@ No authorization required
 
 Get a paginated list of workouts
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.get_workouts200_response import GetWorkouts200Response
 from hevy_api_service.rest import ApiException
@@ -322,7 +317,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     page = 1 # int | Page number (Must be 1 or greater) (optional) (default to 1)
     page_size = 5 # int | Number of items on the requested page (Max 10) (optional) (default to 5)
 
@@ -339,9 +334,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **page** | **int**| Page number (Must be 1 or greater) | [optional] [default to 1]
  **page_size** | **int**| Number of items on the requested page (Max 10) | [optional] [default to 5]
 
@@ -359,6 +355,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A paginated list of workouts |  -  |
@@ -371,13 +368,10 @@ No authorization required
 
 Update an existing workout
 
-
-
 ### Example
 
+
 ```python
-import time
-import os
 import hevy_api_service
 from hevy_api_service.models.post_workouts_request_body import PostWorkoutsRequestBody
 from hevy_api_service.models.workout import Workout
@@ -395,7 +389,7 @@ configuration = hevy_api_service.Configuration(
 with hevy_api_service.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = hevy_api_service.WorkoutsApi(api_client)
-    api_key = 'api_key_example' # str | 
+    api_key = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
     workout_id = 'workout_id_example' # str | The id of the workout
     post_workouts_request_body = hevy_api_service.PostWorkoutsRequestBody() # PostWorkoutsRequestBody | 
 
@@ -412,9 +406,10 @@ with hevy_api_service.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key** | **str**|  | 
+ **api_key** | **UUID**|  | 
  **workout_id** | **str**| The id of the workout | 
  **post_workouts_request_body** | [**PostWorkoutsRequestBody**](PostWorkoutsRequestBody.md)|  | 
 
@@ -432,6 +427,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The workout was successfully updated |  -  |

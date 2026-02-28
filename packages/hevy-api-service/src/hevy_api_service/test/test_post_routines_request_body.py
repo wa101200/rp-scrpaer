@@ -11,9 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.post_routines_request_body import (
-    PostRoutinesRequestBody,  # noqa: E501
-)
+from hevy_api_service.models.post_routines_request_body import PostRoutinesRequestBody
 
 
 class TestPostRoutinesRequestBody(unittest.TestCase):
@@ -27,12 +25,12 @@ class TestPostRoutinesRequestBody(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PostRoutinesRequestBody:
         """Test PostRoutinesRequestBody
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `PostRoutinesRequestBody`
         """
-        model = PostRoutinesRequestBody()  # noqa: E501
+        model = PostRoutinesRequestBody()
         if include_optional:
             return PostRoutinesRequestBody(
                 routine = hevy_api_service.models.post_routines_request_body_routine.PostRoutinesRequestBody_routine(

@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.api.routines_api import RoutinesApi  # noqa: E501
+from hevy_api_service.api.routines_api import RoutinesApi
 
 
 class TestRoutinesApi(unittest.TestCase):
@@ -21,33 +21,33 @@ class TestRoutinesApi(unittest.TestCase):
         self.api = RoutinesApi()
 
     def tearDown(self) -> None:
-        self.api.api_client.close()
+        pass
 
     def test_create_routine(self) -> None:
         """Test case for create_routine
 
-        Create a new routine  # noqa: E501
+        Create a new routine
         """
         pass
 
     def test_get_routine_by_id(self) -> None:
         """Test case for get_routine_by_id
 
-        Get a routine by its Id  # noqa: E501
+        Get a routine by its Id
         """
         pass
 
     def test_get_routines(self) -> None:
         """Test case for get_routines
 
-        Get a paginated list of routines  # noqa: E501
+        Get a paginated list of routines
         """
         pass
 
     def test_update_routine(self) -> None:
         """Test case for update_routine
 
-        Update an existing routine  # noqa: E501
+        Update an existing routine
         """
         pass
 

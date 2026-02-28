@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The exercise template ID. | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of ExerciseTemplate from a JSON string
 exercise_template_instance = ExerciseTemplate.from_json(json)
 # print the JSON string representation of the object
-print ExerciseTemplate.to_json()
+print(ExerciseTemplate.to_json())
 
 # convert the object into a dict
 exercise_template_dict = exercise_template_instance.to_dict()

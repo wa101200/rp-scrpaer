@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.create_custom_exercise_template400_response import (
-    CreateCustomExerciseTemplate400Response,  # noqa: E501
+    CreateCustomExerciseTemplate400Response,
 )
 
 
@@ -29,12 +29,12 @@ class TestCreateCustomExerciseTemplate400Response(unittest.TestCase):
         self, include_optional
     ) -> CreateCustomExerciseTemplate400Response:
         """Test CreateCustomExerciseTemplate400Response
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `CreateCustomExerciseTemplate400Response`
         """
-        model = CreateCustomExerciseTemplate400Response()  # noqa: E501
+        model = CreateCustomExerciseTemplate400Response()
         if include_optional:
             return CreateCustomExerciseTemplate400Response(
                 error = 'Invalid request body'

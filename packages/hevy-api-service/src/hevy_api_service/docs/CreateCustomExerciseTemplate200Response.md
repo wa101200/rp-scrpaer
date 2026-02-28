@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** | The ID of the exercise template | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CreateCustomExerciseTemplate200Response from a JSON string
 create_custom_exercise_template200_response_instance = CreateCustomExerciseTemplate200Response.from_json(json)
 # print the JSON string representation of the object
-print CreateCustomExerciseTemplate200Response.to_json()
+print(CreateCustomExerciseTemplate200Response.to_json())
 
 # convert the object into a dict
 create_custom_exercise_template200_response_dict = create_custom_exercise_template200_response_instance.to_dict()

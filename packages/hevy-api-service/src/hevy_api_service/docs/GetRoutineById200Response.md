@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **routine** | [**Routine**](Routine.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of GetRoutineById200Response from a JSON string
 get_routine_by_id200_response_instance = GetRoutineById200Response.from_json(json)
 # print the JSON string representation of the object
-print GetRoutineById200Response.to_json()
+print(GetRoutineById200Response.to_json())
 
 # convert the object into a dict
 get_routine_by_id200_response_dict = get_routine_by_id200_response_instance.to_dict()

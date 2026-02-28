@@ -14,8 +14,9 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from hevy_api_service.models.put_routines_request_body_routine import (
     PutRoutinesRequestBodyRoutine,
@@ -25,50 +26,65 @@ from hevy_api_service.models.put_routines_request_body_routine import (
 class PutRoutinesRequestBody(BaseModel):
     """
     PutRoutinesRequestBody
-    """
+    """  # noqa: E501
 
     routine: PutRoutinesRequestBodyRoutine | None = None
-    __properties = ["routine"]
+    __properties: ClassVar[list[str]] = ["routine"]
 
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> PutRoutinesRequestBody:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of PutRoutinesRequestBody from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of routine
         if self.routine:
             _dict["routine"] = self.routine.to_dict()
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> PutRoutinesRequestBody:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of PutRoutinesRequestBody from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return PutRoutinesRequestBody.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = PutRoutinesRequestBody.parse_obj(
+        _obj = cls.model_validate(
             {
-                "routine": PutRoutinesRequestBodyRoutine.from_dict(obj.get("routine"))
+                "routine": PutRoutinesRequestBodyRoutine.from_dict(obj["routine"])
                 if obj.get("routine") is not None
                 else None
             }

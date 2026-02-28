@@ -11,9 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.get_routines200_response import (
-    GetRoutines200Response,  # noqa: E501
-)
+from hevy_api_service.models.get_routines200_response import GetRoutines200Response
 
 
 class TestGetRoutines200Response(unittest.TestCase):
@@ -27,12 +25,12 @@ class TestGetRoutines200Response(unittest.TestCase):
 
     def make_instance(self, include_optional) -> GetRoutines200Response:
         """Test GetRoutines200Response
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `GetRoutines200Response`
         """
-        model = GetRoutines200Response()  # noqa: E501
+        model = GetRoutines200Response()
         if include_optional:
             return GetRoutines200Response(
                 page = 1,

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | The type of the set. | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of PostWorkoutsRequestSet from a JSON string
 post_workouts_request_set_instance = PostWorkoutsRequestSet.from_json(json)
 # print the JSON string representation of the object
-print PostWorkoutsRequestSet.to_json()
+print(PostWorkoutsRequestSet.to_json())
 
 # convert the object into a dict
 post_workouts_request_set_dict = post_workouts_request_set_instance.to_dict()

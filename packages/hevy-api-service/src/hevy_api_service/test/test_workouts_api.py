@@ -11,7 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.api.workouts_api import WorkoutsApi  # noqa: E501
+from hevy_api_service.api.workouts_api import WorkoutsApi
 
 
 class TestWorkoutsApi(unittest.TestCase):
@@ -21,47 +21,47 @@ class TestWorkoutsApi(unittest.TestCase):
         self.api = WorkoutsApi()
 
     def tearDown(self) -> None:
-        self.api.api_client.close()
+        pass
 
     def test_create_workout(self) -> None:
         """Test case for create_workout
 
-        Create a new workout  # noqa: E501
+        Create a new workout
         """
         pass
 
     def test_get_workout_by_id(self) -> None:
         """Test case for get_workout_by_id
 
-        Get a single workout’s complete details by the workoutId  # noqa: E501
+        Get a single workout’s complete details by the workoutId
         """
         pass
 
     def test_get_workout_count(self) -> None:
         """Test case for get_workout_count
 
-        Get the total number of workouts on the account  # noqa: E501
+        Get the total number of workouts on the account
         """
         pass
 
     def test_get_workout_events(self) -> None:
         """Test case for get_workout_events
 
-        Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.  # noqa: E501
+        Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
         """
         pass
 
     def test_get_workouts(self) -> None:
         """Test case for get_workouts
 
-        Get a paginated list of workouts  # noqa: E501
+        Get a paginated list of workouts
         """
         pass
 
     def test_update_workout(self) -> None:
         """Test case for update_workout
 
-        Update an existing workout  # noqa: E501
+        Update an existing workout
         """
         pass
 

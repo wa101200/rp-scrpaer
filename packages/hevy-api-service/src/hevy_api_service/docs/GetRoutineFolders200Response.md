@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **page** | **int** | Current page number | [optional] [default to 1]
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of GetRoutineFolders200Response from a JSON string
 get_routine_folders200_response_instance = GetRoutineFolders200Response.from_json(json)
 # print the JSON string representation of the object
-print GetRoutineFolders200Response.to_json()
+print(GetRoutineFolders200Response.to_json())
 
 # convert the object into a dict
 get_routine_folders200_response_dict = get_routine_folders200_response_instance.to_dict()

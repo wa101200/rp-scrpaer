@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **workout_id** | **str** | The workout ID | [optional] 
@@ -27,7 +28,7 @@ json = "{}"
 # create an instance of ExerciseHistoryEntry from a JSON string
 exercise_history_entry_instance = ExerciseHistoryEntry.from_json(json)
 # print the JSON string representation of the object
-print ExerciseHistoryEntry.to_json()
+print(ExerciseHistoryEntry.to_json())
 
 # convert the object into a dict
 exercise_history_entry_dict = exercise_history_entry_instance.to_dict()

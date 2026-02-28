@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** | Indicates the type of the event (deleted) | 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of DeletedWorkout from a JSON string
 deleted_workout_instance = DeletedWorkout.from_json(json)
 # print the JSON string representation of the object
-print DeletedWorkout.to_json()
+print(DeletedWorkout.to_json())
 
 # convert the object into a dict
 deleted_workout_dict = deleted_workout_instance.to_dict()

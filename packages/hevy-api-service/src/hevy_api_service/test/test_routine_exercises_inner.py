@@ -11,9 +11,7 @@ Do not edit the class manually.
 
 import unittest
 
-from hevy_api_service.models.routine_exercises_inner import (
-    RoutineExercisesInner,  # noqa: E501
-)
+from hevy_api_service.models.routine_exercises_inner import RoutineExercisesInner
 
 
 class TestRoutineExercisesInner(unittest.TestCase):
@@ -27,12 +25,12 @@ class TestRoutineExercisesInner(unittest.TestCase):
 
     def make_instance(self, include_optional) -> RoutineExercisesInner:
         """Test RoutineExercisesInner
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `RoutineExercisesInner`
         """
-        model = RoutineExercisesInner()  # noqa: E501
+        model = RoutineExercisesInner()
         if include_optional:
             return RoutineExercisesInner(
                 index = 0,

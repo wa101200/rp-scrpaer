@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.post_workouts_request_exercise import (
-    PostWorkoutsRequestExercise,  # noqa: E501
+    PostWorkoutsRequestExercise,
 )
 
 
@@ -27,12 +27,12 @@ class TestPostWorkoutsRequestExercise(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PostWorkoutsRequestExercise:
         """Test PostWorkoutsRequestExercise
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `PostWorkoutsRequestExercise`
         """
-        model = PostWorkoutsRequestExercise()  # noqa: E501
+        model = PostWorkoutsRequestExercise()
         if include_optional:
             return PostWorkoutsRequestExercise(
                 exercise_template_id = 'D04AC939',

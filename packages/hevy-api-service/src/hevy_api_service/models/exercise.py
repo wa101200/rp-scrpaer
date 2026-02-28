@@ -14,16 +14,15 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
+from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
-
-from hevy_api_service.models.set import Set
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 
 
 class Exercise(BaseModel):
     """
     Exercise
-    """
+    """  # noqa: E501
 
     index: StrictFloat | StrictInt | None = Field(
         default=None,
@@ -39,8 +38,8 @@ class Exercise(BaseModel):
         default=None,
         description="The id of the superset that the exercise belongs to. A value of null indicates the exercise is not part of a superset.",
     )
-    sets: conlist(Set) | None = None
-    __properties = [
+    sets: list[set] | None = None
+    __properties: ClassVar[list[str]] = [
         "index",
         "title",
         "notes",
@@ -49,59 +48,74 @@ class Exercise(BaseModel):
         "sets",
     ]
 
-    class Config:
-        """Pydantic configuration"""
-
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Exercise:
+    def from_json(cls, json_str: str) -> Self | None:
         """Create an instance of Exercise from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True, exclude={}, exclude_none=True)
+    def to_dict(self) -> dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: set[str] = set([])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in sets (list)
         _items = []
         if self.sets:
-            for _item in self.sets:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_sets in self.sets:
+                if _item_sets:
+                    _items.append(_item_sets.to_dict())
             _dict["sets"] = _items
         # set to None if supersets_id (nullable) is None
-        # and __fields_set__ contains the field
-        if self.supersets_id is None and "supersets_id" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.supersets_id is None and "supersets_id" in self.model_fields_set:
             _dict["supersets_id"] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Exercise:
+    def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
         """Create an instance of Exercise from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Exercise.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Exercise.parse_obj(
+        _obj = cls.model_validate(
             {
                 "index": obj.get("index"),
                 "title": obj.get("title"),
                 "notes": obj.get("notes"),
                 "exercise_template_id": obj.get("exercise_template_id"),
                 "supersets_id": obj.get("supersets_id"),
-                "sets": [Set.from_dict(_item) for _item in obj.get("sets")]
+                "sets": [set.from_dict(_item) for _item in obj["sets"]]
                 if obj.get("sets") is not None
                 else None,
             }

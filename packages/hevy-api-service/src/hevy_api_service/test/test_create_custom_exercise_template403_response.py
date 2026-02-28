@@ -12,7 +12,7 @@ Do not edit the class manually.
 import unittest
 
 from hevy_api_service.models.create_custom_exercise_template403_response import (
-    CreateCustomExerciseTemplate403Response,  # noqa: E501
+    CreateCustomExerciseTemplate403Response,
 )
 
 
@@ -29,12 +29,12 @@ class TestCreateCustomExerciseTemplate403Response(unittest.TestCase):
         self, include_optional
     ) -> CreateCustomExerciseTemplate403Response:
         """Test CreateCustomExerciseTemplate403Response
-        include_option is a boolean, when False only required
+        include_optional is a boolean, when False only required
         params are included, when True both required and
         optional params are included"""
         # uncomment below to create an instance of `CreateCustomExerciseTemplate403Response`
         """
-        model = CreateCustomExerciseTemplate403Response()  # noqa: E501
+        model = CreateCustomExerciseTemplate403Response()
         if include_optional:
             return CreateCustomExerciseTemplate403Response(
                 error = 'exceeds-custom-exercise-limit'
