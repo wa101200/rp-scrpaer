@@ -8,7 +8,15 @@ import click
 
 from rp_to_strong_cli.service import RPClient
 
-EXPORT_TYPES = ["all", "profile", "subscriptions", "exercises", "mesocycles", "templates", "exercise-history"]
+EXPORT_TYPES = [
+    "all",
+    "profile",
+    "subscriptions",
+    "exercises",
+    "mesocycles",
+    "templates",
+    "exercise-history",
+]
 
 
 def _read_token(token_file: str) -> str:
@@ -67,7 +75,9 @@ def cli():
 
 
 @cli.command()
-@click.option("--token-file", default="token.txt", help="Path to file containing bearer token.")
+@click.option(
+    "--token-file", default="token.txt", help="Path to file containing bearer token."
+)
 @click.option(
     "--type",
     "export_type",
@@ -86,7 +96,9 @@ def export(token_file: str, export_type: str, output: str | None):
     token = _read_token(token_file)
 
     if output is None:
-        output_path = Path("export") if export_type == "all" else Path(f"{export_type}.json")
+        output_path = (
+            Path("export") if export_type == "all" else Path(f"{export_type}.json")
+        )
     else:
         output_path = Path(output)
 

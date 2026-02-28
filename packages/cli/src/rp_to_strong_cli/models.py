@@ -355,5 +355,3 @@ class SecondMesoMeta(BaseModel):
     started_at: datetime | None = None
 
     model_config = {"alias_generator": lambda s: _to_camel(s), "populate_by_name": True}
-
-

@@ -75,16 +75,16 @@ class RPClient:
 
     async def get_all_mesocycles(self) -> list[MesocycleDetail]:
         summaries = await self.get_mesocycles()
-        results = await asyncio.gather(
-            *(self.get_mesocycle(m.key) for m in summaries)
-        )
+        results = await asyncio.gather(*(self.get_mesocycle(m.key) for m in summaries))
         return list(results)
 
     async def get_templates(self) -> list[TemplateSummary]:
         data = await self._get("/training/templates")
         return [TemplateSummary.model_validate(t) for t in data]
 
-    async def get_exercise_history(self, exercise_id: int) -> list[ExerciseHistoryEntry]:
+    async def get_exercise_history(
+        self, exercise_id: int
+    ) -> list[ExerciseHistoryEntry]:
         data = await self._get(f"/training/exercises/{exercise_id}/history")
         return [ExerciseHistoryEntry.model_validate(e) for e in data]
 
@@ -99,14 +99,18 @@ class RPClient:
     # --- Bulk export ---
 
     async def export_all(self) -> dict:
-        profile, subscriptions, bootstrap, templates, exercise_history = (
-            await asyncio.gather(
-                self.get_user_profile(),
-                self.get_user_subscriptions(),
-                self.get_bootstrap(),
-                self.get_templates(),
-                self.get_user_exercise_history(),
-            )
+        (
+            profile,
+            subscriptions,
+            bootstrap,
+            templates,
+            exercise_history,
+        ) = await asyncio.gather(
+            self.get_user_profile(),
+            self.get_user_subscriptions(),
+            self.get_bootstrap(),
+            self.get_templates(),
+            self.get_user_exercise_history(),
         )
 
         mesocycles = await asyncio.gather(
