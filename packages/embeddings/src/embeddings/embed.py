@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 device = "mps" if torch.backends.mps.is_available() else "cpu"
 logger.info("Using device: %s", device)
 
-MODEL_NAME = "mixedbread-ai/mxbai-embed-large-v1"
+MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 
 # 2. Load the model and move it to the MPS device
 logger.info("Loading model %s", MODEL_NAME)
