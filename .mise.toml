@@ -10,7 +10,6 @@ config_roots = ["packages/*", "scripts/*"]
 
 [settings]
 experimental = true
-lockfile = true
 
 [tools]
 python = "3.12"
