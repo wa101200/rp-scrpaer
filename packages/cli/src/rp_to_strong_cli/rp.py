@@ -5,6 +5,7 @@ from pathlib import Path
 
 import click
 from api_service_rp import ApiClient, Configuration, TrainingDataApi, UserApi
+from cloudpathlib import AnyPath, CloudPath
 
 from ._utils import _read_token, _write_json
 
@@ -55,7 +56,7 @@ async def _fetch_mesocycles(training_api: TrainingDataApi) -> list:
     )
 
 
-async def _export(token: str, export_type: str, output: Path) -> None:
+async def _export(token: str, export_type: str, output: Path | CloudPath) -> None:
     config = Configuration(access_token=token)
     async with ApiClient(config) as client:
         user_api = UserApi(client)
@@ -66,7 +67,8 @@ async def _export(token: str, export_type: str, output: Path) -> None:
             if output.suffix == ".json":
                 _write_json(data, output)
             else:
-                output.mkdir(parents=True, exist_ok=True)
+                if isinstance(output, Path):
+                    output.mkdir(parents=True, exist_ok=True)
                 for key, value in data.items():
                     _write_json(value, output / f"{key}.json")
             return
@@ -109,10 +111,10 @@ def export(token_file: str, export_type: str, output: str | None):
     token = _read_token(token_file)
 
     if output is None:
-        output_path = (
-            Path("export") if export_type == "all" else Path(f"{export_type}.json")
+        output_path = AnyPath(
+            "export" if export_type == "all" else f"{export_type}.json"
         )
     else:
-        output_path = Path(output)
+        output_path = AnyPath(output)
 
     asyncio.run(_export(token, export_type, output_path))

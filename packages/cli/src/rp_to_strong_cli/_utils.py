@@ -4,10 +4,11 @@ import json
 from pathlib import Path
 
 import click
+from cloudpathlib import AnyPath, CloudPath
 
 
 def _read_token(token_file: str) -> str:
-    path = Path(token_file)
+    path = AnyPath(token_file)
     if not path.exists():
         raise click.ClickException(f"Token file not found: {token_file}")
     return path.read_text().strip()
@@ -29,7 +30,8 @@ def _serialize(obj: object) -> object:
     return obj
 
 
-def _write_json(data: object, output: Path) -> None:
-    output.parent.mkdir(parents=True, exist_ok=True)
+def _write_json(data: object, output: Path | CloudPath) -> None:
+    if isinstance(output, Path):
+        output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(_serialize(data), indent=2, ensure_ascii=False))
     click.echo(f"Wrote {output}")
