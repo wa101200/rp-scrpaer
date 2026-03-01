@@ -16,9 +16,7 @@ logger.info("Using device: %s", device)
 
 # 2. Load the model and move it to the MPS device
 logger.info("Loading model paraphrase-mpnet-base-v2")
-model = SentenceTransformer(
-    "sentence-transformers/paraphrase-mpnet-base-v2", device=device
-)
+model = SentenceTransformer("mixedbread-ai/mxbai-embed-large-v1", device=device)
 
 # 3. Encode and store hevy exercises
 hevy_docs = hevy_exercises["rich_text_representation"].to_list()

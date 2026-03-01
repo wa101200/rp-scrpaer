@@ -1,8 +1,8 @@
 rp_embedding_name: dumbbell press low incline, dumbbell, chest
 matches:
   - hevy_embedding_name: incline bench press dumbbell, chest, triceps, shoulders
-    distance: 0.09312671422958374
-  - hevy_embedding_name: overhead press dumbbell, shoulders, triceps
-    distance: 0.09782636165618896
+    distance: 0.0848466157913208
+  - hevy_embedding_name: dumbbell squeeze press, chest, shoulders, triceps
+    distance: 0.1066969633102417
   - hevy_embedding_name: floor press dumbbell, chest, shoulders, triceps
-    distance: 0.11089563369750977
+    distance: 0.11084264516830444

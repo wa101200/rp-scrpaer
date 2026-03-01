@@ -1,8 +1,8 @@
 rp_embedding_name: barbell bent over row, barbell, lats, upper_back
 matches:
   - hevy_embedding_name: bent over row barbell, upper_back, lats, biceps, forearms
-    distance: 0.22533851861953735
-  - hevy_embedding_name: pendlay row barbell, upper_back, lats, biceps, forearms
-    distance: 0.2536203861236572
-  - hevy_embedding_name: kettlebell halo, shoulders, traps, upper_back
-    distance: 0.25541794300079346
+    distance: 0.036681175231933594
+  - hevy_embedding_name: bent over row dumbbell, upper_back, lats, biceps, forearms
+    distance: 0.05457860231399536
+  - hevy_embedding_name: bent over row band, upper_back, lats, biceps, forearms
+    distance: 0.07626336812973022

@@ -1,8 +1,8 @@
 rp_embedding_name: v-up weighted, bodyweight-loadable, abdominals
 matches:
-  - hevy_embedding_name: sit up weighted, abdominals
-    distance: 0.20700287818908691
   - hevy_embedding_name: v up, abdominals
-    distance: 0.26306241750717163
+    distance: 0.13890749216079712
+  - hevy_embedding_name: sit up weighted, abdominals
+    distance: 0.16960716247558594
   - hevy_embedding_name: crunch weighted, abdominals
-    distance: 0.27309107780456543
+    distance: 0.18551212549209595
