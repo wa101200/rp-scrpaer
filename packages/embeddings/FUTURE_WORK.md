@@ -21,40 +21,58 @@ Run every model/config change against this ground truth to catch regressions.
 
 ---
 
-## Model Upgrades
+## Model Upgrades: LLM-Based Embedding Models
 
-### Paraphrase models (current tier)
+The pipeline currently uses `mixedbread-ai/mxbai-embed-large-v1` (335M params, 1024-dim, ~0.7 GB). This was a major improvement over the original `paraphrase-mpnet-base-v2` --- better precision on hard synonyms and equipment-variant matching. The next frontier is LLM-based embedding models.
 
-The pipeline uses `paraphrase-mpnet-base-v2` (768-dim, ~420 MB). This is strong for synonym detection but there are better options in the same weight class:
+### Why LLM-based models
 
-| Model | Dim | Size | Advantage |
-|---|---|---|---|
-| `paraphrase-MiniLM-L6-v2` | 384 | 80 MB | 5x faster, minimal quality loss --- good for rapid iteration |
-| `BAAI/bge-small-en-v1.5` | 384 | 130 MB | Top MTEB performer in the small tier. Supports instruction prefixes like `"Represent this exercise for matching:"` which can steer embeddings toward the task |
-| `BAAI/bge-base-en-v1.5` | 768 | 440 MB | Same family, stronger. Instruction prefix support |
-| `intfloat/e5-small-v2` / `e5-base-v2` | 384/768 | 130/440 MB | Microsoft E5 models, strong on short text. Require `"query: "` / `"passage: "` prefixes |
-| `nomic-ai/nomic-embed-text-v1.5` | 768 | 550 MB | Matryoshka embeddings --- can truncate dimensions (768 -> 256 -> 128) without retraining for speed/quality tradeoff |
+Traditional encoder models (BERT-scale, ~100M--500M params) learn general sentence similarity but have no world knowledge. They treat "RDL" and "Romanian Deadlift" as unrelated tokens unless they happened to co-occur in training data. LLM-based embedders are built on top of pre-trained language models that already understand fitness vocabulary, abbreviations, and equipment relationships. Key advantages:
 
-### LLM-based embedding models
+- **World knowledge** --- They know that "Pullup Underhand Grip" is a "Chin Up", that "Machine Flye" is a "Butterfly (Pec Deck)", and that "RDL" means "Romanian Deadlift". This knowledge is baked into the model weights, not learned from our small dataset.
+- **Instruction prompts** --- LLM-based models accept task-specific instructions like `"Given an exercise from the RP app, retrieve the matching Hevy exercise even if it uses alternative names."` This steers the embedding space toward our exact use case without fine-tuning.
+- **Higher MTEB scores** --- The best LLM-based models score 70--75 on MTEB English vs. 64--65 for BERT-scale models. On short-text semantic similarity (our task), the gap is even wider.
+- **Practical for our dataset** --- We have ~750 exercises. Even an 8B model encodes everything in under a minute on a modern GPU. The extra compute cost is negligible.
 
-For maximum zero-shot quality, LLM-based embedders understand fitness vocabulary natively (they know "RDL" = "Romanian Deadlift"):
+### Candidate models by tier
 
-| Model | Params | Why |
-|---|---|---|
-| `Alibaba-NLP/gte-Qwen2-7B-instruct` | 7B | Top MTEB. Highly instruction-tunable: `"Given an exercise from the RP app, retrieve the matching Hevy exercise even if it uses alternative names."` |
-| `Salesforce/SFR-Embedding-Mistral` | 7B | Built on Mistral-7B, designed for asymmetric retrieval (query looks different from document) |
-| `mixedbread-ai/mxbai-embed-large-v1` | ~335M | 1024-dim, Matryoshka support. Peak traditional encoder quality without going to 7B parameters |
+#### Small (0.6B--1.5B params, 1--7 GB)
 
-The dataset is tiny (~4k exercises), so even a 7B model encodes everything in a few minutes on a modern GPU.
+Best starting point. These run comfortably on CPU or a single consumer GPU and already outperform all BERT-scale models.
 
-### Benchmarking plan
+| Model | Params | Dim | Size | Notes |
+|---|---|---|---|---|
+| `Qwen/Qwen3-Embedding-0.6B` | 0.6B | 1024 (MRL 32--1024) | ~1.2 GB | Apache 2.0, 32K context, 100+ languages, instruction-aware |
+| `Alibaba-NLP/gte-Qwen2-1.5B-instruct` | 1.5B | 1536 | ~7.1 GB | Strong MTEB for its size, instruction-aware, Apache 2.0 |
+| `dunzhang/stella_en_1.5B_v5` | 1.5B | 256--8192 (MRL) | ~6.2 GB | Matryoshka with 8 dimension choices, MIT license |
 
-Run all candidate models against the ground truth. Compare Precision@1, MRR, and inspect the failure cases qualitatively. Likely priority order:
+#### Medium (4B params, ~8 GB)
 
-1. `paraphrase-mpnet-base-v2` (current baseline)
-2. `BAAI/bge-small-en-v1.5` (instruction prefix, lightweight)
-3. `paraphrase-MiniLM-L6-v2` (speed baseline)
-4. `gte-Qwen2-7B-instruct` (quality ceiling)
+Sweet spot between quality and resource usage.
+
+| Model | Params | Dim | Size | Notes |
+|---|---|---|---|---|
+| `Qwen/Qwen3-Embedding-4B` | 4B | 2560 (MRL) | ~8.1 GB | Apache 2.0, instruction-aware, 32K context |
+
+#### Large (7B--8B params, 14--30 GB)
+
+Quality ceiling. Requires a GPU with 16+ GB VRAM (or quantization).
+
+| Model | Params | Dim | Size | Notes |
+|---|---|---|---|---|
+| `Qwen/Qwen3-Embedding-8B` | 8B | 4096 (MRL 32--4096) | ~15.2 GB | MTEB #1 multilingual (70.58), English 75.22, Apache 2.0 |
+| `nvidia/NV-Embed-v2` | 7.85B | 4096 | ~15.7 GB | MTEB English 72.31, novel latent-attention pooling, 32K context. CC-BY-NC-4.0 (non-commercial) |
+| `intfloat/e5-mistral-7b-instruct` | 7.1B | 4096 | ~14.2 GB | First major LLM embedder, instruction-aware, MIT license |
+| `Salesforce/SFR-Embedding-2_R` | 7.1B | 4096 | ~14.2 GB | Built on e5-mistral, asymmetric retrieval. CC-BY-NC-4.0 |
+| `Alibaba-NLP/gte-Qwen2-7B-instruct` | 7B | 3584 | ~30.5 GB | Instruction-tunable, Apache 2.0, needs 16--32 GB VRAM |
+
+### Recommended evaluation order
+
+1. `Qwen3-Embedding-0.6B` --- smallest LLM embedder, fast iteration, likely already better than mxbai
+2. `stella_en_1.5B_v5` or `gte-Qwen2-1.5B-instruct` --- 1.5B sweet spot
+3. `Qwen3-Embedding-8B` --- quality ceiling, Apache 2.0, best current MTEB scores
+
+Run each against the ground truth (see Evaluation section above). Compare Precision@1, MRR, and inspect failure cases qualitatively. The 0.6B model is the pragmatic first pick; only move to 8B if the 0.6B leaves a meaningful accuracy gap on hard pairs.
 
 ---
 
@@ -92,7 +110,7 @@ After retrieving top-N candidates with the bi-encoder, pass each (RP, Hevy) pair
 If zero-shot models still fail on edge cases (custom exercises, gym slang, uncommon equipment), fine-tune a small model on synthetic pairs:
 
 1. Use a local LLM (e.g., Llama 3 70B) to generate 3-5k synthetic (RP name, Hevy name) pairs including synonyms, acronyms, and paraphrases
-2. Fine-tune `bge-small-en-v1.5` or `paraphrase-MiniLM-L6-v2` using contrastive loss or SetFit
+2. Fine-tune `Qwen3-Embedding-0.6B` or `stella_en_1.5B_v5` using contrastive loss
 3. Evaluate against the ground truth
 
 This is the "nuclear option" --- only worth pursuing after confirming that zero-shot models leave a meaningful accuracy gap.
