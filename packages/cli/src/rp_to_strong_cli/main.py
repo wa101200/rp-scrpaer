@@ -115,7 +115,12 @@ def cli():
     """RP Hypertrophy to STRONG workout data exporter."""
 
 
-@cli.command()
+@cli.group()
+def rp():
+    """RP Hypertrophy commands."""
+
+
+@rp.command()
 @click.option(
     "--token-file", default="token.txt", help="Path to file containing bearer token."
 )
