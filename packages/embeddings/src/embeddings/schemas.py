@@ -63,3 +63,23 @@ class MuscleGroupMapping(TypedDict):
 
 # The resulting type for your data
 MuscleGroupsData = list[MuscleGroupMapping]
+
+
+muscleGroupMappingSchema = {
+    "hevy_primary": pl.List(pl.String),
+    "name": pl.String,
+    "rpMuscleGroupId": pl.UInt32,  # Using Unsigned Integer
+    "subtypes": pl.Struct(
+        {
+            "incline": pl.String,
+            "non-incline": pl.String,
+            "horizontal": pl.String,
+            "vertical": pl.String,
+            "compound": pl.String,
+            "raise": pl.String,
+            "heavy-axial": pl.String,
+            "non-heavy-axial": pl.String,
+        }
+    ),
+    "note": pl.String,
+}

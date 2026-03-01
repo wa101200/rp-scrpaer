@@ -1,8 +1,14 @@
 import json
+from pprint import pprint
 
 import polars as pl
 
-from embeddings.schemas import MuscleGroupMapping, hevy_schema, rp_schema
+from embeddings.schemas import (
+    MuscleGroupMapping,
+    hevy_schema,
+    muscleGroupMappingSchema,
+    rp_schema,
+)
 
 rp_exercises: pl.DataFrame = pl.read_json("data/rp/exercises.json", schema=rp_schema)
 
@@ -24,5 +30,16 @@ normalized_mapping: list[MuscleGroupMapping] = [
     for k, v in mappings.items()
 ]
 
+normalized_mapping_df = pl.DataFrame(
+    normalized_mapping, schema=muscleGroupMappingSchema
+)
 
-print(rp_exercises)
+rp_exercises_with_muscle_mapping = rp_exercises.join(
+    normalized_mapping_df,
+    left_on="muscleGroupId",
+    right_on="rpMuscleGroupId",
+    how="right",
+)
+
+
+pprint(rp_exercises_with_muscle_mapping[0].to_dicts())
