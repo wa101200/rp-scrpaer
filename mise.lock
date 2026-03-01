@@ -10,6 +10,11 @@ backend = "aqua:cli/cli"
 [[tools.hadolint]]
 version = "2.14.0"
 backend = "aqua:hadolint/hadolint"
+"platforms.linux-arm64" = { checksum = "sha256:331f1d3511b84a4f1e3d18d52fec284723e4019552f4f47b19322a53ce9a40ed", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:6bf226944684f56c84dd014e8b979d27425c0148f61b3bd99bcc6f39e9dc5a47", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-linux-x86_64"}
+"platforms.macos-arm64" = { checksum = "sha256:3625e2e9f43dcfe7bd38738a5f5520ed50ce39ed28485266e6803dd7bc197b10", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:2b69a853433f1eca522ffb921cd490bd1321424d03331fd8390f93b7fb4a02e9", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-macos-x86_64"}
+"platforms.windows-x64" = { checksum = "sha256:8e0ee174f88edb14f207a68430c7a53c2883ed509cdbde9a3a26fffa140fa5e4", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-windows-x86_64.exe"}
 
 [[tools.hk]]
 version = "1.36.0"
@@ -84,7 +89,11 @@ backend = "aqua:astral-sh/uv"
 [[tools.watchexec]]
 version = "2.5.0"
 backend = "aqua:watchexec/watchexec"
+"platforms.linux-arm64" = { checksum = "sha256:5b01f78483eb506c111a035ec3187b7ef37de3158702c50c4f85390e97d02487", url = "https://github.com/watchexec/watchexec/releases/download/v2.5.0/watchexec-2.5.0-aarch64-unknown-linux-gnu.tar.xz"}
+"platforms.linux-x64" = { checksum = "sha256:e8015bffea46d9de5cc7ff061afa2d27593e1a1914b406343ef47bb65f5f0634", url = "https://github.com/watchexec/watchexec/releases/download/v2.5.0/watchexec-2.5.0-x86_64-unknown-linux-musl.tar.xz"}
 "platforms.macos-arm64" = { checksum = "sha256:dd77ea998468c128b70c9c8a0e6a59221c9a674151a8d683b1e30055d0eeb1d2", url = "https://github.com/watchexec/watchexec/releases/download/v2.5.0/watchexec-2.5.0-aarch64-apple-darwin.tar.xz"}
+"platforms.macos-x64" = { checksum = "sha256:a494a488f51359d6bd873ee6df6dcc190c4ce1f693a8688064fbf3a26ffe3579", url = "https://github.com/watchexec/watchexec/releases/download/v2.5.0/watchexec-2.5.0-x86_64-apple-darwin.tar.xz"}
+"platforms.windows-x64" = { checksum = "sha256:ecfc8457d30f0ebe5fdc6f67fed87e9114eee551310ebb66449629a5994f843c", url = "https://github.com/watchexec/watchexec/releases/download/v2.5.0/watchexec-2.5.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools.yamlfmt]]
 version = "0.21.0"
