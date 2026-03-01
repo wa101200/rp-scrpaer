@@ -8,25 +8,6 @@ rp_schema = {
     "muscleGroupId": pl.UInt32,
     "mgSubType": pl.String,
     "exerciseType": pl.String,
-    "youtubeId": pl.String,
-    "userId": pl.Int64,
-    "notes": pl.List(
-        pl.Struct(
-            [
-                pl.Field("id", pl.UInt32),
-                pl.Field("exerciseId", pl.UInt32),
-                pl.Field("userId", pl.Int64),
-                pl.Field("noteId", pl.UInt32),
-                pl.Field("dayExerciseId", pl.UInt32),
-                pl.Field("createdAt", pl.String),
-                pl.Field("updatedAt", pl.String),
-                pl.Field("text", pl.String),
-            ]
-        )
-    ),
-    "createdAt": pl.String,
-    "updatedAt": pl.String,
-    "deletedAt": pl.String,
 }
 
 
@@ -36,7 +17,6 @@ hevy_schema = {
     "type": pl.String,
     "primary_muscle_group": pl.String,
     "secondary_muscle_groups": pl.List(pl.String),
-    "is_custom": pl.Boolean,
 }
 
 
@@ -56,7 +36,8 @@ SubtypeDict = dict[str, str]
 class MuscleGroupMapping(TypedDict):
     hevy_primary: list[str]
     name: str
-    rpMuscleGroupId: str
+    rp_muscleGroupId: str
+    muscle_name: str
     subtypes: SubtypeDict | None
     note: str | None
 
@@ -66,20 +47,9 @@ MuscleGroupsData = list[MuscleGroupMapping]
 
 
 muscleGroupMappingSchema = {
-    "hevy_primary": pl.List(pl.String),
-    "name": pl.String,
-    "rpMuscleGroupId": pl.UInt32,  # Using Unsigned Integer
-    "subtypes": pl.Struct(
-        {
-            "incline": pl.String,
-            "non-incline": pl.String,
-            "horizontal": pl.String,
-            "vertical": pl.String,
-            "compound": pl.String,
-            "raise": pl.String,
-            "heavy-axial": pl.String,
-            "non-heavy-axial": pl.String,
-        }
-    ),
-    "note": pl.String,
+    "hevy_primary": pl.List(
+        pl.String
+    ),  # Guess data of which hevy primary muscle groups map to which rp muscle group
+    "rp_muscleGroupId": pl.UInt32,  # join column
+    "rp_muscleGroup": pl.String,  # Guessed data
 }
