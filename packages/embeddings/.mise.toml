@@ -8,8 +8,5 @@ auto_install = true
 [env]
 
 
-[tasks.test]
-run = "echo 'No tests defined'"
-
 [tasks.embed]
 run = "uv run src/embeddings/embed.py"
