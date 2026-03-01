@@ -16,7 +16,6 @@ ENV MISE_YES=1 \
     MISE_DATA_DIR=/opt/mise
 
 WORKDIR /app
-COPY .mise.toml mise.lock ./
 COPY packages/api-service/.mise.toml packages/api-service/.mise.toml
 
 WORKDIR /app/packages/api-service

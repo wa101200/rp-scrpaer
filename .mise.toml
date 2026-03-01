@@ -29,13 +29,13 @@ watchexec = "latest"
 "npm:@biomejs/biome" = "latest"
 
 [tasks.pre-commit]
-run = "hk run pre-commit -a"
+run = "hk pre-commit -a"
 
 [tasks.format]
-run = "hk run fix -a"
+run = "hk fix -a"
 
 [tasks.lint]
-run = "hk run check -a"
+run = "hk check -a"
 
 [prepare.uv]
 run = "uv sync --all-packages"
