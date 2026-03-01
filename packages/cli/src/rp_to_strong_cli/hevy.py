@@ -6,6 +6,7 @@ from pathlib import Path
 from uuid import UUID
 
 import click
+from cloudpathlib import AnyPath, CloudPath
 from hevy_api_service import ApiClient as HevyApiClient
 from hevy_api_service import Configuration as HevyConfiguration
 from hevy_api_service import ExerciseTemplatesApi
@@ -35,7 +36,9 @@ async def _fetch_all_exercise_templates(
     return all_templates
 
 
-async def _hevy_export(api_key: str, export_type: str, output: Path) -> None:
+async def _hevy_export(
+    api_key: str, export_type: str, output: Path | CloudPath
+) -> None:
     key = UUID(api_key)
     config = HevyConfiguration(host="https://api.hevyapp.com")
     async with HevyApiClient(config) as client:
@@ -55,7 +58,8 @@ async def _hevy_export(api_key: str, export_type: str, output: Path) -> None:
         if output.suffix == ".json":
             _write_json(data, output)
         else:
-            output.mkdir(parents=True, exist_ok=True)
+            if isinstance(output, Path):
+                output.mkdir(parents=True, exist_ok=True)
             for name, value in data.items():
                 _write_json(value, output / f"{name}.json")
 
@@ -89,10 +93,10 @@ def hevy_export(export_type: str, output: str | None):
         )
 
     if output is None:
-        output_path = (
-            Path("hevy-export") if export_type == "all" else Path(f"{export_type}.json")
+        output_path = AnyPath(
+            "hevy-export" if export_type == "all" else f"{export_type}.json"
         )
     else:
-        output_path = Path(output)
+        output_path = AnyPath(output)
 
     asyncio.run(_hevy_export(api_key, export_type, output_path))
