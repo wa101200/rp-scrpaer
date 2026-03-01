@@ -10,6 +10,7 @@ config_roots = ["packages/*", "scripts/*"]
 
 [settings]
 experimental = true
+auto_install = true
 
 [tools]
 python = "3.12"
