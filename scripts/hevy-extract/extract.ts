@@ -9,9 +9,8 @@ function generateOperationId(method: string, path: string): string {
 			const clean = seg.replace(/[{}]/g, "");
 			return clean
 				.split("_")
-				.map(
-					(part, i) =>
-						i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1),
+				.map((part, i) =>
+					i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1),
 				)
 				.join("");
 		});
@@ -45,6 +44,70 @@ function addOperationIds(spec: Record<string, unknown>): void {
 			if (operation.operationId) continue;
 			operation.operationId = generateOperationId(method, path);
 		}
+	}
+}
+
+function fixMissingParameterSchemas(spec: Record<string, unknown>): void {
+	const paths = spec.paths as
+		| Record<string, Record<string, Record<string, unknown>>>
+		| undefined;
+	if (!paths) return;
+
+	const httpMethods = new Set([
+		"get",
+		"post",
+		"put",
+		"delete",
+		"patch",
+		"options",
+		"head",
+	]);
+
+	for (const methods of Object.values(paths)) {
+		for (const [method, operation] of Object.entries(methods)) {
+			if (!httpMethods.has(method)) continue;
+			const params = operation.parameters as
+				| Array<Record<string, unknown>>
+				| undefined;
+			if (!params) continue;
+			for (const param of params) {
+				if (!param.schema) {
+					param.schema = { type: "string" };
+				}
+			}
+		}
+	}
+}
+
+function fixEnumSchemaTypes(spec: Record<string, unknown>): void {
+	const components = spec.components as Record<string, unknown> | undefined;
+	if (!components) return;
+	const schemas = components.schemas as
+		| Record<string, Record<string, unknown>>
+		| undefined;
+	if (!schemas) return;
+
+	for (const schema of Object.values(schemas)) {
+		if (schema.type === "enum") {
+			schema.type = "string";
+		}
+	}
+}
+
+function fixRefSiblings(obj: unknown): void {
+	if (typeof obj !== "object" || obj === null) return;
+	if (Array.isArray(obj)) {
+		for (const item of obj) fixRefSiblings(item);
+		return;
+	}
+	const record = obj as Record<string, unknown>;
+	for (const value of Object.values(record)) {
+		fixRefSiblings(value);
+	}
+	if ("$ref" in record && Object.keys(record).length > 1) {
+		const ref = record.$ref;
+		delete record.$ref;
+		record.allOf = [{ $ref: ref }];
 	}
 }
 
@@ -111,6 +174,9 @@ const extract = defineCommand({
 		const jsSource = await fetch(flags.url).then((r) => r.text());
 		const spec = extractSpec(jsSource);
 		addOperationIds(spec);
+		fixMissingParameterSchemas(spec);
+		fixEnumSchemaTypes(spec);
+		fixRefSiblings(spec);
 
 		spin.update(`Writing to ${flags.output}`);
 		await Bun.write(flags.output, JSON.stringify(spec, null, 2) + "\n");

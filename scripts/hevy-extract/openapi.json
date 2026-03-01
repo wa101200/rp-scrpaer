@@ -254,7 +254,10 @@
             "name": "workoutId",
             "in": "path",
             "description": "The id of the workout",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -293,7 +296,10 @@
             "in": "path",
             "name": "workoutId",
             "description": "The id of the workout",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -535,7 +541,10 @@
             "in": "path",
             "name": "routineId",
             "description": "The id of the routine",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -592,7 +601,10 @@
             "in": "path",
             "name": "routineId",
             "description": "The id of the routine",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -825,7 +837,10 @@
             "name": "exerciseTemplateId",
             "in": "path",
             "description": "The id of the exercise template",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -993,7 +1008,10 @@
             "name": "folderId",
             "in": "path",
             "description": "The id of the routine folder",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1034,7 +1052,10 @@
             "in": "path",
             "name": "exerciseTemplateId",
             "description": "The id of the exercise template",
-            "required": true
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "in": "query",
@@ -1650,7 +1671,7 @@
         }
       },
       "CustomExerciseType": {
-        "type": "enum",
+        "type": "string",
         "enum": [
           "weight_reps",
           "reps_only",
@@ -1664,7 +1685,7 @@
         "example": "weight_reps"
       },
       "MuscleGroup": {
-        "type": "enum",
+        "type": "string",
         "enum": [
           "abdominals",
           "shoulders",
@@ -1690,7 +1711,7 @@
         "example": "chest"
       },
       "EquipmentCategory": {
-        "type": "enum",
+        "type": "string",
         "enum": [
           "none",
           "barbell",
@@ -1757,14 +1778,22 @@
                 "$ref": "#/components/schemas/CustomExerciseType"
               },
               "equipment_category": {
-                "$ref": "#/components/schemas/EquipmentCategory",
                 "description": "The equipment category of the exercise template.",
-                "example": "barbell"
+                "example": "barbell",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/EquipmentCategory"
+                  }
+                ]
               },
               "muscle_group": {
-                "$ref": "#/components/schemas/MuscleGroup",
                 "description": "The muscle group of the exercise template.",
-                "example": "chest"
+                "example": "chest",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/MuscleGroup"
+                  }
+                ]
               },
               "other_muscles": {
                 "type": "array",

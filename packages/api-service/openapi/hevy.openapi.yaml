@@ -50,6 +50,7 @@ paths:
                       $ref: '#/components/schemas/Workout'
         "400":
           description: Invalid page size
+      operationId: getWorkouts
     post:
       summary: Create a new workout
       tags:
@@ -84,6 +85,7 @@ paths:
                   error:
                     type: string
                     description: Error message
+      operationId: postWorkouts
   /v1/workouts/count:
     get:
       summary: Get the total number of workouts on the account
@@ -108,6 +110,7 @@ paths:
                     type: integer
                     default: 42
                     description: The total number of workouts
+      operationId: getWorkoutsCount
   /v1/workouts/events:
     get:
       summary: Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
@@ -147,6 +150,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedWorkoutEvents'
         "500":
           description: Internal Server Error
+      operationId: getWorkoutsEvents
   /v1/workouts/{workoutId}:
     get:
       tags:
@@ -163,6 +167,8 @@ paths:
           in: path
           description: The id of the workout
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success
@@ -172,6 +178,7 @@ paths:
                 $ref: '#/components/schemas/Workout'
         "404":
           description: Workout not found
+      operationId: getWorkoutsWorkoutId
     put:
       summary: Update an existing workout
       tags:
@@ -187,6 +194,8 @@ paths:
           name: workoutId
           description: The id of the workout
           required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -210,6 +219,7 @@ paths:
                   error:
                     type: string
                     description: Error message
+      operationId: putWorkoutsWorkoutId
   /v1/user/info:
     get:
       summary: Get user info
@@ -231,6 +241,7 @@ paths:
                 $ref: '#/components/schemas/UserInfoResponse'
         "404":
           description: User not found
+      operationId: getUserInfo
   /v1/routines:
     get:
       summary: Get a paginated list of routines
@@ -277,6 +288,7 @@ paths:
                       $ref: '#/components/schemas/Routine'
         "400":
           description: Invalid page size
+      operationId: getRoutines
     post:
       summary: Create a new routine
       tags:
@@ -321,6 +333,7 @@ paths:
                   error:
                     type: string
                     description: Error message
+      operationId: postRoutines
   /v1/routines/{routineId}:
     get:
       summary: Get a routine by its Id
@@ -337,6 +350,8 @@ paths:
           name: routineId
           description: The id of the routine
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: The routine with the provided id
@@ -357,6 +372,7 @@ paths:
                   error:
                     type: string
                     description: Error message
+      operationId: getRoutinesRoutineId
     put:
       summary: Update an existing routine
       tags:
@@ -372,6 +388,8 @@ paths:
           name: routineId
           description: The id of the routine
           required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -405,6 +423,7 @@ paths:
                   error:
                     type: string
                     description: Error message
+      operationId: putRoutinesRoutineId
   /v1/exercise_templates:
     get:
       summary: Get a paginated list of exercise templates available on the account.
@@ -451,6 +470,7 @@ paths:
                       $ref: '#/components/schemas/ExerciseTemplate'
         "400":
           description: Invalid page size
+      operationId: getExerciseTemplates
     post:
       summary: Create a new custom exercise template.
       tags:
@@ -503,6 +523,7 @@ paths:
                     type: string
                     description: Error message
                     example: exceeds-custom-exercise-limit
+      operationId: postExerciseTemplates
   /v1/exercise_templates/{exerciseTemplateId}:
     get:
       tags:
@@ -519,6 +540,8 @@ paths:
           in: path
           description: The id of the exercise template
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success
@@ -528,6 +551,7 @@ paths:
                 $ref: '#/components/schemas/ExerciseTemplate'
         "404":
           description: Exercise template not found
+      operationId: getExerciseTemplatesExerciseTemplateId
   /v1/routine_folders:
     get:
       summary: Get a paginated list of routine folders available on the account.
@@ -574,6 +598,7 @@ paths:
                       $ref: '#/components/schemas/RoutineFolder'
         "400":
           description: Invalid page size
+      operationId: getRoutineFolders
     post:
       summary: Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
       tags:
@@ -608,6 +633,7 @@ paths:
                   error:
                     type: string
                     description: Error message
+      operationId: postRoutineFolders
   /v1/routine_folders/{folderId}:
     get:
       tags:
@@ -624,6 +650,8 @@ paths:
           in: path
           description: The id of the routine folder
           required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success
@@ -633,6 +661,7 @@ paths:
                 $ref: '#/components/schemas/RoutineFolder'
         "404":
           description: Routine folder not found
+      operationId: getRoutineFoldersFolderId
   /v1/exercise_history/{exerciseTemplateId}:
     get:
       summary: Get exercise history for a specific exercise template
@@ -649,6 +678,8 @@ paths:
           name: exerciseTemplateId
           description: The id of the exercise template
           required: true
+          schema:
+            type: string
         - in: query
           name: start_date
           schema:
@@ -679,6 +710,7 @@ paths:
                       $ref: '#/components/schemas/ExerciseHistoryEntry'
         "400":
           description: Invalid request parameters or date format
+      operationId: getExerciseHistoryExerciseTemplateId
 components:
   schemas:
     PostWorkoutsRequestSet:
@@ -1117,7 +1149,7 @@ components:
           description: The type of set (warmup, normal, failure, dropset)
           example: normal
     CustomExerciseType:
-      type: enum
+      type: string
       enum:
         - weight_reps
         - reps_only
@@ -1129,7 +1161,7 @@ components:
         - short_distance_weight
       example: weight_reps
     MuscleGroup:
-      type: enum
+      type: string
       enum:
         - abdominals
         - shoulders
@@ -1153,7 +1185,7 @@ components:
         - other
       example: chest
     EquipmentCategory:
-      type: enum
+      type: string
       enum:
         - none
         - barbell
@@ -1207,13 +1239,15 @@ components:
             exercise_type:
               $ref: '#/components/schemas/CustomExerciseType'
             equipment_category:
-              $ref: '#/components/schemas/EquipmentCategory'
               description: The equipment category of the exercise template.
               example: barbell
+              allOf:
+                - $ref: '#/components/schemas/EquipmentCategory'
             muscle_group:
-              $ref: '#/components/schemas/MuscleGroup'
               description: The muscle group of the exercise template.
               example: chest
+              allOf:
+                - $ref: '#/components/schemas/MuscleGroup'
             other_muscles:
               type: array
               items:

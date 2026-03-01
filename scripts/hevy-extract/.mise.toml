@@ -11,5 +11,9 @@ run = [
 ]
 
 [tasks.vacuum]
+depends = ["export"]
 description = "Vacuum the Hevy OpenAPI spec"
-run = "vacuum  spectral-report openapi.json -r operationId.yaml"
+run = [
+  "vacuum  spectral-report openapi.json",
+  "jq '[.[] | select(.severity == 0)]' vacuum-spectral-report.json > vacuum-severity-0.json",
+]

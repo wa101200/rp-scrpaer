@@ -1,0 +1,23 @@
+[
+  {
+    "code": "oas3-schema",
+    "path": [
+      "components",
+      "schemas",
+      "CreateCustomExerciseRequestBody"
+    ],
+    "message": "schema invalid: `/components/schemas/CreateCustomExerciseRequestBody/properties/exercise/required` expected type `[array]`, got `boolean`",
+    "severity": 0,
+    "range": {
+      "start": {
+        "line": 1764,
+        "character": 42
+      },
+      "end": {
+        "line": 1764,
+        "character": 42
+      }
+    },
+    "source": "openapi.json"
+  }
+]
