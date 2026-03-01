@@ -1,0 +1,38 @@
+import polars as pl
+
+rp_schema = {
+    "id": pl.Int64,
+    "name": pl.String,
+    "muscleGroupId": pl.Int64,
+    "mgSubType": pl.String,
+    "exerciseType": pl.String,
+    "youtubeId": pl.String,
+    "userId": pl.Int64,
+    "notes": pl.List(
+        pl.Struct(
+            [
+                pl.Field("id", pl.Int64),
+                pl.Field("exerciseId", pl.Int64),
+                pl.Field("userId", pl.Int64),
+                pl.Field("noteId", pl.Int64),
+                pl.Field("dayExerciseId", pl.Int64),
+                pl.Field("createdAt", pl.String),
+                pl.Field("updatedAt", pl.String),
+                pl.Field("text", pl.String),
+            ]
+        )
+    ),
+    "createdAt": pl.String,
+    "updatedAt": pl.String,
+    "deletedAt": pl.String,
+}
+
+
+hevy_schema = {
+    "id": pl.String,
+    "title": pl.String,
+    "type": pl.String,
+    "primary_muscle_group": pl.String,
+    "secondary_muscle_groups": pl.List(pl.String),
+    "is_custom": pl.Boolean,
+}
