@@ -42,20 +42,29 @@ rp_exercises = rp_exercises.join(
     how="right",
 )
 
-
-# normalize hevy_primary from list to joined string
-rp_exercises = rp_exercises.with_columns(pl.col("hevy_primary").list.join(", "))
-
-
+# rp: add rich text representation for embeddings
 rp_exercises = rp_exercises.with_columns(
     pl.format(
         "{}, {}, {}",
         pl.col("rp_name"),
         pl.col("rp_exerciseType"),
-        pl.col("hevy_primary"),
+        pl.col("hevy_primary").list.join(", "),
     )
     .str.to_lowercase()
     .alias("rich_text_representation")
 )
 
-pprint(rp_exercises[:].to_dicts())
+# hevy: add rich text representation for embeddings
+hevy_exercises = hevy_exercises.with_columns(
+    pl.format(
+        "{}, {}, {}",
+        pl.col("hevy_title"),
+        pl.col("hevy_primary_muscle_group"),
+        pl.col("hevy_secondary_muscle_groups").list.join(", "),
+    )
+    .str.to_lowercase()
+    .alias("rich_text_representation")
+)
+
+pprint(rp_exercises[:10].to_dicts())
+# pprint(hevy_exercises[:10].to_dicts())
