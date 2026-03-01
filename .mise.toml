@@ -51,3 +51,7 @@ run = [
     "//...:test",
   ] },
 ]
+
+
+[tasks.test]
+run = "echo no tests defined"

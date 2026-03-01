@@ -14,8 +14,6 @@ HEVY_API_BASE_URL = "https://api.hevyapp.com"
 RP_APP_BASE_URL = "https://training.rpstrength.com/api"
 RP_APP_VERSION = "1.1.13"
 
-[tasks.test]
-run = "echo 'No tests defined'"
 
 [tasks.generate-libs-hevy]
 depends = "//scripts/hevy-extract:export"
