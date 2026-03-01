@@ -1,0 +1,124 @@
+version: "3.8"
+
+# Kestra Orchestration Platform
+# This docker-compose.yml provides a complete Kestra setup for the rp-to-hevy project.
+# It includes Kestra server, PostgreSQL database, and optional monitoring.
+
+services:
+  # PostgreSQL database for Kestra state
+  postgres:
+    image: postgres:16-alpine
+    container_name: kestra-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kestra
+      POSTGRES_USER: kestra
+      POSTGRES_PASSWORD: k3str4
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kestra"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kestra
+
+  # Kestra server
+  kestra:
+    image: kestra/kestra:latest
+    container_name: kestra
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+      - "8081:8081"  # Management port
+    volumes:
+      # Mount flows directory (auto-sync YAML files)
+      - ./kestra-flows:/app/flows:ro
+      # Mount storage for execution data
+      - kestra-data:/app/storage
+      # Mount Docker socket for running containers
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      # Database configuration
+      KESTRA_CONFIGURATION: |
+        datasources:
+          postgres:
+            url: jdbc:postgresql://postgres:5432/kestra
+            driverClassName: org.postgresql.Driver
+            username: kestra
+            password: k3str4
+        
+        kestra:
+          # Server configuration
+          server:
+            basic-auth:
+              enabled: false
+              username: admin@kestra.io
+              password: kestra
+          
+          # Repository (flows, templates)
+          repository:
+            type: postgres
+          
+          # Queue (for task execution)
+          queue:
+            type: postgres
+          
+          # Storage (for task outputs)
+          storage:
+            type: local
+            local:
+              base-path: /app/storage
+          
+          # Tasks configuration
+          tasks:
+            tmp-dir:
+              path: /tmp/kestra-wd/tmp
+          
+          # URL for webhooks and links
+          url: http://localhost:8080/
+          
+          # Docker runner configuration
+          tasks:
+            scripts:
+              docker:
+                # Use host Docker socket
+                volume-enabled: true
+    networks:
+      - kestra
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Optional: Grafana for monitoring (uncomment to enable)
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: kestra-grafana
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin
+  #   volumes:
+  #     - grafana-data:/var/lib/grafana
+  #   networks:
+  #     - kestra
+
+networks:
+  kestra:
+    name: kestra
+    driver: bridge
+
+volumes:
+  postgres-data:
+    name: kestra-postgres-data
+  kestra-data:
+    name: kestra-data
+  # grafana-data:
+  #   name: kestra-grafana-data

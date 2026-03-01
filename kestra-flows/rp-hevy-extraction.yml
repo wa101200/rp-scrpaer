@@ -1,0 +1,331 @@
+id: rp-hevy-extraction
+namespace: workouts.pipeline
+description: |
+  Automated extraction of RP Hypertrophy and Hevy workout data with 
+  semantic exercise matching and portable format export.
+  
+  This flow demonstrates how to orchestrate the existing rp-to-hevy 
+  CLI tools using Kestra, without requiring code refactoring.
+
+inputs:
+  - id: rp_auth_token
+    type: SECRET
+    description: RP Hypertrophy API authentication token
+  
+  - id: hevy_api_key
+    type: SECRET
+    description: Hevy API key for data extraction
+
+tasks:
+  # Task 1: Extract RP Hypertrophy workout data
+  - id: extract_rp_workouts
+    type: io.kestra.plugin.scripts.python.Script
+    description: Extract workout history from RP Hypertrophy app
+    containerImage: ghcr.io/wa101200/rp-scrpaer/cli:latest
+    env:
+      RP_AUTH_TOKEN: "{{ inputs.rp_auth_token }}"
+    script: |
+      # Reuse existing CLI functionality
+      from rp_to_strong_cli.rp import export_workouts
+      import json
+      
+      print("🏋️ Extracting RP Hypertrophy workout data...")
+      
+      try:
+          workouts = export_workouts()
+          
+          # Save to Kestra output for next tasks
+          with open('rp_workouts.json', 'w') as f:
+              json.dump(workouts, f, indent=2)
+          
+          print(f"✅ Successfully extracted {len(workouts)} workouts from RP")
+      except Exception as e:
+          print(f"❌ Failed to extract RP data: {e}")
+          raise
+    outputFiles:
+      - rp_workouts.json
+    retry:
+      type: constant
+      interval: PT5M
+      maxAttempt: 3
+
+  # Task 2: Extract Hevy workout data
+  - id: extract_hevy_workouts
+    type: io.kestra.plugin.scripts.python.Script
+    description: Extract workout history from Hevy app
+    containerImage: ghcr.io/wa101200/rp-scrpaer/cli:latest
+    env:
+      HEVY_API_KEY: "{{ inputs.hevy_api_key }}"
+    script: |
+      from rp_to_strong_cli.hevy import export_workouts
+      import json
+      
+      print("🏋️ Extracting Hevy workout data...")
+      
+      try:
+          workouts = export_workouts()
+          
+          with open('hevy_workouts.json', 'w') as f:
+              json.dump(workouts, f, indent=2)
+          
+          print(f"✅ Successfully extracted {len(workouts)} workouts from Hevy")
+      except Exception as e:
+          print(f"❌ Failed to extract Hevy data: {e}")
+          raise
+    outputFiles:
+      - hevy_workouts.json
+    retry:
+      type: constant
+      interval: PT5M
+      maxAttempt: 3
+
+  # Task 3: Generate exercise embeddings and find matches
+  - id: match_exercises
+    type: io.kestra.plugin.scripts.python.Script
+    description: Use semantic embeddings to match exercises across platforms
+    containerImage: ghcr.io/wa101200/rp-scrpaer/embeddings:latest
+    inputFiles:
+      rp_workouts.json: "{{ outputs.extract_rp_workouts.outputFiles['rp_workouts.json'] }}"
+      hevy_workouts.json: "{{ outputs.extract_hevy_workouts.outputFiles['hevy_workouts.json'] }}"
+    script: |
+      from embeddings import generate_exercise_matches, ExerciseDatabase
+      import json
+      
+      print("🧠 Generating semantic embeddings for exercise matching...")
+      
+      # Load extracted workout data
+      with open('rp_workouts.json') as f:
+          rp_data = json.load(f)
+      
+      with open('hevy_workouts.json') as f:
+          hevy_data = json.load(f)
+      
+      # Extract unique exercises from each platform
+      rp_exercises = extract_exercises_from_workouts(rp_data)
+      hevy_exercises = extract_exercises_from_workouts(hevy_data)
+      
+      print(f"Found {len(rp_exercises)} unique RP exercises")
+      print(f"Found {len(hevy_exercises)} unique Hevy exercises")
+      
+      # Generate matches using semantic similarity
+      db = ExerciseDatabase()
+      matches = db.find_matches(rp_exercises, hevy_exercises, threshold=0.85)
+      
+      # Save match results
+      with open('exercise_matches.json', 'w') as f:
+          json.dump(matches, f, indent=2)
+      
+      match_rate = len(matches) / len(rp_exercises) * 100
+      print(f"✅ Matched {len(matches)} exercises ({match_rate:.1f}% match rate)")
+    outputFiles:
+      - exercise_matches.json
+    retry:
+      type: exponential
+      interval: PT1M
+      maxAttempt: 3
+
+  # Task 4: Transform workouts with Polars
+  - id: transform_workouts
+    type: io.kestra.plugin.scripts.python.Script
+    description: Transform and normalize workout data using Polars
+    containerImage: ghcr.io/wa101200/rp-scrpaer/cli:latest
+    inputFiles:
+      rp_workouts.json: "{{ outputs.extract_rp_workouts.outputFiles['rp_workouts.json'] }}"
+      hevy_workouts.json: "{{ outputs.extract_hevy_workouts.outputFiles['hevy_workouts.json'] }}"
+      exercise_matches.json: "{{ outputs.match_exercises.outputFiles['exercise_matches.json'] }}"
+    script: |
+      import polars as pl
+      import json
+      from datetime import datetime
+      
+      print("🔄 Transforming workout data with Polars...")
+      
+      # Load data
+      with open('rp_workouts.json') as f:
+          rp_workouts = json.load(f)
+      
+      with open('hevy_workouts.json') as f:
+          hevy_workouts = json.load(f)
+      
+      with open('exercise_matches.json') as f:
+          matches = json.load(f)
+      
+      # Transform to Polars DataFrames
+      rp_df = pl.DataFrame(rp_workouts)
+      hevy_df = pl.DataFrame(hevy_workouts)
+      
+      # Apply exercise name mapping based on matches
+      # ... transformation logic ...
+      
+      # Normalize dates, convert RIR to RPE, standardize units
+      # Sort chronologically (critical for import compatibility)
+      combined_df = combine_and_normalize(rp_df, hevy_df, matches)
+      combined_df = combined_df.sort("date")
+      
+      # Export to multiple formats
+      combined_df.write_csv('workouts_export.csv')
+      combined_df.write_json('workouts_export.json')
+      combined_df.write_parquet('workouts_export.parquet')
+      
+      print(f"✅ Transformed {len(combined_df)} total workout entries")
+      print(f"   Date range: {combined_df['date'].min()} to {combined_df['date'].max()}")
+    outputFiles:
+      - workouts_export.csv
+      - workouts_export.json
+      - workouts_export.parquet
+
+  # Task 5: Generate summary statistics
+  - id: generate_stats
+    type: io.kestra.plugin.scripts.python.Script
+    description: Generate workout statistics and summary metrics
+    containerImage: ghcr.io/wa101200/rp-scrpaer/cli:latest
+    inputFiles:
+      workouts_export.parquet: "{{ outputs.transform_workouts.outputFiles['workouts_export.parquet'] }}"
+    script: |
+      import polars as pl
+      import json
+      
+      df = pl.read_parquet('workouts_export.parquet')
+      
+      stats = {
+          "total_workouts": len(df.select("workout_id").unique()),
+          "total_sets": len(df),
+          "date_range": {
+              "start": df["date"].min().isoformat(),
+              "end": df["date"].max().isoformat()
+          },
+          "exercise_breakdown": df.group_by("exercise").count().to_dicts(),
+          "total_volume_kg": df.select(pl.col("weight") * pl.col("reps")).sum().item()
+      }
+      
+      with open('stats.json', 'w') as f:
+          json.dump(stats, f, indent=2)
+      
+      print("📊 Workout Statistics:")
+      print(f"   Total Workouts: {stats['total_workouts']}")
+      print(f"   Total Sets: {stats['total_sets']}")
+      print(f"   Total Volume: {stats['total_volume_kg']:,.0f} kg")
+    outputFiles:
+      - stats.json
+
+  # Task 6: Upload to cloud storage (optional - commented out)
+  # Uncomment and configure based on your cloud provider
+  # - id: upload_to_gcs
+  #   type: io.kestra.plugin.gcp.gcs.Upload
+  #   from: "{{ outputs.transform_workouts.outputFiles['workouts_export.csv'] }}"
+  #   to: "gs://my-bucket/exports/workouts_{{ execution.startDate | date('yyyy-MM-dd') }}.csv"
+  #   serviceAccount: "{{ secret('GCP_SERVICE_ACCOUNT') }}"
+
+  # - id: upload_to_s3
+  #   type: io.kestra.plugin.aws.s3.Upload
+  #   from: "{{ outputs.transform_workouts.outputFiles['workouts_export.csv'] }}"
+  #   to: "s3://my-bucket/exports/workouts_{{ execution.startDate | date('yyyy-MM-dd') }}.csv"
+  #   accessKeyId: "{{ secret('AWS_ACCESS_KEY_ID') }}"
+  #   secretKeyId: "{{ secret('AWS_SECRET_ACCESS_KEY') }}"
+  #   region: us-east-1
+
+  # Task 7: Send success notification
+  - id: notify_success
+    type: io.kestra.plugin.notifications.slack.SlackIncomingWebhook
+    url: "{{ secret('SLACK_WEBHOOK_URL') }}"
+    payload: |
+      {
+        "text": "✅ Workout data extraction completed successfully!",
+        "blocks": [
+          {
+            "type": "header",
+            "text": {
+              "type": "plain_text",
+              "text": "🏋️ Workout Export Complete"
+            }
+          },
+          {
+            "type": "section",
+            "fields": [
+              {
+                "type": "mrkdwn",
+                "text": "*Execution ID:*\n{{ execution.id }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Date:*\n{{ execution.startDate | date('yyyy-MM-dd HH:mm:ss') }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Duration:*\n{{ execution.duration }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Status:*\n✅ Success"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "*Summary:*\nExtracted and transformed workout data from RP Hypertrophy and Hevy apps. Exercise matching completed with semantic embeddings."
+            }
+          }
+        ]
+      }
+
+# Scheduling: Run daily at 2 AM UTC
+triggers:
+  - id: daily_extraction
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "0 2 * * *"
+    timezone: UTC
+
+  # Alternative: Manual trigger via webhook
+  # - id: manual_trigger
+  #   type: io.kestra.plugin.core.trigger.Webhook
+
+# Error handling: Send notification on failure
+errors:
+  - id: notify_failure
+    type: io.kestra.plugin.notifications.slack.SlackIncomingWebhook
+    url: "{{ secret('SLACK_WEBHOOK_URL') }}"
+    payload: |
+      {
+        "text": "❌ Workout extraction failed!",
+        "blocks": [
+          {
+            "type": "header",
+            "text": {
+              "type": "plain_text",
+              "text": "❌ Extraction Failed"
+            }
+          },
+          {
+            "type": "section",
+            "fields": [
+              {
+                "type": "mrkdwn",
+                "text": "*Execution ID:*\n{{ execution.id }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Failed Task:*\n{{ task.id }}"
+              },
+              {
+                "type": "mrkdwn",
+                "text": "*Error:*\n```{{ error.message }}```"
+              }
+            ]
+          },
+          {
+            "type": "actions",
+            "elements": [
+              {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "View Logs"
+                },
+                "url": "{{ kestra.url }}/executions/{{ execution.id }}"
+              }
+            ]
+          }
+        ]
+      }
