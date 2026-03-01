@@ -39,3 +39,17 @@ run = "hk check -a"
 
 [prepare.uv]
 run = "uv sync --all-packages"
+
+
+[tasks.all-ci]
+description = "Will simulate CI environment by running all checks and tests"
+
+run = [
+  { task = "//...:generate-models*" },
+  { task = "//:format" },
+  { tasks = [
+    "//:lint",
+    "//...:build",
+    "//...:test",
+  ] },
+]
