@@ -23,3 +23,6 @@ normalized_mapping: list[MuscleGroupMapping] = [
     }
     for k, v in mappings.items()
 ]
+
+
+print(rp_exercises)

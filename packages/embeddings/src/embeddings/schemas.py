@@ -3,9 +3,9 @@ from typing import TypedDict
 import polars as pl
 
 rp_schema = {
-    "id": pl.Int64,
+    "id": pl.UInt32,
     "name": pl.String,
-    "muscleGroupId": pl.Int64,
+    "muscleGroupId": pl.UInt32,
     "mgSubType": pl.String,
     "exerciseType": pl.String,
     "youtubeId": pl.String,
@@ -13,11 +13,11 @@ rp_schema = {
     "notes": pl.List(
         pl.Struct(
             [
-                pl.Field("id", pl.Int64),
-                pl.Field("exerciseId", pl.Int64),
+                pl.Field("id", pl.UInt32),
+                pl.Field("exerciseId", pl.UInt32),
                 pl.Field("userId", pl.Int64),
-                pl.Field("noteId", pl.Int64),
-                pl.Field("dayExerciseId", pl.Int64),
+                pl.Field("noteId", pl.UInt32),
+                pl.Field("dayExerciseId", pl.UInt32),
                 pl.Field("createdAt", pl.String),
                 pl.Field("updatedAt", pl.String),
                 pl.Field("text", pl.String),
