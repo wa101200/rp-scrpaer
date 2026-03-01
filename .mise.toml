@@ -55,3 +55,36 @@ run = [
 
 [tasks.test]
 run = "echo no tests defined"
+
+[tasks."kestra:up"]
+description = "Start Kestra orchestrator with PostgreSQL backend"
+run = "docker-compose -f docker-compose.kestra.yml up -d"
+
+[tasks."kestra:down"]
+description = "Stop Kestra orchestrator"
+run = "docker-compose -f docker-compose.kestra.yml down"
+
+[tasks."kestra:logs"]
+description = "View Kestra logs"
+run = "docker-compose -f docker-compose.kestra.yml logs -f kestra"
+
+[tasks."kestra:restart"]
+description = "Restart Kestra orchestrator"
+run = "docker-compose -f docker-compose.kestra.yml restart kestra"
+
+[tasks."kestra:reset"]
+description = "Reset Kestra (remove all data and containers)"
+run = "docker-compose -f docker-compose.kestra.yml down -v"
+
+[tasks."kestra:open"]
+description = "Open Kestra UI in browser"
+run = """
+if command -v xdg-open > /dev/null; then
+  xdg-open http://localhost:8080
+elif command -v open > /dev/null; then
+  open http://localhost:8080
+else
+  echo "Kestra UI is available at http://localhost:8080"
+fi
+"""
+

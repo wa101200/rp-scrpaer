@@ -50,10 +50,38 @@ This project is a **uv + mise driven Python monorepo** — uv manages Python pac
        └───────────────────┘    └─────────────────────┘
 ```
 
+> **Note**: The pipeline box shows "Dagster scheduled extraction + DAG" but [Kestra is now recommended](#kestra-vs-dagster) as a simpler alternative. See [KESTRA_RESEARCH.md](KESTRA_RESEARCH.md) for details.
+
 - **[`api-service`](packages/api-service/README.md)** --- Auto-generated async Python SDKs for the RP and Hevy APIs, produced from OpenAPI specs. The foundation that all other packages build on.
 - **[`cli`](packages/cli/README.md)** --- Click-based CLI frontend. Exports workout data to JSON (local or cloud storage), runs embedding and similarity search. The primary user-facing interface today.
 - **[`embeddings`](packages/embeddings/README.md)** --- Semantic exercise matching library. Encodes RP and Hevy exercises with LLM-based embedding models, stores them in ChromaDB, and finds the best cross-platform matches. Achieves 91.75% muscle group precision@1 with `Qwen/Qwen3-Embedding-8B`.
-- **[`pipeline`](packages/pipeline/README.md)** *(not yet implemented)* --- Dagster orchestration layer. Will do the same data extraction as the CLI but on a cron schedule with DAG-based execution, automatic retries, failure alerts, and user notifications. Currently scaffolded with empty assets and resources.
+- **[`pipeline`](packages/pipeline/README.md)** *(not yet implemented)* --- Orchestration layer for scheduled data extraction. Currently scaffolded for Dagster, but [Kestra is recommended](#kestra-vs-dagster) as a simpler alternative. See [KESTRA_RESEARCH.md](KESTRA_RESEARCH.md) for detailed evaluation.
+
+## Kestra vs Dagster
+
+> **📋 Research Note**: A comprehensive evaluation of **Kestra** as an alternative to Dagster has been completed. See [KESTRA_RESEARCH.md](KESTRA_RESEARCH.md) for the full analysis.
+
+**TL;DR:** Kestra is recommended over Dagster for this project because:
+- ✅ **Zero refactoring** - Use existing CLI code directly in YAML workflows
+- ✅ **Simpler setup** - Single Docker Compose file vs. complex Dagster configuration  
+- ✅ **Native Docker support** - Each task runs in isolated containers without executor setup
+- ✅ **Faster implementation** - YAML-based flows vs. Python asset development
+- ✅ **Better for scheduled extraction** - Event-driven architecture with robust scheduling
+
+**Quick Start with Kestra:**
+```bash
+# Start Kestra orchestrator
+docker-compose -f docker-compose.kestra.yml up -d
+
+# Access UI at http://localhost:8080
+# Upload flows from kestra-flows/ directory
+# See kestra-flows/README.md for complete guide
+```
+
+For detailed comparison, migration path, and example workflows, see:
+- [KESTRA_RESEARCH.md](KESTRA_RESEARCH.md) - Full research document
+- [kestra-flows/](kestra-flows/) - Example YAML workflows
+- [docker-compose.kestra.yml](docker-compose.kestra.yml) - Docker setup
 
 ## Quick Start
 
