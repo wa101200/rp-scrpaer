@@ -1,0 +1,25 @@
+name: all-ci
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+permissions:
+  contents: read
+jobs:
+  all:
+    runs-on: blacksmith-8vcpu-ubuntu-2404-arm
+    name: all-ci
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
+      - uses: useblacksmith/setup-docker-builder@ef12d5b165b596e3aa44ea8198d8fde563eab402 # v1.4.0
+      - name: Install Dependencies
+        run: |
+          find . -name ".mise.toml" -execdir mise install \;
+      - name: all-ci
+        run: mise //:all-ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

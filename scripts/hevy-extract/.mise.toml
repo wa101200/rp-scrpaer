@@ -3,6 +3,9 @@
 "bun" = "latest"
 "jq" = "latest"
 
+[settings]
+auto_install = true
+
 [tasks.export]
 description = "Extract Hevy OpenAPI spec and export as YAML to packages/api-service/openapi/"
 run = [
