@@ -65,6 +65,3 @@ hevy_exercises = hevy_exercises.with_columns(
     .str.to_lowercase()
     .alias("rich_text_representation")
 )
-
-pprint(rp_exercises[:10].to_dicts())
-# pprint(hevy_exercises[:10].to_dicts())
