@@ -1,8 +1,8 @@
 rp_embedding_name: bulgarian split squat glute-focused, dumbbell, glutes
 matches:
-  - hevy_embedding_name: single leg romanian deadlift dumbbell, hamstrings, glutes, lower_back
-    distance: 0.2042464017868042
   - hevy_embedding_name: bulgarian split squat, quadriceps, glutes, hamstrings
-    distance: 0.2053101658821106
-  - hevy_embedding_name: romanian deadlift dumbbell, hamstrings, glutes, lower_back, upper_back, lats
-    distance: 0.22178387641906738
+    distance: 0.09420186281204224
+  - hevy_embedding_name: split squat dumbbell, quadriceps, hamstrings, glutes
+    distance: 0.16604506969451904
+  - hevy_embedding_name: single leg romanian deadlift dumbbell, hamstrings, glutes, lower_back
+    distance: 0.20823729038238525

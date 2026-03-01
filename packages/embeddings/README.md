@@ -20,9 +20,11 @@ Hybrid strategy: **semantic embeddings + muscle group filtering**.
 
 1. **Load & enrich** --- Build a rich text string per exercise combining name, equipment type, and muscle groups into a single lowercase sentence
 2. **Filter by muscle group** --- Join RP exercises with a muscle group mapping (`data/muscle_group_mapping.json`) so candidates are constrained to the same body part
-3. **Embed** --- Encode all enriched strings with `paraphrase-mpnet-base-v2` (768-dim, trained on paraphrase detection)
+3. **Embed** --- Encode all enriched strings with `mixedbread-ai/mxbai-embed-large-v1` (1024-dim, Matryoshka support). This replaced the earlier `paraphrase-mpnet-base-v2` model and produces significantly better match quality --- fewer false positives on hard synonyms and equipment variants
 4. **Store & query** --- Index Hevy embeddings in an in-memory ChromaDB collection (HNSW, cosine distance). Query with RP embeddings to retrieve the top 3 Hevy matches per RP exercise
 5. **Export** --- Write one YAML file per RP exercise to the `output/` directory
+
+The next step is moving to LLM-based embedding models (1.5B--8B parameters). These understand fitness vocabulary natively ("RDL" = "Romanian Deadlift", "Pullup Underhand Grip" = "Chin Up") and support task-specific instruction prompts, which should close the remaining accuracy gaps. See [FUTURE_WORK.md](./FUTURE_WORK.md) for details.
 
 ## Project Structure
 
@@ -106,7 +108,7 @@ Lower distance = better match (cosine distance, 0.0 = identical).
 
 | Library | Role |
 |---|---|
-| `sentence-transformers` | Embedding model (`paraphrase-mpnet-base-v2`) |
+| `sentence-transformers` | Embedding model (`mixedbread-ai/mxbai-embed-large-v1`) |
 | `chromadb` | In-memory vector store with HNSW index |
 | `polars` | DataFrame loading, joins, and transformations |
 | `torch` | Tensor backend (MPS / CPU / CUDA) |

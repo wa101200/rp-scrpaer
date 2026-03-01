@@ -1,8 +1,8 @@
 rp_embedding_name: machine pulldown, machine, lats, upper_back
 matches:
-  - hevy_embedding_name: back extension machine, lower_back
-    distance: 0.29710853099823
   - hevy_embedding_name: lat pulldown machine, lats, upper_back, biceps, forearms
-    distance: 0.326460063457489
-  - hevy_embedding_name: reverse grip lat pulldown cable, lats, upper_back, biceps
-    distance: 0.4100695252418518
+    distance: 0.0831308364868164
+  - hevy_embedding_name: pullover machine, lats, upper_back, chest, triceps
+    distance: 0.11364036798477173
+  - hevy_embedding_name: iso-lateral row machine, upper_back, lats, biceps, forearms
+    distance: 0.15693461894989014

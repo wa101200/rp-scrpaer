@@ -1,8 +1,8 @@
 rp_embedding_name: dumbbell front squat, dumbbell, quadriceps
 matches:
-  - hevy_embedding_name: shoulder press dumbbell, shoulders, triceps
-    distance: 0.12742120027542114
+  - hevy_embedding_name: front squat, quadriceps, hamstrings, glutes
+    distance: 0.07274556159973145
   - hevy_embedding_name: squat dumbbell, quadriceps, hamstrings, glutes
-    distance: 0.12890052795410156
-  - hevy_embedding_name: dumbbell step up, quadriceps, glutes, hamstrings
-    distance: 0.13093727827072144
+    distance: 0.07878410816192627
+  - hevy_embedding_name: squat barbell, quadriceps, hamstrings, glutes
+    distance: 0.10427474975585938
