@@ -4,6 +4,18 @@
 
 Extract workout data from the [RP Hypertrophy](https://rpstrength.com/) and [Hevy](https://www.hevyapp.com/) apps, match exercises across platforms using semantic embeddings, and convert training history to portable formats. The CLI handles on-demand exports; a Dagster pipeline (in progress) will add scheduled extraction with DAG-based orchestration, failure handling, and user notifications.
 
+## The Problem
+
+[RP Hypertrophy](https://rpstrength.com/) and [Hevy](https://www.hevyapp.com/) are fitness apps for tracking strength-training workouts. RP programs your mesocycles and auto-regulates volume; Hevy is a general-purpose workout logger with social features. Both store your training history, but neither makes it easy to get your data out — and moving between them is even harder.
+
+Three specific problems make this project necessary:
+
+1. **RP has no public API.** There is no documented developer interface. The SDK in `packages/api-service` is built against a private API that was reverse-engineered from the mobile app's network traffic. Endpoints, auth flows, and payload shapes were discovered by inspecting requests — nothing is guaranteed to be stable, and there are no official docs to fall back on.
+
+2. **Hevy's OpenAPI spec is broken.** Hevy *does* publish API docs at `api.hevyapp.com/docs`, but the spec is embedded inside a Swagger UI init script and riddled with violations: missing `operationId` on every endpoint, parameters without `schema`, `type: "enum"` instead of `type: "string"`, per-property `required: true` booleans instead of a proper `required` array, and `$ref` nodes with illegal sibling properties. The spec cannot be fed to any code generator without significant patching first — which is exactly what `scripts/hevy-extract/` does.
+
+3. **Exercises don't match across platforms.** RP calls it "Barbell Bench Press", Hevy calls it "Bench Press (Barbell)". Multiply that across hundreds of exercises and there is no reliable way to map one catalog to the other with string matching alone. The `embeddings` package solves this with LLM-based semantic embeddings and vector similarity search.
+
 ## The Core Idea: One Source of Truth, Everywhere
 
 The defining principle of this repo is that **`.mise.toml` + `mise.lock` are the single source of truth** for every tool version — on your laptop, in Docker, and in CI. There is no second place where Python 3.12 or uv 0.10.7 is declared. Every environment reads the same two files:
@@ -191,6 +203,38 @@ mise //...:build
 mise //packages/pipeline:build
 mise //packages/cli:build
 mise //packages/api-service:build
+```
+
+## scripts/hevy-extract: OpenAPI Spec Extraction
+
+A standalone Bun/TypeScript tool that fetches the Hevy OpenAPI spec from their Swagger UI docs page, fixes every spec violation, and outputs clean JSON ready for code generation.
+
+The Hevy docs page loads a `swagger-ui-init.js` script with the full OpenAPI spec embedded inline. Rather than parsing the JS as text, the extractor evaluates it in a sandbox with mocked Swagger UI globals. When the script calls `SwaggerUIBundle(opts)`, the mock intercepts and captures `opts.spec`. This is resilient to formatting changes since it relies on runtime behavior, not string patterns.
+
+After extraction, these fixes are applied automatically:
+
+| Fix | What it does |
+|-----|--------------|
+| `addOperationIds` | Generates `operationId` for every endpoint (`getWorkouts`, `postRoutines`, etc.) |
+| `fixMissingParameterSchemas` | Adds `{ type: "string" }` to parameters with no `schema` |
+| `fixEnumSchemaTypes` | Replaces non-standard `type: "enum"` with `type: "string"` |
+| `fixBooleanRequired` | Converts per-property `required: true` into a proper `required` array on the parent |
+| `fixRefSiblings` | Wraps `$ref` nodes that have sibling properties into `allOf` |
+
+The output feeds into the SDK generation pipeline via mise tasks:
+
+```
+scripts/hevy-extract/extract.ts    →  openapi.json (patched spec)
+    → yq -p json -o yaml           →  packages/api-service/openapi/hevy.openapi.yaml
+    → openapi-generator-cli        →  packages/api-service/src/hevy_api_service/ (async Python SDK)
+```
+
+```bash
+# Run directly
+cd scripts/hevy-extract && bun run start
+
+# Or through mise (also triggers the YAML conversion)
+mise //scripts/hevy-extract:export
 ```
 
 ## CI/CD
