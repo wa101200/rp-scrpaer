@@ -234,9 +234,7 @@ def hevy_export(export_type: str, output: str | None):
 
     if output is None:
         output_path = (
-            Path("hevy-export")
-            if export_type == "all"
-            else Path(f"{export_type}.json")
+            Path("hevy-export") if export_type == "all" else Path(f"{export_type}.json")
         )
     else:
         output_path = Path(output)
