@@ -25,6 +25,8 @@ zizmor = "latest"
 github-cli = "latest"
 hadolint = "latest"
 watchexec = "latest"
+"npm:@quobix/vacuum" = "latest"
+"npm:@biomejs/biome" = "latest"
 
 [tasks.pre-commit]
 run = "hk run pre-commit -a"

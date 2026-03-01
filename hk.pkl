@@ -20,6 +20,18 @@ local python_linters = new Mapping<String, Step> {
   ["python-debug-statements"] = Builtins.python_debug_statements
 }
 
+local javascript_linters = new Mapping<String, Step> {
+  // Fast JavaScript linter (eslint replacement)
+  ["biome"] = (Builtins.biome) {
+    batch = false // Override the default batch setting
+    glob = List("*.js", "*.ts") // Override file patterns
+  }
+}
+
+local openapi_linters = new Mapping<String, Step> {
+  ["vacuum"] = Builtins.vacuum
+}
+
 // --- Config files ---
 local config_linters = new Mapping<String, Step> {
   // Formats mise.toml configuration files
@@ -51,6 +63,8 @@ local all_linters = new Mapping<String, Step> {
   ...config_linters
   ...gh_actions_linters
   ...containers_linters
+  ...javascript_linters
+  ...openapi_linters
 }
 
 fail_fast = false

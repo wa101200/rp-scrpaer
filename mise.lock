@@ -19,6 +19,14 @@ backend = "aqua:jdx/hk"
 "platforms.macos-arm64" = { checksum = "sha256:553ff3c7c18d91f1c1dcdbae44315db0324b52336b5a02ed5b9c382f08499b3b", url = "https://github.com/jdx/hk/releases/download/v1.36.0/hk-aarch64-apple-darwin.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:1f12218ccad806a3f49bcf521f86b6825fbd89486e830c1c04f72e3796f84589", url = "https://github.com/jdx/hk/releases/download/v1.36.0/hk-x86_64-pc-windows-msvc.zip"}
 
+[[tools."npm:@biomejs/biome"]]
+version = "2.4.4"
+backend = "npm:@biomejs/biome"
+
+[[tools."npm:@quobix/vacuum"]]
+version = "0.23.8"
+backend = "npm:@quobix/vacuum"
+
 [[tools.pinact]]
 version = "3.9.0"
 backend = "aqua:suzuki-shunsuke/pinact"
