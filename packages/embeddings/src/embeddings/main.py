@@ -43,12 +43,19 @@ rp_exercises = rp_exercises.join(
 )
 
 
+# normalize hevy_primary from list to joined string
+rp_exercises = rp_exercises.with_columns(pl.col("hevy_primary").list.join(", "))
+
+
+rp_exercises = rp_exercises.with_columns(
+    pl.format(
+        "{}, {}, {}",
+        pl.col("rp_name"),
+        pl.col("rp_exerciseType"),
+        pl.col("hevy_primary"),
+    )
+    .str.to_lowercase()
+    .alias("rich_text_representation")
+)
+
 pprint(rp_exercises[:].to_dicts())
-
-# # now build the rich text representation for each exercise
-# rp_exercises["rich_text_representation"] = (
-#     rp_exercises["name"] + ", " + rp_exercises["hevy_primary"]
-
-
-#     + rp_exercises["exerciseType"]
-# )

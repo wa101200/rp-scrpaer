@@ -6,7 +6,6 @@ rp_schema = {
     "id": pl.UInt32,
     "name": pl.String,
     "muscleGroupId": pl.UInt32,
-    "mgSubType": pl.String,
     "exerciseType": pl.String,
 }
 
