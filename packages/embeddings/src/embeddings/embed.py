@@ -23,7 +23,7 @@ MODEL_NAME = "mixedbread-ai/mxbai-embed-large-v1"
 logger.info("Loading model %s", MODEL_NAME)
 model = SentenceTransformer(MODEL_NAME, device=device)
 
-rp_prompt = "You are translating exercise descriptions from english to common exercise names that would make sense across different fitness apps in english"
+rp_prompt = ""
 
 hevy_prompt = rp_prompt
 
