@@ -23,7 +23,7 @@ Dagster-based orchestration pipeline for automated workout data extraction, tran
        │               │               │
   ┌────▼────┐   ┌──────▼──────┐  ┌────▼────┐
   │  Export  │   │  Embedding  │  │  Notify │
-  │ STRONG   │   │  Matching   │  │  User   │
+  │      │   │  Matching   │  │  User   │
   │  CSV     │   │  (optional) │  │         │
   └─────────┘   └─────────────┘  └─────────┘
 ```
@@ -34,7 +34,6 @@ Dagster-based orchestration pipeline for automated workout data extraction, tran
 - **DAG execution** --- Dagster manages the dependency graph so steps run in the right order with proper retries on failure
 - **Failure handling** --- Built-in retry policies and alerting when API calls or transformations fail
 - **User communication** --- Notify users on successful exports or when manual intervention is needed (e.g., expired tokens)
-- **Data transformation** --- Convert RP workout format to STRONG import format using Polars
 
 ### Differences from the CLI
 
