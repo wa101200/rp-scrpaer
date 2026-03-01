@@ -6,6 +6,8 @@ on:
     branches: [master]
 permissions:
   contents: read
+env:
+  MISE_LOCKED: 1
 jobs:
   lint:
     runs-on: blacksmith-2vcpu-ubuntu-2404-arm
