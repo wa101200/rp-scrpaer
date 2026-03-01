@@ -32,8 +32,12 @@ class CreateCustomExerciseRequestBodyExercise(BaseModel):
         default=None, description="The title of the exercise template."
     )
     exercise_type: CustomExerciseType | None = None
-    equipment_category: EquipmentCategory | None = None
-    muscle_group: MuscleGroup | None = None
+    equipment_category: EquipmentCategory | None = Field(
+        default=None, description="The equipment category of the exercise template."
+    )
+    muscle_group: MuscleGroup | None = Field(
+        default=None, description="The muscle group of the exercise template."
+    )
     other_muscles: list[MuscleGroup] | None = Field(
         default=None, description="The other muscles of the exercise template."
     )

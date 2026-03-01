@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **distance_meters** | **int** | The distance in meters. | [optional] 
 **duration_seconds** | **int** | The duration in seconds. | [optional] 
 **custom_metric** | **float** | A custom metric for the set. Currently used for steps and floors. | [optional] 
-**rpe** | **float** | The Rating of Perceived Exertion (RPE). Allowed values: 6, 7, 7.5, 8, 8.5, 9, 9.5, 10. | [optional] 
+**rpe** | **float** | The Rating of Perceived Exertion (RPE). | [optional] 
 
 ## Example
 

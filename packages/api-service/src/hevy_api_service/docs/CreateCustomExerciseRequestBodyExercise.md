@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **title** | **str** | The title of the exercise template. | [optional] 
 **exercise_type** | [**CustomExerciseType**](CustomExerciseType.md) |  | [optional] 
-**equipment_category** | [**EquipmentCategory**](EquipmentCategory.md) |  | [optional] 
-**muscle_group** | [**MuscleGroup**](MuscleGroup.md) |  | [optional] 
+**equipment_category** | [**EquipmentCategory**](EquipmentCategory.md) | The equipment category of the exercise template. | [optional] 
+**muscle_group** | [**MuscleGroup**](MuscleGroup.md) | The muscle group of the exercise template. | [optional] 
 **other_muscles** | [**List[MuscleGroup]**](MuscleGroup.md) | The other muscles of the exercise template. | [optional] 
 
 ## Example

@@ -39,524 +39,6 @@ class RoutineFoldersApi:
         self.api_client = api_client
 
     @validate_call
-    async def create_routine_folder(
-        self,
-        api_key: UUID,
-        post_routine_folder_request_body: PostRoutineFolderRequestBody,
-        _request_timeout: None
-        | Annotated[StrictFloat, Field(gt=0)]
-        | tuple[
-            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-        ] = None,
-        _request_auth: dict[StrictStr, Any] | None = None,
-        _content_type: StrictStr | None = None,
-        _headers: dict[StrictStr, Any] | None = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RoutineFolder:
-        """Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
-
-
-        :param api_key: (required)
-        :type api_key: UUID
-        :param post_routine_folder_request_body: (required)
-        :type post_routine_folder_request_body: PostRoutineFolderRequestBody
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._create_routine_folder_serialize(
-            api_key=api_key,
-            post_routine_folder_request_body=post_routine_folder_request_body,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: dict[str, str | None] = {
-            "201": "RoutineFolder",
-            "400": "CreateWorkout400Response",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def create_routine_folder_with_http_info(
-        self,
-        api_key: UUID,
-        post_routine_folder_request_body: PostRoutineFolderRequestBody,
-        _request_timeout: None
-        | Annotated[StrictFloat, Field(gt=0)]
-        | tuple[
-            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-        ] = None,
-        _request_auth: dict[StrictStr, Any] | None = None,
-        _content_type: StrictStr | None = None,
-        _headers: dict[StrictStr, Any] | None = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RoutineFolder]:
-        """Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
-
-
-        :param api_key: (required)
-        :type api_key: UUID
-        :param post_routine_folder_request_body: (required)
-        :type post_routine_folder_request_body: PostRoutineFolderRequestBody
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._create_routine_folder_serialize(
-            api_key=api_key,
-            post_routine_folder_request_body=post_routine_folder_request_body,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: dict[str, str | None] = {
-            "201": "RoutineFolder",
-            "400": "CreateWorkout400Response",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    async def create_routine_folder_without_preload_content(
-        self,
-        api_key: UUID,
-        post_routine_folder_request_body: PostRoutineFolderRequestBody,
-        _request_timeout: None
-        | Annotated[StrictFloat, Field(gt=0)]
-        | tuple[
-            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-        ] = None,
-        _request_auth: dict[StrictStr, Any] | None = None,
-        _content_type: StrictStr | None = None,
-        _headers: dict[StrictStr, Any] | None = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
-
-
-        :param api_key: (required)
-        :type api_key: UUID
-        :param post_routine_folder_request_body: (required)
-        :type post_routine_folder_request_body: PostRoutineFolderRequestBody
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._create_routine_folder_serialize(
-            api_key=api_key,
-            post_routine_folder_request_body=post_routine_folder_request_body,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: dict[str, str | None] = {
-            "201": "RoutineFolder",
-            "400": "CreateWorkout400Response",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _create_routine_folder_serialize(
-        self,
-        api_key,
-        post_routine_folder_request_body,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: dict[str, str] = {}
-
-        _path_params: dict[str, str] = {}
-        _query_params: list[tuple[str, str]] = []
-        _header_params: dict[str, str | None] = _headers or {}
-        _form_params: list[tuple[str, str]] = []
-        _files: dict[
-            str, str | bytes | list[str] | list[bytes] | list[tuple[str, bytes]]
-        ] = {}
-        _body_params: bytes | None = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        if api_key is not None:
-            _header_params["api-key"] = api_key
-        # process the form parameters
-        # process the body parameter
-        if post_routine_folder_request_body is not None:
-            _body_params = post_routine_folder_request_body
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
-
-        # authentication setting
-        _auth_settings: list[str] = []
-
-        return self.api_client.param_serialize(
-            method="POST",
-            resource_path="/v1/routine_folders",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    async def get_routine_folder_by_id(
-        self,
-        api_key: UUID,
-        folder_id: Annotated[
-            StrictStr, Field(description="The id of the routine folder")
-        ],
-        _request_timeout: None
-        | Annotated[StrictFloat, Field(gt=0)]
-        | tuple[
-            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-        ] = None,
-        _request_auth: dict[StrictStr, Any] | None = None,
-        _content_type: StrictStr | None = None,
-        _headers: dict[StrictStr, Any] | None = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RoutineFolder:
-        """Get a single routine folder by id.
-
-
-        :param api_key: (required)
-        :type api_key: UUID
-        :param folder_id: The id of the routine folder (required)
-        :type folder_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_routine_folder_by_id_serialize(
-            api_key=api_key,
-            folder_id=folder_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: dict[str, str | None] = {
-            "200": "RoutineFolder",
-            "404": None,
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def get_routine_folder_by_id_with_http_info(
-        self,
-        api_key: UUID,
-        folder_id: Annotated[
-            StrictStr, Field(description="The id of the routine folder")
-        ],
-        _request_timeout: None
-        | Annotated[StrictFloat, Field(gt=0)]
-        | tuple[
-            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-        ] = None,
-        _request_auth: dict[StrictStr, Any] | None = None,
-        _content_type: StrictStr | None = None,
-        _headers: dict[StrictStr, Any] | None = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RoutineFolder]:
-        """Get a single routine folder by id.
-
-
-        :param api_key: (required)
-        :type api_key: UUID
-        :param folder_id: The id of the routine folder (required)
-        :type folder_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_routine_folder_by_id_serialize(
-            api_key=api_key,
-            folder_id=folder_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: dict[str, str | None] = {
-            "200": "RoutineFolder",
-            "404": None,
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    @validate_call
-    async def get_routine_folder_by_id_without_preload_content(
-        self,
-        api_key: UUID,
-        folder_id: Annotated[
-            StrictStr, Field(description="The id of the routine folder")
-        ],
-        _request_timeout: None
-        | Annotated[StrictFloat, Field(gt=0)]
-        | tuple[
-            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-        ] = None,
-        _request_auth: dict[StrictStr, Any] | None = None,
-        _content_type: StrictStr | None = None,
-        _headers: dict[StrictStr, Any] | None = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get a single routine folder by id.
-
-
-        :param api_key: (required)
-        :type api_key: UUID
-        :param folder_id: The id of the routine folder (required)
-        :type folder_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_routine_folder_by_id_serialize(
-            api_key=api_key,
-            folder_id=folder_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: dict[str, str | None] = {
-            "200": "RoutineFolder",
-            "404": None,
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-    def _get_routine_folder_by_id_serialize(
-        self,
-        api_key,
-        folder_id,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: dict[str, str] = {}
-
-        _path_params: dict[str, str] = {}
-        _query_params: list[tuple[str, str]] = []
-        _header_params: dict[str, str | None] = _headers or {}
-        _form_params: list[tuple[str, str]] = []
-        _files: dict[
-            str, str | bytes | list[str] | list[bytes] | list[tuple[str, bytes]]
-        ] = {}
-        _body_params: bytes | None = None
-
-        # process the path parameters
-        if folder_id is not None:
-            _path_params["folderId"] = folder_id
-        # process the query parameters
-        # process the header parameters
-        if api_key is not None:
-            _header_params["api-key"] = api_key
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: list[str] = []
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/v1/routine_folders/{folderId}",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
     async def get_routine_folders(
         self,
         api_key: UUID,
@@ -826,6 +308,524 @@ class RoutineFoldersApi:
 
         return self.api_client.param_serialize(
             method="GET",
+            resource_path="/v1/routine_folders",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    async def get_routine_folders_folder_id(
+        self,
+        api_key: UUID,
+        folder_id: Annotated[
+            StrictStr, Field(description="The id of the routine folder")
+        ],
+        _request_timeout: None
+        | Annotated[StrictFloat, Field(gt=0)]
+        | tuple[
+            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+        ] = None,
+        _request_auth: dict[StrictStr, Any] | None = None,
+        _content_type: StrictStr | None = None,
+        _headers: dict[StrictStr, Any] | None = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RoutineFolder:
+        """Get a single routine folder by id.
+
+
+        :param api_key: (required)
+        :type api_key: UUID
+        :param folder_id: The id of the routine folder (required)
+        :type folder_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_routine_folders_folder_id_serialize(
+            api_key=api_key,
+            folder_id=folder_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: dict[str, str | None] = {
+            "200": "RoutineFolder",
+            "404": None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def get_routine_folders_folder_id_with_http_info(
+        self,
+        api_key: UUID,
+        folder_id: Annotated[
+            StrictStr, Field(description="The id of the routine folder")
+        ],
+        _request_timeout: None
+        | Annotated[StrictFloat, Field(gt=0)]
+        | tuple[
+            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+        ] = None,
+        _request_auth: dict[StrictStr, Any] | None = None,
+        _content_type: StrictStr | None = None,
+        _headers: dict[StrictStr, Any] | None = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RoutineFolder]:
+        """Get a single routine folder by id.
+
+
+        :param api_key: (required)
+        :type api_key: UUID
+        :param folder_id: The id of the routine folder (required)
+        :type folder_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_routine_folders_folder_id_serialize(
+            api_key=api_key,
+            folder_id=folder_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: dict[str, str | None] = {
+            "200": "RoutineFolder",
+            "404": None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    async def get_routine_folders_folder_id_without_preload_content(
+        self,
+        api_key: UUID,
+        folder_id: Annotated[
+            StrictStr, Field(description="The id of the routine folder")
+        ],
+        _request_timeout: None
+        | Annotated[StrictFloat, Field(gt=0)]
+        | tuple[
+            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+        ] = None,
+        _request_auth: dict[StrictStr, Any] | None = None,
+        _content_type: StrictStr | None = None,
+        _headers: dict[StrictStr, Any] | None = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get a single routine folder by id.
+
+
+        :param api_key: (required)
+        :type api_key: UUID
+        :param folder_id: The id of the routine folder (required)
+        :type folder_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_routine_folders_folder_id_serialize(
+            api_key=api_key,
+            folder_id=folder_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: dict[str, str | None] = {
+            "200": "RoutineFolder",
+            "404": None,
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _get_routine_folders_folder_id_serialize(
+        self,
+        api_key,
+        folder_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: dict[str, str] = {}
+
+        _path_params: dict[str, str] = {}
+        _query_params: list[tuple[str, str]] = []
+        _header_params: dict[str, str | None] = _headers or {}
+        _form_params: list[tuple[str, str]] = []
+        _files: dict[
+            str, str | bytes | list[str] | list[bytes] | list[tuple[str, bytes]]
+        ] = {}
+        _body_params: bytes | None = None
+
+        # process the path parameters
+        if folder_id is not None:
+            _path_params["folderId"] = folder_id
+        # process the query parameters
+        # process the header parameters
+        if api_key is not None:
+            _header_params["api-key"] = api_key
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # authentication setting
+        _auth_settings: list[str] = []
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/v1/routine_folders/{folderId}",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    async def post_routine_folders(
+        self,
+        api_key: UUID,
+        post_routine_folder_request_body: PostRoutineFolderRequestBody,
+        _request_timeout: None
+        | Annotated[StrictFloat, Field(gt=0)]
+        | tuple[
+            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+        ] = None,
+        _request_auth: dict[StrictStr, Any] | None = None,
+        _content_type: StrictStr | None = None,
+        _headers: dict[StrictStr, Any] | None = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RoutineFolder:
+        """Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
+
+
+        :param api_key: (required)
+        :type api_key: UUID
+        :param post_routine_folder_request_body: (required)
+        :type post_routine_folder_request_body: PostRoutineFolderRequestBody
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._post_routine_folders_serialize(
+            api_key=api_key,
+            post_routine_folder_request_body=post_routine_folder_request_body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: dict[str, str | None] = {
+            "201": "RoutineFolder",
+            "400": "PostWorkouts400Response",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def post_routine_folders_with_http_info(
+        self,
+        api_key: UUID,
+        post_routine_folder_request_body: PostRoutineFolderRequestBody,
+        _request_timeout: None
+        | Annotated[StrictFloat, Field(gt=0)]
+        | tuple[
+            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+        ] = None,
+        _request_auth: dict[StrictStr, Any] | None = None,
+        _content_type: StrictStr | None = None,
+        _headers: dict[StrictStr, Any] | None = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RoutineFolder]:
+        """Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
+
+
+        :param api_key: (required)
+        :type api_key: UUID
+        :param post_routine_folder_request_body: (required)
+        :type post_routine_folder_request_body: PostRoutineFolderRequestBody
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._post_routine_folders_serialize(
+            api_key=api_key,
+            post_routine_folder_request_body=post_routine_folder_request_body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: dict[str, str | None] = {
+            "201": "RoutineFolder",
+            "400": "PostWorkouts400Response",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    async def post_routine_folders_without_preload_content(
+        self,
+        api_key: UUID,
+        post_routine_folder_request_body: PostRoutineFolderRequestBody,
+        _request_timeout: None
+        | Annotated[StrictFloat, Field(gt=0)]
+        | tuple[
+            Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+        ] = None,
+        _request_auth: dict[StrictStr, Any] | None = None,
+        _content_type: StrictStr | None = None,
+        _headers: dict[StrictStr, Any] | None = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
+
+
+        :param api_key: (required)
+        :type api_key: UUID
+        :param post_routine_folder_request_body: (required)
+        :type post_routine_folder_request_body: PostRoutineFolderRequestBody
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._post_routine_folders_serialize(
+            api_key=api_key,
+            post_routine_folder_request_body=post_routine_folder_request_body,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: dict[str, str | None] = {
+            "201": "RoutineFolder",
+            "400": "PostWorkouts400Response",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _post_routine_folders_serialize(
+        self,
+        api_key,
+        post_routine_folder_request_body,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: dict[str, str] = {}
+
+        _path_params: dict[str, str] = {}
+        _query_params: list[tuple[str, str]] = []
+        _header_params: dict[str, str | None] = _headers or {}
+        _form_params: list[tuple[str, str]] = []
+        _files: dict[
+            str, str | bytes | list[str] | list[bytes] | list[tuple[str, bytes]]
+        ] = {}
+        _body_params: bytes | None = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if api_key is not None:
+            _header_params["api-key"] = api_key
+        # process the form parameters
+        # process the body parameter
+        if post_routine_folder_request_body is not None:
+            _body_params = post_routine_folder_request_body
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: list[str] = []
+
+        return self.api_client.param_serialize(
+            method="POST",
             resource_path="/v1/routine_folders",
             path_params=_path_params,
             query_params=_query_params,

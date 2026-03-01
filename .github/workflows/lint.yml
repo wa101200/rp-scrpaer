@@ -21,12 +21,18 @@ jobs:
           HK_JOBS: "1"
   generate-no-diff:
     runs-on: blacksmith-2vcpu-ubuntu-2404-arm
-    name: lint
+    name: Assert no diff on generated files
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
       - uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
+      - uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
+        with:
+          working_directory: packages/api-service
+      - uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
+        with:
+          working_directory: scripts/hevy-extract
       - name: mise generate
         run: mise "//...:generate-models*"
       - name: fix formatting

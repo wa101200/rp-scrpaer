@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_exercise_history**](ExerciseHistoryApi.md#get_exercise_history) | **GET** /v1/exercise_history/{exerciseTemplateId} | Get exercise history for a specific exercise template
+[**get_exercise_history_exercise_template_id**](ExerciseHistoryApi.md#get_exercise_history_exercise_template_id) | **GET** /v1/exercise_history/{exerciseTemplateId} | Get exercise history for a specific exercise template
 
 
-# **get_exercise_history**
-> GetExerciseHistory200Response get_exercise_history(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
+# **get_exercise_history_exercise_template_id**
+> GetExerciseHistoryExerciseTemplateId200Response get_exercise_history_exercise_template_id(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
 
 Get exercise history for a specific exercise template
 
@@ -17,7 +17,7 @@ Get exercise history for a specific exercise template
 
 ```python
 import hevy_api_service
-from hevy_api_service.models.get_exercise_history200_response import GetExerciseHistory200Response
+from hevy_api_service.models.get_exercise_history_exercise_template_id200_response import GetExerciseHistoryExerciseTemplateId200Response
 from hevy_api_service.rest import ApiException
 from pprint import pprint
 
@@ -39,11 +39,11 @@ async with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get exercise history for a specific exercise template
-        api_response = await api_instance.get_exercise_history(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
-        print("The response of ExerciseHistoryApi->get_exercise_history:\n")
+        api_response = await api_instance.get_exercise_history_exercise_template_id(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
+        print("The response of ExerciseHistoryApi->get_exercise_history_exercise_template_id:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ExerciseHistoryApi->get_exercise_history: %s\n" % e)
+        print("Exception when calling ExerciseHistoryApi->get_exercise_history_exercise_template_id: %s\n" % e)
 ```
 
 
@@ -60,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetExerciseHistory200Response**](GetExerciseHistory200Response.md)
+[**GetExerciseHistoryExerciseTemplateId200Response**](GetExerciseHistoryExerciseTemplateId200Response.md)
 
 ### Authorization
 
