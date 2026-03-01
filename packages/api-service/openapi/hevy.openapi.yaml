@@ -6,7 +6,6 @@ info:
 paths:
   /v1/workouts:
     get:
-      operationId: getWorkouts
       summary: Get a paginated list of workouts
       tags:
         - Workouts
@@ -52,7 +51,6 @@ paths:
         "400":
           description: Invalid page size
     post:
-      operationId: createWorkout
       summary: Create a new workout
       tags:
         - Workouts
@@ -88,7 +86,6 @@ paths:
                     description: Error message
   /v1/workouts/count:
     get:
-      operationId: getWorkoutCount
       summary: Get the total number of workouts on the account
       tags:
         - Workouts
@@ -113,7 +110,6 @@ paths:
                     description: The total number of workouts
   /v1/workouts/events:
     get:
-      operationId: getWorkoutEvents
       summary: Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
       tags:
         - Workouts
@@ -153,7 +149,6 @@ paths:
           description: Internal Server Error
   /v1/workouts/{workoutId}:
     get:
-      operationId: getWorkoutById
       tags:
         - Workouts
       summary: Get a single workout’s complete details by the workoutId
@@ -168,8 +163,6 @@ paths:
           in: path
           description: The id of the workout
           required: true
-          schema:
-            type: string
       responses:
         "200":
           description: Success
@@ -180,7 +173,6 @@ paths:
         "404":
           description: Workout not found
     put:
-      operationId: updateWorkout
       summary: Update an existing workout
       tags:
         - Workouts
@@ -195,8 +187,6 @@ paths:
           name: workoutId
           description: The id of the workout
           required: true
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -222,7 +212,6 @@ paths:
                     description: Error message
   /v1/user/info:
     get:
-      operationId: getUserInfo
       summary: Get user info
       tags:
         - Users
@@ -244,7 +233,6 @@ paths:
           description: User not found
   /v1/routines:
     get:
-      operationId: getRoutines
       summary: Get a paginated list of routines
       tags:
         - Routines
@@ -290,7 +278,6 @@ paths:
         "400":
           description: Invalid page size
     post:
-      operationId: createRoutine
       summary: Create a new routine
       tags:
         - Routines
@@ -336,7 +323,6 @@ paths:
                     description: Error message
   /v1/routines/{routineId}:
     get:
-      operationId: getRoutineById
       summary: Get a routine by its Id
       tags:
         - Routines
@@ -351,8 +337,6 @@ paths:
           name: routineId
           description: The id of the routine
           required: true
-          schema:
-            type: string
       responses:
         "200":
           description: The routine with the provided id
@@ -374,7 +358,6 @@ paths:
                     type: string
                     description: Error message
     put:
-      operationId: updateRoutine
       summary: Update an existing routine
       tags:
         - Routines
@@ -389,8 +372,6 @@ paths:
           name: routineId
           description: The id of the routine
           required: true
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -426,7 +407,6 @@ paths:
                     description: Error message
   /v1/exercise_templates:
     get:
-      operationId: getExerciseTemplates
       summary: Get a paginated list of exercise templates available on the account.
       tags:
         - ExerciseTemplates
@@ -472,7 +452,6 @@ paths:
         "400":
           description: Invalid page size
     post:
-      operationId: createCustomExerciseTemplate
       summary: Create a new custom exercise template.
       tags:
         - ExerciseTemplates
@@ -526,7 +505,6 @@ paths:
                     example: exceeds-custom-exercise-limit
   /v1/exercise_templates/{exerciseTemplateId}:
     get:
-      operationId: getExerciseTemplateById
       tags:
         - ExerciseTemplates
       summary: Get a single exercise template by id.
@@ -541,8 +519,6 @@ paths:
           in: path
           description: The id of the exercise template
           required: true
-          schema:
-            type: string
       responses:
         "200":
           description: Success
@@ -554,7 +530,6 @@ paths:
           description: Exercise template not found
   /v1/routine_folders:
     get:
-      operationId: getRoutineFolders
       summary: Get a paginated list of routine folders available on the account.
       tags:
         - RoutineFolders
@@ -600,7 +575,6 @@ paths:
         "400":
           description: Invalid page size
     post:
-      operationId: createRoutineFolder
       summary: Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
       tags:
         - RoutineFolders
@@ -636,7 +610,6 @@ paths:
                     description: Error message
   /v1/routine_folders/{folderId}:
     get:
-      operationId: getRoutineFolderById
       tags:
         - RoutineFolders
       summary: Get a single routine folder by id.
@@ -651,8 +624,6 @@ paths:
           in: path
           description: The id of the routine folder
           required: true
-          schema:
-            type: string
       responses:
         "200":
           description: Success
@@ -664,7 +635,6 @@ paths:
           description: Routine folder not found
   /v1/exercise_history/{exerciseTemplateId}:
     get:
-      operationId: getExerciseHistory
       summary: Get exercise history for a specific exercise template
       tags:
         - ExerciseHistory
@@ -679,8 +649,6 @@ paths:
           name: exerciseTemplateId
           description: The id of the exercise template
           required: true
-          schema:
-            type: string
         - in: query
           name: start_date
           schema:
@@ -753,7 +721,16 @@ components:
         rpe:
           type: number
           nullable: true
-          description: "The Rating of Perceived Exertion (RPE). Allowed values: 6, 7, 7.5, 8, 8.5, 9, 9.5, 10."
+          description: The Rating of Perceived Exertion (RPE).
+          enum:
+            - 6
+            - 7
+            - 7.5
+            - 8
+            - 8.5
+            - 9
+            - 9.5
+            - 10
           example: null
     PostWorkoutsRequestExercise:
       type: object
@@ -1140,7 +1117,7 @@ components:
           description: The type of set (warmup, normal, failure, dropset)
           example: normal
     CustomExerciseType:
-      type: string
+      type: enum
       enum:
         - weight_reps
         - reps_only
@@ -1152,7 +1129,7 @@ components:
         - short_distance_weight
       example: weight_reps
     MuscleGroup:
-      type: string
+      type: enum
       enum:
         - abdominals
         - shoulders
@@ -1176,7 +1153,7 @@ components:
         - other
       example: chest
     EquipmentCategory:
-      type: string
+      type: enum
       enum:
         - none
         - barbell
@@ -1218,10 +1195,9 @@ components:
           example: false
     CreateCustomExerciseRequestBody:
       type: object
-      required:
-        - exercise
       properties:
         exercise:
+          required: true
           type: object
           properties:
             title:

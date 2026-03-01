@@ -3,10 +3,10 @@ experimental_monorepo_root = true
 [env]
 DOCKER_BUILDKIT = 1
 RP_AUTH_TOKEN = ""
-
+MONOREPO_ROOT = "{{config_root}}"
 
 [monorepo]
-config_roots = ["packages/*"]
+config_roots = ["packages/*", "scripts/*"]
 
 [settings]
 experimental = true
