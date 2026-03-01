@@ -1,0 +1,14 @@
+[project]
+name = "embeddings"
+version = "0.1.0"
+description = "Embedding library for hevy and rp"
+requires-python = ">=3.12"
+dependencies = [
+  "pydantic~=2.12",
+  "aiofiles>=25.1.0",
+  "aiohttp>=3.13.3",
+  "aiohttp-retry>=2.9.1",
+  "pydantic>=2.12.5",
+  "torch>=2.10.0",
+  "transformers>=5.2.0",
+]
