@@ -10,7 +10,7 @@ run = [
   'echo "Exported to packages/api-service/openapi/hevy.openapi.yaml"',
 ]
 
-[tasks.vacuum]
+[tasks.report]
 depends = ["export"]
 description = "Vacuum the Hevy OpenAPI spec"
 run = [

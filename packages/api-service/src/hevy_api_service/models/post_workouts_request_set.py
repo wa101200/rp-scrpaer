@@ -50,8 +50,7 @@ class PostWorkoutsRequestSet(BaseModel):
         description="A custom metric for the set. Currently used for steps and floors.",
     )
     rpe: StrictFloat | StrictInt | None = Field(
-        default=None,
-        description="The Rating of Perceived Exertion (RPE). Allowed values: 6, 7, 7.5, 8, 8.5, 9, 9.5, 10.",
+        default=None, description="The Rating of Perceived Exertion (RPE)."
     )
     __properties: ClassVar[list[str]] = [
         "type",
@@ -72,6 +71,18 @@ class PostWorkoutsRequestSet(BaseModel):
         if value not in set(["warmup", "normal", "failure", "dropset"]):
             raise ValueError(
                 "must be one of enum values ('warmup', 'normal', 'failure', 'dropset')"
+            )
+        return value
+
+    @field_validator("rpe")
+    def rpe_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set([6, 7, 7.5, 8, 8.5, 9, 9.5, 10]):
+            raise ValueError(
+                "must be one of enum values (6, 7, 7.5, 8, 8.5, 9, 9.5, 10)"
             )
         return value
 

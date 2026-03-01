@@ -18,6 +18,7 @@ RP_APP_VERSION = "1.1.13"
 run = "echo 'No tests defined'"
 
 [tasks.generate-models-hevy]
+depends = "//scripts/hevy-extract:export"
 description = "Generate Python SDK from OpenAPI spec"
 run = """
 openapi-generator-cli generate \
@@ -43,6 +44,7 @@ openapi-generator-cli generate \
 
 
 [tasks.compile-openai-hevy]
+depends = "//scripts/hevy-extract:export"
 run = "redocly build-docs openapi/hevy.openapi.yaml --output website/docs/hevy/index.html"
 description = "Compile OpenAPI docs"
 

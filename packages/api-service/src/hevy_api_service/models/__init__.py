@@ -19,43 +19,42 @@ from hevy_api_service.models.create_custom_exercise_request_body import (
 from hevy_api_service.models.create_custom_exercise_request_body_exercise import (
     CreateCustomExerciseRequestBodyExercise,
 )
-from hevy_api_service.models.create_custom_exercise_template200_response import (
-    CreateCustomExerciseTemplate200Response,
-)
-from hevy_api_service.models.create_custom_exercise_template400_response import (
-    CreateCustomExerciseTemplate400Response,
-)
-from hevy_api_service.models.create_custom_exercise_template403_response import (
-    CreateCustomExerciseTemplate403Response,
-)
-from hevy_api_service.models.create_workout400_response import CreateWorkout400Response
 from hevy_api_service.models.custom_exercise_type import CustomExerciseType
 from hevy_api_service.models.deleted_workout import DeletedWorkout
 from hevy_api_service.models.equipment_category import EquipmentCategory
 from hevy_api_service.models.exercise import Exercise
 from hevy_api_service.models.exercise_history_entry import ExerciseHistoryEntry
 from hevy_api_service.models.exercise_template import ExerciseTemplate
-from hevy_api_service.models.get_exercise_history200_response import (
-    GetExerciseHistory200Response,
+from hevy_api_service.models.get_exercise_history_exercise_template_id200_response import (
+    GetExerciseHistoryExerciseTemplateId200Response,
 )
 from hevy_api_service.models.get_exercise_templates200_response import (
     GetExerciseTemplates200Response,
-)
-from hevy_api_service.models.get_routine_by_id200_response import (
-    GetRoutineById200Response,
 )
 from hevy_api_service.models.get_routine_folders200_response import (
     GetRoutineFolders200Response,
 )
 from hevy_api_service.models.get_routines200_response import GetRoutines200Response
-from hevy_api_service.models.get_workout_count200_response import (
-    GetWorkoutCount200Response,
+from hevy_api_service.models.get_routines_routine_id200_response import (
+    GetRoutinesRoutineId200Response,
 )
 from hevy_api_service.models.get_workouts200_response import GetWorkouts200Response
+from hevy_api_service.models.get_workouts_count200_response import (
+    GetWorkoutsCount200Response,
+)
 from hevy_api_service.models.muscle_group import MuscleGroup
 from hevy_api_service.models.paginated_workout_events import PaginatedWorkoutEvents
 from hevy_api_service.models.paginated_workout_events_events_inner import (
     PaginatedWorkoutEventsEventsInner,
+)
+from hevy_api_service.models.post_exercise_templates200_response import (
+    PostExerciseTemplates200Response,
+)
+from hevy_api_service.models.post_exercise_templates400_response import (
+    PostExerciseTemplates400Response,
+)
+from hevy_api_service.models.post_exercise_templates403_response import (
+    PostExerciseTemplates403Response,
 )
 from hevy_api_service.models.post_routine_folder_request_body import (
     PostRoutineFolderRequestBody,
@@ -74,6 +73,7 @@ from hevy_api_service.models.post_routines_request_set import PostRoutinesReques
 from hevy_api_service.models.post_routines_request_set_rep_range import (
     PostRoutinesRequestSetRepRange,
 )
+from hevy_api_service.models.post_workouts400_response import PostWorkouts400Response
 from hevy_api_service.models.post_workouts_request_body import PostWorkoutsRequestBody
 from hevy_api_service.models.post_workouts_request_body_workout import (
     PostWorkoutsRequestBodyWorkout,

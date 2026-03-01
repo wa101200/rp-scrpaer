@@ -17,8 +17,8 @@ from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 
 from hevy_api_service.api_client import ApiClient, RequestSerialized
 from hevy_api_service.api_response import ApiResponse
-from hevy_api_service.models.get_exercise_history200_response import (
-    GetExerciseHistory200Response,
+from hevy_api_service.models.get_exercise_history_exercise_template_id200_response import (
+    GetExerciseHistoryExerciseTemplateId200Response,
 )
 from hevy_api_service.rest import RESTResponseType
 
@@ -36,7 +36,7 @@ class ExerciseHistoryApi:
         self.api_client = api_client
 
     @validate_call
-    async def get_exercise_history(
+    async def get_exercise_history_exercise_template_id(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -63,7 +63,7 @@ class ExerciseHistoryApi:
         _content_type: StrictStr | None = None,
         _headers: dict[StrictStr, Any] | None = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetExerciseHistory200Response:
+    ) -> GetExerciseHistoryExerciseTemplateId200Response:
         """Get exercise history for a specific exercise template
 
 
@@ -97,7 +97,7 @@ class ExerciseHistoryApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_exercise_history_serialize(
+        _param = self._get_exercise_history_exercise_template_id_serialize(
             api_key=api_key,
             exercise_template_id=exercise_template_id,
             start_date=start_date,
@@ -109,7 +109,7 @@ class ExerciseHistoryApi:
         )
 
         _response_types_map: dict[str, str | None] = {
-            "200": "GetExerciseHistory200Response",
+            "200": "GetExerciseHistoryExerciseTemplateId200Response",
             "400": None,
         }
         response_data = await self.api_client.call_api(
@@ -122,7 +122,7 @@ class ExerciseHistoryApi:
         ).data
 
     @validate_call
-    async def get_exercise_history_with_http_info(
+    async def get_exercise_history_exercise_template_id_with_http_info(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -149,7 +149,7 @@ class ExerciseHistoryApi:
         _content_type: StrictStr | None = None,
         _headers: dict[StrictStr, Any] | None = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetExerciseHistory200Response]:
+    ) -> ApiResponse[GetExerciseHistoryExerciseTemplateId200Response]:
         """Get exercise history for a specific exercise template
 
 
@@ -183,7 +183,7 @@ class ExerciseHistoryApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_exercise_history_serialize(
+        _param = self._get_exercise_history_exercise_template_id_serialize(
             api_key=api_key,
             exercise_template_id=exercise_template_id,
             start_date=start_date,
@@ -195,7 +195,7 @@ class ExerciseHistoryApi:
         )
 
         _response_types_map: dict[str, str | None] = {
-            "200": "GetExerciseHistory200Response",
+            "200": "GetExerciseHistoryExerciseTemplateId200Response",
             "400": None,
         }
         response_data = await self.api_client.call_api(
@@ -208,7 +208,7 @@ class ExerciseHistoryApi:
         )
 
     @validate_call
-    async def get_exercise_history_without_preload_content(
+    async def get_exercise_history_exercise_template_id_without_preload_content(
         self,
         api_key: UUID,
         exercise_template_id: Annotated[
@@ -269,7 +269,7 @@ class ExerciseHistoryApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_exercise_history_serialize(
+        _param = self._get_exercise_history_exercise_template_id_serialize(
             api_key=api_key,
             exercise_template_id=exercise_template_id,
             start_date=start_date,
@@ -281,7 +281,7 @@ class ExerciseHistoryApi:
         )
 
         _response_types_map: dict[str, str | None] = {
-            "200": "GetExerciseHistory200Response",
+            "200": "GetExerciseHistoryExerciseTemplateId200Response",
             "400": None,
         }
         response_data = await self.api_client.call_api(
@@ -289,7 +289,7 @@ class ExerciseHistoryApi:
         )
         return response_data.response
 
-    def _get_exercise_history_serialize(
+    def _get_exercise_history_exercise_template_id_serialize(
         self,
         api_key,
         exercise_template_id,

@@ -16,38 +16,18 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Self
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict
 
-from hevy_api_service.models.custom_exercise_type import CustomExerciseType
-from hevy_api_service.models.equipment_category import EquipmentCategory
-from hevy_api_service.models.muscle_group import MuscleGroup
+from hevy_api_service.models.routine import Routine
 
 
-class CreateCustomExerciseRequestBodyExercise(BaseModel):
+class GetRoutinesRoutineId200Response(BaseModel):
     """
-    CreateCustomExerciseRequestBodyExercise
+    GetRoutinesRoutineId200Response
     """  # noqa: E501
 
-    title: StrictStr | None = Field(
-        default=None, description="The title of the exercise template."
-    )
-    exercise_type: CustomExerciseType | None = None
-    equipment_category: EquipmentCategory | None = Field(
-        default=None, description="The equipment category of the exercise template."
-    )
-    muscle_group: MuscleGroup | None = Field(
-        default=None, description="The muscle group of the exercise template."
-    )
-    other_muscles: list[MuscleGroup] | None = Field(
-        default=None, description="The other muscles of the exercise template."
-    )
-    __properties: ClassVar[list[str]] = [
-        "title",
-        "exercise_type",
-        "equipment_category",
-        "muscle_group",
-        "other_muscles",
-    ]
+    routine: Routine | None = None
+    __properties: ClassVar[list[str]] = ["routine"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -66,7 +46,7 @@ class CreateCustomExerciseRequestBodyExercise(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self | None:
-        """Create an instance of CreateCustomExerciseRequestBodyExercise from a JSON string"""
+        """Create an instance of GetRoutinesRoutineId200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> dict[str, Any]:
@@ -86,11 +66,14 @@ class CreateCustomExerciseRequestBodyExercise(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of routine
+        if self.routine:
+            _dict["routine"] = self.routine.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: dict[str, Any] | None) -> Self | None:
-        """Create an instance of CreateCustomExerciseRequestBodyExercise from a dict"""
+        """Create an instance of GetRoutinesRoutineId200Response from a dict"""
         if obj is None:
             return None
 
@@ -99,11 +82,9 @@ class CreateCustomExerciseRequestBodyExercise(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "title": obj.get("title"),
-                "exercise_type": obj.get("exercise_type"),
-                "equipment_category": obj.get("equipment_category"),
-                "muscle_group": obj.get("muscle_group"),
-                "other_muscles": obj.get("other_muscles"),
+                "routine": Routine.from_dict(obj["routine"])
+                if obj.get("routine") is not None
+                else None
             }
         )
         return _obj

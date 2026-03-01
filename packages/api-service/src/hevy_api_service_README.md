@@ -55,11 +55,11 @@ async with hevy_api_service.ApiClient(configuration) as api_client:
 
     try:
         # Get exercise history for a specific exercise template
-        api_response = await api_instance.get_exercise_history(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
-        print("The response of ExerciseHistoryApi->get_exercise_history:\n")
+        api_response = await api_instance.get_exercise_history_exercise_template_id(api_key, exercise_template_id, start_date=start_date, end_date=end_date)
+        print("The response of ExerciseHistoryApi->get_exercise_history_exercise_template_id:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling ExerciseHistoryApi->get_exercise_history: %s\n" % e)
+        print("Exception when calling ExerciseHistoryApi->get_exercise_history_exercise_template_id: %s\n" % e)
 
 ```
 
@@ -69,50 +69,49 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*ExerciseHistoryApi* | [**get_exercise_history**](hevy_api_service/docs/ExerciseHistoryApi.md#get_exercise_history) | **GET** /v1/exercise_history/{exerciseTemplateId} | Get exercise history for a specific exercise template
-*ExerciseTemplatesApi* | [**create_custom_exercise_template**](hevy_api_service/docs/ExerciseTemplatesApi.md#create_custom_exercise_template) | **POST** /v1/exercise_templates | Create a new custom exercise template.
-*ExerciseTemplatesApi* | [**get_exercise_template_by_id**](hevy_api_service/docs/ExerciseTemplatesApi.md#get_exercise_template_by_id) | **GET** /v1/exercise_templates/{exerciseTemplateId} | Get a single exercise template by id.
+*ExerciseHistoryApi* | [**get_exercise_history_exercise_template_id**](hevy_api_service/docs/ExerciseHistoryApi.md#get_exercise_history_exercise_template_id) | **GET** /v1/exercise_history/{exerciseTemplateId} | Get exercise history for a specific exercise template
 *ExerciseTemplatesApi* | [**get_exercise_templates**](hevy_api_service/docs/ExerciseTemplatesApi.md#get_exercise_templates) | **GET** /v1/exercise_templates | Get a paginated list of exercise templates available on the account.
-*RoutineFoldersApi* | [**create_routine_folder**](hevy_api_service/docs/RoutineFoldersApi.md#create_routine_folder) | **POST** /v1/routine_folders | Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
-*RoutineFoldersApi* | [**get_routine_folder_by_id**](hevy_api_service/docs/RoutineFoldersApi.md#get_routine_folder_by_id) | **GET** /v1/routine_folders/{folderId} | Get a single routine folder by id.
+*ExerciseTemplatesApi* | [**get_exercise_templates_exercise_template_id**](hevy_api_service/docs/ExerciseTemplatesApi.md#get_exercise_templates_exercise_template_id) | **GET** /v1/exercise_templates/{exerciseTemplateId} | Get a single exercise template by id.
+*ExerciseTemplatesApi* | [**post_exercise_templates**](hevy_api_service/docs/ExerciseTemplatesApi.md#post_exercise_templates) | **POST** /v1/exercise_templates | Create a new custom exercise template.
 *RoutineFoldersApi* | [**get_routine_folders**](hevy_api_service/docs/RoutineFoldersApi.md#get_routine_folders) | **GET** /v1/routine_folders | Get a paginated list of routine folders available on the account.
-*RoutinesApi* | [**create_routine**](hevy_api_service/docs/RoutinesApi.md#create_routine) | **POST** /v1/routines | Create a new routine
-*RoutinesApi* | [**get_routine_by_id**](hevy_api_service/docs/RoutinesApi.md#get_routine_by_id) | **GET** /v1/routines/{routineId} | Get a routine by its Id
+*RoutineFoldersApi* | [**get_routine_folders_folder_id**](hevy_api_service/docs/RoutineFoldersApi.md#get_routine_folders_folder_id) | **GET** /v1/routine_folders/{folderId} | Get a single routine folder by id.
+*RoutineFoldersApi* | [**post_routine_folders**](hevy_api_service/docs/RoutineFoldersApi.md#post_routine_folders) | **POST** /v1/routine_folders | Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.
 *RoutinesApi* | [**get_routines**](hevy_api_service/docs/RoutinesApi.md#get_routines) | **GET** /v1/routines | Get a paginated list of routines
-*RoutinesApi* | [**update_routine**](hevy_api_service/docs/RoutinesApi.md#update_routine) | **PUT** /v1/routines/{routineId} | Update an existing routine
+*RoutinesApi* | [**get_routines_routine_id**](hevy_api_service/docs/RoutinesApi.md#get_routines_routine_id) | **GET** /v1/routines/{routineId} | Get a routine by its Id
+*RoutinesApi* | [**post_routines**](hevy_api_service/docs/RoutinesApi.md#post_routines) | **POST** /v1/routines | Create a new routine
+*RoutinesApi* | [**put_routines_routine_id**](hevy_api_service/docs/RoutinesApi.md#put_routines_routine_id) | **PUT** /v1/routines/{routineId} | Update an existing routine
 *UsersApi* | [**get_user_info**](hevy_api_service/docs/UsersApi.md#get_user_info) | **GET** /v1/user/info | Get user info
-*WorkoutsApi* | [**create_workout**](hevy_api_service/docs/WorkoutsApi.md#create_workout) | **POST** /v1/workouts | Create a new workout
-*WorkoutsApi* | [**get_workout_by_id**](hevy_api_service/docs/WorkoutsApi.md#get_workout_by_id) | **GET** /v1/workouts/{workoutId} | Get a single workout’s complete details by the workoutId
-*WorkoutsApi* | [**get_workout_count**](hevy_api_service/docs/WorkoutsApi.md#get_workout_count) | **GET** /v1/workouts/count | Get the total number of workouts on the account
-*WorkoutsApi* | [**get_workout_events**](hevy_api_service/docs/WorkoutsApi.md#get_workout_events) | **GET** /v1/workouts/events | Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
 *WorkoutsApi* | [**get_workouts**](hevy_api_service/docs/WorkoutsApi.md#get_workouts) | **GET** /v1/workouts | Get a paginated list of workouts
-*WorkoutsApi* | [**update_workout**](hevy_api_service/docs/WorkoutsApi.md#update_workout) | **PUT** /v1/workouts/{workoutId} | Update an existing workout
+*WorkoutsApi* | [**get_workouts_count**](hevy_api_service/docs/WorkoutsApi.md#get_workouts_count) | **GET** /v1/workouts/count | Get the total number of workouts on the account
+*WorkoutsApi* | [**get_workouts_events**](hevy_api_service/docs/WorkoutsApi.md#get_workouts_events) | **GET** /v1/workouts/events | Retrieve a paged list of workout events (updates or deletes) since a given date. Events are ordered from newest to oldest. The intention is to allow clients to keep their local cache of workouts up to date without having to fetch the entire list of workouts.
+*WorkoutsApi* | [**get_workouts_workout_id**](hevy_api_service/docs/WorkoutsApi.md#get_workouts_workout_id) | **GET** /v1/workouts/{workoutId} | Get a single workout’s complete details by the workoutId
+*WorkoutsApi* | [**post_workouts**](hevy_api_service/docs/WorkoutsApi.md#post_workouts) | **POST** /v1/workouts | Create a new workout
+*WorkoutsApi* | [**put_workouts_workout_id**](hevy_api_service/docs/WorkoutsApi.md#put_workouts_workout_id) | **PUT** /v1/workouts/{workoutId} | Update an existing workout
 
 
 ## Documentation For Models
 
  - [CreateCustomExerciseRequestBody](hevy_api_service/docs/CreateCustomExerciseRequestBody.md)
  - [CreateCustomExerciseRequestBodyExercise](hevy_api_service/docs/CreateCustomExerciseRequestBodyExercise.md)
- - [CreateCustomExerciseTemplate200Response](hevy_api_service/docs/CreateCustomExerciseTemplate200Response.md)
- - [CreateCustomExerciseTemplate400Response](hevy_api_service/docs/CreateCustomExerciseTemplate400Response.md)
- - [CreateCustomExerciseTemplate403Response](hevy_api_service/docs/CreateCustomExerciseTemplate403Response.md)
- - [CreateWorkout400Response](hevy_api_service/docs/CreateWorkout400Response.md)
  - [CustomExerciseType](hevy_api_service/docs/CustomExerciseType.md)
  - [DeletedWorkout](hevy_api_service/docs/DeletedWorkout.md)
  - [EquipmentCategory](hevy_api_service/docs/EquipmentCategory.md)
  - [Exercise](hevy_api_service/docs/Exercise.md)
  - [ExerciseHistoryEntry](hevy_api_service/docs/ExerciseHistoryEntry.md)
  - [ExerciseTemplate](hevy_api_service/docs/ExerciseTemplate.md)
- - [GetExerciseHistory200Response](hevy_api_service/docs/GetExerciseHistory200Response.md)
+ - [GetExerciseHistoryExerciseTemplateId200Response](hevy_api_service/docs/GetExerciseHistoryExerciseTemplateId200Response.md)
  - [GetExerciseTemplates200Response](hevy_api_service/docs/GetExerciseTemplates200Response.md)
- - [GetRoutineById200Response](hevy_api_service/docs/GetRoutineById200Response.md)
  - [GetRoutineFolders200Response](hevy_api_service/docs/GetRoutineFolders200Response.md)
  - [GetRoutines200Response](hevy_api_service/docs/GetRoutines200Response.md)
- - [GetWorkoutCount200Response](hevy_api_service/docs/GetWorkoutCount200Response.md)
+ - [GetRoutinesRoutineId200Response](hevy_api_service/docs/GetRoutinesRoutineId200Response.md)
  - [GetWorkouts200Response](hevy_api_service/docs/GetWorkouts200Response.md)
+ - [GetWorkoutsCount200Response](hevy_api_service/docs/GetWorkoutsCount200Response.md)
  - [MuscleGroup](hevy_api_service/docs/MuscleGroup.md)
  - [PaginatedWorkoutEvents](hevy_api_service/docs/PaginatedWorkoutEvents.md)
  - [PaginatedWorkoutEventsEventsInner](hevy_api_service/docs/PaginatedWorkoutEventsEventsInner.md)
+ - [PostExerciseTemplates200Response](hevy_api_service/docs/PostExerciseTemplates200Response.md)
+ - [PostExerciseTemplates400Response](hevy_api_service/docs/PostExerciseTemplates400Response.md)
+ - [PostExerciseTemplates403Response](hevy_api_service/docs/PostExerciseTemplates403Response.md)
  - [PostRoutineFolderRequestBody](hevy_api_service/docs/PostRoutineFolderRequestBody.md)
  - [PostRoutineFolderRequestBodyRoutineFolder](hevy_api_service/docs/PostRoutineFolderRequestBodyRoutineFolder.md)
  - [PostRoutinesRequestBody](hevy_api_service/docs/PostRoutinesRequestBody.md)
@@ -120,6 +119,7 @@ Class | Method | HTTP request | Description
  - [PostRoutinesRequestExercise](hevy_api_service/docs/PostRoutinesRequestExercise.md)
  - [PostRoutinesRequestSet](hevy_api_service/docs/PostRoutinesRequestSet.md)
  - [PostRoutinesRequestSetRepRange](hevy_api_service/docs/PostRoutinesRequestSetRepRange.md)
+ - [PostWorkouts400Response](hevy_api_service/docs/PostWorkouts400Response.md)
  - [PostWorkoutsRequestBody](hevy_api_service/docs/PostWorkoutsRequestBody.md)
  - [PostWorkoutsRequestBodyWorkout](hevy_api_service/docs/PostWorkoutsRequestBodyWorkout.md)
  - [PostWorkoutsRequestExercise](hevy_api_service/docs/PostWorkoutsRequestExercise.md)
