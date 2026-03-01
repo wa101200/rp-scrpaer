@@ -131,7 +131,7 @@
             "properties",
             "workouts"
         ],
-        "message": "media type schema property `workouts` is missing `examples` or `example`",
+        "message": "schema is missing `examples` or `example`",
         "severity": 1,
         "range": {
             "start": {
@@ -159,7 +159,7 @@
             "properties",
             "workouts"
         ],
-        "message": "schema is missing `examples` or `example`",
+        "message": "media type schema property `workouts` is missing `examples` or `example`",
         "severity": 1,
         "range": {
             "start": {
@@ -5206,27 +5206,6 @@
         "source": "openapi.json"
     },
     {
-        "code": "oas3-schema",
-        "path": [
-            "components",
-            "schemas",
-            "CreateCustomExerciseRequestBody"
-        ],
-        "message": "schema invalid: `/components/schemas/CreateCustomExerciseRequestBody/properties/exercise/required` expected type `[array]`, got `boolean`",
-        "severity": 0,
-        "range": {
-            "start": {
-                "line": 1764,
-                "character": 42
-            },
-            "end": {
-                "line": 1764,
-                "character": 42
-            }
-        },
-        "source": "openapi.json"
-    },
-    {
         "code": "component-description",
         "path": [
             "components",
@@ -5266,11 +5245,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1777,
+                "line": 1776,
                 "character": 15
             },
             "end": {
-                "line": 1777,
+                "line": 1776,
                 "character": 30
             }
         },
@@ -5295,11 +5274,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1780,
+                "line": 1779,
                 "character": 15
             },
             "end": {
-                "line": 1780,
+                "line": 1779,
                 "character": 35
             }
         },
@@ -5324,11 +5303,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1789,
+                "line": 1788,
                 "character": 15
             },
             "end": {
-                "line": 1789,
+                "line": 1788,
                 "character": 29
             }
         },
@@ -5353,11 +5332,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1798,
+                "line": 1797,
                 "character": 15
             },
             "end": {
-                "line": 1798,
+                "line": 1797,
                 "character": 30
             }
         },
@@ -5374,11 +5353,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1813,
+                "line": 1815,
                 "character": 7
             },
             "end": {
-                "line": 1813,
+                "line": 1815,
                 "character": 22
             }
         },
@@ -5397,11 +5376,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1831,
+                "line": 1833,
                 "character": 11
             },
             "end": {
-                "line": 1831,
+                "line": 1833,
                 "character": 23
             }
         },
@@ -5420,11 +5399,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1836,
+                "line": 1838,
                 "character": 11
             },
             "end": {
-                "line": 1836,
+                "line": 1838,
                 "character": 23
             }
         },
@@ -5441,11 +5420,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1843,
+                "line": 1845,
                 "character": 7
             },
             "end": {
-                "line": 1843,
+                "line": 1845,
                 "character": 16
             }
         },
@@ -5464,11 +5443,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1856,
+                "line": 1858,
                 "character": 11
             },
             "end": {
-                "line": 1856,
+                "line": 1858,
                 "character": 22
             }
         },
@@ -5484,15 +5463,15 @@
             "folder_id",
             "description"
         ],
-        "message": "Description at line `1859` is a duplicate of line `1818`",
+        "message": "Description at line `1861` is a duplicate of line `1820`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1859,
+                "line": 1861,
                 "character": 28
             },
             "end": {
-                "line": 1859,
+                "line": 1861,
                 "character": 52
             }
         },
@@ -5511,11 +5490,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1862,
+                "line": 1864,
                 "character": 11
             },
             "end": {
-                "line": 1862,
+                "line": 1864,
                 "character": 23
             }
         },
@@ -5534,11 +5513,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1867,
+                "line": 1869,
                 "character": 11
             },
             "end": {
-                "line": 1867,
+                "line": 1869,
                 "character": 23
             }
         },
@@ -5557,11 +5536,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1872,
+                "line": 1874,
                 "character": 11
             },
             "end": {
-                "line": 1872,
+                "line": 1874,
                 "character": 22
             }
         },
@@ -5580,11 +5559,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1872,
+                "line": 1874,
                 "character": 11
             },
             "end": {
-                "line": 1872,
+                "line": 1874,
                 "character": 22
             }
         },
@@ -5600,15 +5579,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1884` is a duplicate of line `1575`",
+        "message": "Description at line `1886` is a duplicate of line `1575`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1884,
+                "line": 1886,
                 "character": 34
             },
             "end": {
-                "line": 1884,
+                "line": 1886,
                 "character": 57
             }
         },
@@ -5630,11 +5609,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1887,
+                "line": 1889,
                 "character": 17
             },
             "end": {
-                "line": 1887,
+                "line": 1889,
                 "character": 31
             }
         },
@@ -5657,11 +5636,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1890,
+                "line": 1892,
                 "character": 19
             },
             "end": {
-                "line": 1890,
+                "line": 1892,
                 "character": 28
             }
         },
@@ -5683,11 +5662,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1897,
+                "line": 1899,
                 "character": 17
             },
             "end": {
-                "line": 1897,
+                "line": 1899,
                 "character": 39
             }
         },
@@ -5703,15 +5682,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1899` is a duplicate of line `1585`",
+        "message": "Description at line `1901` is a duplicate of line `1585`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1899,
+                "line": 1901,
                 "character": 34
             },
             "end": {
-                "line": 1899,
+                "line": 1901,
                 "character": 117
             }
         },
@@ -5733,11 +5712,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1902,
+                "line": 1904,
                 "character": 17
             },
             "end": {
-                "line": 1902,
+                "line": 1904,
                 "character": 31
             }
         },
@@ -5753,15 +5732,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1905` is a duplicate of line `1591`",
+        "message": "Description at line `1907` is a duplicate of line `1591`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1905,
+                "line": 1907,
                 "character": 34
             },
             "end": {
-                "line": 1905,
+                "line": 1907,
                 "character": 154
             }
         },
@@ -5777,15 +5756,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1920` is a duplicate of line `1524`",
+        "message": "Description at line `1922` is a duplicate of line `1524`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1920,
+                "line": 1922,
                 "character": 40
             },
             "end": {
-                "line": 1920,
+                "line": 1922,
                 "character": 118
             }
         },
@@ -5810,11 +5789,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1923,
+                "line": 1925,
                 "character": 23
             },
             "end": {
-                "line": 1923,
+                "line": 1925,
                 "character": 34
             }
         },
@@ -5830,15 +5809,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1926` is a duplicate of line `1530`",
+        "message": "Description at line `1928` is a duplicate of line `1530`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1926,
+                "line": 1928,
                 "character": 40
             },
             "end": {
-                "line": 1926,
+                "line": 1928,
                 "character": 69
             }
         },
@@ -5853,15 +5832,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `1932` is a duplicate of line `1536`",
+        "message": "Description at line `1934` is a duplicate of line `1536`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1932,
+                "line": 1934,
                 "character": 40
             },
             "end": {
-                "line": 1932,
+                "line": 1934,
                 "character": 75
             }
         },
@@ -5886,11 +5865,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1935,
+                "line": 1937,
                 "character": 23
             },
             "end": {
-                "line": 1935,
+                "line": 1937,
                 "character": 34
             }
         },
@@ -5906,15 +5885,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1938` is a duplicate of line `1291`",
+        "message": "Description at line `1940` is a duplicate of line `1291`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1938,
+                "line": 1940,
                 "character": 40
             },
             "end": {
-                "line": 1938,
+                "line": 1940,
                 "character": 82
             }
         },
@@ -5932,15 +5911,15 @@
             "start",
             "description"
         ],
-        "message": "Description at line `1943` is a duplicate of line `1295`",
+        "message": "Description at line `1945` is a duplicate of line `1295`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1943,
+                "line": 1945,
                 "character": 44
             },
             "end": {
-                "line": 1943,
+                "line": 1945,
                 "character": 78
             }
         },
@@ -5958,15 +5937,15 @@
             "end",
             "description"
         ],
-        "message": "Description at line `1949` is a duplicate of line `1300`",
+        "message": "Description at line `1951` is a duplicate of line `1300`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1949,
+                "line": 1951,
                 "character": 44
             },
             "end": {
-                "line": 1949,
+                "line": 1951,
                 "character": 76
             }
         },
@@ -5991,11 +5970,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1954,
+                "line": 1956,
                 "character": 23
             },
             "end": {
-                "line": 1954,
+                "line": 1956,
                 "character": 40
             }
         },
@@ -6010,15 +5989,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `1957` is a duplicate of line `1542`",
+        "message": "Description at line `1959` is a duplicate of line `1542`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1957,
+                "line": 1959,
                 "character": 40
             },
             "end": {
-                "line": 1957,
+                "line": 1959,
                 "character": 77
             }
         },
@@ -6043,11 +6022,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1960,
+                "line": 1962,
                 "character": 23
             },
             "end": {
-                "line": 1960,
+                "line": 1962,
                 "character": 41
             }
         },
@@ -6062,15 +6041,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `1963` is a duplicate of line `1548`",
+        "message": "Description at line `1965` is a duplicate of line `1548`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1963,
+                "line": 1965,
                 "character": 40
             },
             "end": {
-                "line": 1963,
+                "line": 1965,
                 "character": 78
             }
         },
@@ -6086,15 +6065,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1969` is a duplicate of line `1554`",
+        "message": "Description at line `1971` is a duplicate of line `1554`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1969,
+                "line": 1971,
                 "character": 40
             },
             "end": {
-                "line": 1969,
+                "line": 1971,
                 "character": 100
             }
         },
@@ -6119,11 +6098,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1972,
+                "line": 1974,
                 "character": 23
             },
             "end": {
-                "line": 1972,
+                "line": 1974,
                 "character": 38
             }
         },
@@ -6139,15 +6118,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `1975` is a duplicate of line `1560`",
+        "message": "Description at line `1977` is a duplicate of line `1560`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 1975,
+                "line": 1977,
                 "character": 40
             },
             "end": {
-                "line": 1975,
+                "line": 1977,
                 "character": 147
             }
         },
@@ -6164,11 +6143,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 1986,
+                "line": 1988,
                 "character": 7
             },
             "end": {
-                "line": 1986,
+                "line": 1988,
                 "character": 17
             }
         },
@@ -6185,11 +6164,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2006,
+                "line": 2008,
                 "character": 7
             },
             "end": {
-                "line": 2006,
+                "line": 2008,
                 "character": 25
             }
         },
@@ -6206,11 +6185,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2014,
+                "line": 2016,
                 "character": 7
             },
             "end": {
-                "line": 2014,
+                "line": 2016,
                 "character": 16
             }
         },
@@ -6229,11 +6208,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2027,
+                "line": 2029,
                 "character": 11
             },
             "end": {
-                "line": 2027,
+                "line": 2029,
                 "character": 23
             }
         },
@@ -6252,11 +6231,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2037,
+                "line": 2039,
                 "character": 11
             },
             "end": {
-                "line": 2037,
+                "line": 2039,
                 "character": 23
             }
         },
@@ -6272,15 +6251,15 @@
             "start_time",
             "description"
         ],
-        "message": "Description at line `2039` is a duplicate of line `1617`",
+        "message": "Description at line `2041` is a duplicate of line `1617`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2039,
+                "line": 2041,
                 "character": 28
             },
             "end": {
-                "line": 2039,
+                "line": 2041,
                 "character": 98
             }
         },
@@ -6299,11 +6278,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2042,
+                "line": 2044,
                 "character": 11
             },
             "end": {
-                "line": 2042,
+                "line": 2044,
                 "character": 21
             }
         },
@@ -6319,15 +6298,15 @@
             "end_time",
             "description"
         ],
-        "message": "Description at line `2044` is a duplicate of line `1622`",
+        "message": "Description at line `2046` is a duplicate of line `1622`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2044,
+                "line": 2046,
                 "character": 28
             },
             "end": {
-                "line": 2044,
+                "line": 2046,
                 "character": 96
             }
         },
@@ -6346,11 +6325,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2047,
+                "line": 2049,
                 "character": 11
             },
             "end": {
-                "line": 2047,
+                "line": 2049,
                 "character": 23
             }
         },
@@ -6369,11 +6348,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2052,
+                "line": 2054,
                 "character": 11
             },
             "end": {
-                "line": 2052,
+                "line": 2054,
                 "character": 23
             }
         },
@@ -6399,11 +6378,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2057,
+                "line": 2059,
                 "character": 11
             },
             "end": {
-                "line": 2057,
+                "line": 2059,
                 "character": 22
             }
         },
@@ -6429,11 +6408,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2057,
+                "line": 2059,
                 "character": 11
             },
             "end": {
-                "line": 2057,
+                "line": 2059,
                 "character": 22
             }
         },
@@ -6459,11 +6438,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2057,
+                "line": 2059,
                 "character": 11
             },
             "end": {
-                "line": 2057,
+                "line": 2059,
                 "character": 22
             }
         },
@@ -6479,15 +6458,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2064` is a duplicate of line `1570`",
+        "message": "Description at line `2066` is a duplicate of line `1570`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2064,
+                "line": 2066,
                 "character": 34
             },
             "end": {
-                "line": 2064,
+                "line": 2066,
                 "character": 94
             }
         },
@@ -6503,15 +6482,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2069` is a duplicate of line `1575`",
+        "message": "Description at line `2071` is a duplicate of line `1575`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2069,
+                "line": 2071,
                 "character": 34
             },
             "end": {
-                "line": 2069,
+                "line": 2071,
                 "character": 57
             }
         },
@@ -6526,15 +6505,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `2074` is a duplicate of line `1580`",
+        "message": "Description at line `2076` is a duplicate of line `1580`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2074,
+                "line": 2076,
                 "character": 34
             },
             "end": {
-                "line": 2074,
+                "line": 2076,
                 "character": 57
             }
         },
@@ -6545,9 +6524,7 @@
         "path": [
             "components",
             "schemas",
-            "UpdatedWorkout",
-            "properties",
-            "workout",
+            "Workout",
             "properties",
             "exercises",
             "items",
@@ -6558,11 +6535,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2077,
+                "line": 2079,
                 "character": 17
             },
             "end": {
-                "line": 2077,
+                "line": 2079,
                 "character": 39
             }
         },
@@ -6578,15 +6555,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2079` is a duplicate of line `1585`",
+        "message": "Description at line `2081` is a duplicate of line `1585`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2079,
+                "line": 2081,
                 "character": 34
             },
             "end": {
-                "line": 2079,
+                "line": 2081,
                 "character": 117
             }
         },
@@ -6597,9 +6574,7 @@
         "path": [
             "components",
             "schemas",
-            "UpdatedWorkout",
-            "properties",
-            "workout",
+            "Workout",
             "properties",
             "exercises",
             "items",
@@ -6610,11 +6585,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2082,
+                "line": 2084,
                 "character": 17
             },
             "end": {
-                "line": 2082,
+                "line": 2084,
                 "character": 31
             }
         },
@@ -6630,15 +6605,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2085` is a duplicate of line `1591`",
+        "message": "Description at line `2087` is a duplicate of line `1591`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2085,
+                "line": 2087,
                 "character": 34
             },
             "end": {
-                "line": 2085,
+                "line": 2087,
                 "character": 154
             }
         },
@@ -6654,15 +6629,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2095` is a duplicate of line `1519`",
+        "message": "Description at line `2097` is a duplicate of line `1519`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2095,
+                "line": 2097,
                 "character": 40
             },
             "end": {
-                "line": 2095,
+                "line": 2097,
                 "character": 95
             }
         },
@@ -6678,15 +6653,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2100` is a duplicate of line `1524`",
+        "message": "Description at line `2102` is a duplicate of line `1524`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2100,
+                "line": 2102,
                 "character": 40
             },
             "end": {
-                "line": 2100,
+                "line": 2102,
                 "character": 118
             }
         },
@@ -6697,9 +6672,7 @@
         "path": [
             "components",
             "schemas",
-            "UpdatedWorkout",
-            "properties",
-            "workout",
+            "Workout",
             "properties",
             "exercises",
             "items",
@@ -6713,11 +6686,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2103,
+                "line": 2105,
                 "character": 23
             },
             "end": {
-                "line": 2103,
+                "line": 2105,
                 "character": 34
             }
         },
@@ -6733,15 +6706,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2106` is a duplicate of line `1530`",
+        "message": "Description at line `2108` is a duplicate of line `1530`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2106,
+                "line": 2108,
                 "character": 40
             },
             "end": {
-                "line": 2106,
+                "line": 2108,
                 "character": 69
             }
         },
@@ -6756,15 +6729,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `2112` is a duplicate of line `1536`",
+        "message": "Description at line `2114` is a duplicate of line `1536`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2112,
+                "line": 2114,
                 "character": 40
             },
             "end": {
-                "line": 2112,
+                "line": 2114,
                 "character": 75
             }
         },
@@ -6775,9 +6748,7 @@
         "path": [
             "components",
             "schemas",
-            "UpdatedWorkout",
-            "properties",
-            "workout",
+            "Workout",
             "properties",
             "exercises",
             "items",
@@ -6791,11 +6762,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2115,
+                "line": 2117,
                 "character": 23
             },
             "end": {
-                "line": 2115,
+                "line": 2117,
                 "character": 40
             }
         },
@@ -6810,15 +6781,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `2118` is a duplicate of line `1542`",
+        "message": "Description at line `2120` is a duplicate of line `1542`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2118,
+                "line": 2120,
                 "character": 40
             },
             "end": {
-                "line": 2118,
+                "line": 2120,
                 "character": 77
             }
         },
@@ -6829,9 +6800,7 @@
         "path": [
             "components",
             "schemas",
-            "UpdatedWorkout",
-            "properties",
-            "workout",
+            "Workout",
             "properties",
             "exercises",
             "items",
@@ -6845,11 +6814,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2121,
+                "line": 2123,
                 "character": 23
             },
             "end": {
-                "line": 2121,
+                "line": 2123,
                 "character": 41
             }
         },
@@ -6864,15 +6833,15 @@
             "properties",
             "exercises"
         ],
-        "message": "Description at line `2124` is a duplicate of line `1548`",
+        "message": "Description at line `2126` is a duplicate of line `1548`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2124,
+                "line": 2126,
                 "character": 40
             },
             "end": {
-                "line": 2124,
+                "line": 2126,
                 "character": 78
             }
         },
@@ -6888,15 +6857,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2130` is a duplicate of line `1554`",
+        "message": "Description at line `2132` is a duplicate of line `1554`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2130,
+                "line": 2132,
                 "character": 40
             },
             "end": {
-                "line": 2130,
+                "line": 2132,
                 "character": 100
             }
         },
@@ -6907,9 +6876,7 @@
         "path": [
             "components",
             "schemas",
-            "UpdatedWorkout",
-            "properties",
-            "workout",
+            "Workout",
             "properties",
             "exercises",
             "items",
@@ -6923,11 +6890,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2133,
+                "line": 2135,
                 "character": 23
             },
             "end": {
-                "line": 2133,
+                "line": 2135,
                 "character": 38
             }
         },
@@ -6943,15 +6910,15 @@
             "exercises",
             "description"
         ],
-        "message": "Description at line `2136` is a duplicate of line `1560`",
+        "message": "Description at line `2138` is a duplicate of line `1560`",
         "severity": 2,
         "range": {
             "start": {
-                "line": 2136,
+                "line": 2138,
                 "character": 40
             },
             "end": {
-                "line": 2136,
+                "line": 2138,
                 "character": 147
             }
         },
@@ -6968,11 +6935,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2147,
+                "line": 2149,
                 "character": 7
             },
             "end": {
-                "line": 2147,
+                "line": 2149,
                 "character": 23
             }
         },
@@ -6989,11 +6956,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2164,
+                "line": 2166,
                 "character": 7
             },
             "end": {
-                "line": 2164,
+                "line": 2166,
                 "character": 23
             }
         },
@@ -7012,11 +6979,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2181,
+                "line": 2183,
                 "character": 11
             },
             "end": {
-                "line": 2181,
+                "line": 2183,
                 "character": 23
             }
         },
@@ -7033,11 +7000,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2188,
+                "line": 2190,
                 "character": 7
             },
             "end": {
-                "line": 2188,
+                "line": 2190,
                 "character": 31
             }
         },
@@ -7056,11 +7023,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2201,
+                "line": 2203,
                 "character": 11
             },
             "end": {
-                "line": 2201,
+                "line": 2203,
                 "character": 23
             }
         },
@@ -7079,11 +7046,11 @@
         "severity": 1,
         "range": {
             "start": {
-                "line": 2206,
+                "line": 2208,
                 "character": 11
             },
             "end": {
-                "line": 2206,
+                "line": 2208,
                 "character": 19
             }
         },

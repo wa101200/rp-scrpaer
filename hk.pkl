@@ -23,8 +23,8 @@ local python_linters = new Mapping<String, Step> {
 local javascript_linters = new Mapping<String, Step> {
   // Fast JavaScript linter (eslint replacement)
   ["biome"] = (Builtins.biome) {
-    batch = false // Override the default batch setting
     glob = List("*.js", "*.ts") // Override file patterns
+    fix = "biome check --write --unsafe --no-errors-on-unmatched {{ files }}"
   }
 }
 

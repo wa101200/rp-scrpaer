@@ -94,6 +94,37 @@ function fixEnumSchemaTypes(spec: Record<string, unknown>): void {
 	}
 }
 
+function fixBooleanRequired(obj: unknown): void {
+	if (typeof obj !== "object" || obj === null) return;
+	if (Array.isArray(obj)) {
+		for (const item of obj) fixBooleanRequired(item);
+		return;
+	}
+	const record = obj as Record<string, unknown>;
+	const props = record.properties as
+		| Record<string, Record<string, unknown>>
+		| undefined;
+	if (props) {
+		const requiredList: string[] = [];
+		for (const [name, prop] of Object.entries(props)) {
+			if (prop.required === true) {
+				requiredList.push(name);
+				delete prop.required;
+			}
+			fixBooleanRequired(prop);
+		}
+		if (requiredList.length > 0) {
+			const existing = Array.isArray(record.required)
+				? (record.required as string[])
+				: [];
+			record.required = [...existing, ...requiredList];
+		}
+	}
+	for (const [key, value] of Object.entries(record)) {
+		if (key !== "properties") fixBooleanRequired(value);
+	}
+}
+
 function fixRefSiblings(obj: unknown): void {
 	if (typeof obj !== "object" || obj === null) return;
 	if (Array.isArray(obj)) {
@@ -145,6 +176,7 @@ function extractSpec(jsSource: string): Record<string, unknown> {
 	)(window, SwaggerUIBundle, SwaggerUIStandalonePreset, setInterval);
 
 	// Call the onload handler the script registered
+	// biome-ignore lint/complexity/noBannedTypes: DOM hack
 	if (typeof window.onload === "function") (window.onload as Function)();
 
 	if (!captured) throw new Error("Failed to capture swaggerDoc from script");
@@ -177,9 +209,10 @@ const extract = defineCommand({
 		fixMissingParameterSchemas(spec);
 		fixEnumSchemaTypes(spec);
 		fixRefSiblings(spec);
+		fixBooleanRequired(spec);
 
 		spin.update(`Writing to ${flags.output}`);
-		await Bun.write(flags.output, JSON.stringify(spec, null, 2) + "\n");
+		await Bun.write(flags.output, `${JSON.stringify(spec, null, 2)}\n`);
 
 		spin.succeed(
 			`Written to ${flags.output} — ${Object.keys(spec.paths ?? {}).length} paths`,

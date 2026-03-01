@@ -1229,7 +1229,6 @@ components:
       type: object
       properties:
         exercise:
-          required: true
           type: object
           properties:
             title:
@@ -1256,6 +1255,8 @@ components:
               example:
                 - biceps
                 - triceps
+      required:
+        - exercise
     RoutineFolder:
       type: object
       properties:
