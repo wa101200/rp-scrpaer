@@ -1,8 +1,8 @@
 rp_embedding_name: pushup weighted, normal grip, bodyweight-loadable, chest
 matches:
   - hevy_embedding_name: push up weighted, chest, triceps, shoulders
-    distance: 0.23674136400222778
+    distance: 0.12325024604797363
   - hevy_embedding_name: push up - close grip, chest, triceps, shoulders
-    distance: 0.24817287921905518
-  - hevy_embedding_name: sit up weighted, abdominals
-    distance: 0.2589455842971802
+    distance: 0.12642109394073486
+  - hevy_embedding_name: push up, chest, triceps, shoulders
+    distance: 0.16114914417266846

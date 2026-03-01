@@ -6,6 +6,7 @@ auto_install = true
 
 
 [env]
+UPDATE_OUTPUT = "true"
 
 
 [tasks.embed]
