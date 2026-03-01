@@ -73,7 +73,8 @@
           "400": {
             "description": "Invalid page size"
           }
-        }
+        },
+        "operationId": "getWorkouts"
       },
       "post": {
         "summary": "Create a new workout",
@@ -128,7 +129,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "postWorkouts"
       }
     },
     "/v1/workouts/count": {
@@ -166,7 +168,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "getWorkoutsCount"
       }
     },
     "/v1/workouts/events": {
@@ -227,7 +230,8 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "operationId": "getWorkoutsEvents"
       }
     },
     "/v1/workouts/{workoutId}": {
@@ -267,7 +271,8 @@
           "404": {
             "description": "Workout not found"
           }
-        }
+        },
+        "operationId": "getWorkoutsWorkoutId"
       },
       "put": {
         "summary": "Update an existing workout",
@@ -328,7 +333,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "putWorkoutsWorkoutId"
       }
     },
     "/v1/user/info": {
@@ -362,7 +368,8 @@
           "404": {
             "description": "User not found"
           }
-        }
+        },
+        "operationId": "getUserInfo"
       }
     },
     "/v1/routines": {
@@ -432,7 +439,8 @@
           "400": {
             "description": "Invalid page size"
           }
-        }
+        },
+        "operationId": "getRoutines"
       },
       "post": {
         "summary": "Create a new routine",
@@ -503,7 +511,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "postRoutines"
       }
     },
     "/v1/routines/{routineId}": {
@@ -561,7 +570,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "getRoutinesRoutineId"
       },
       "put": {
         "summary": "Update an existing routine",
@@ -638,7 +648,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "putRoutinesRoutineId"
       }
     },
     "/v1/exercise_templates": {
@@ -708,7 +719,8 @@
           "400": {
             "description": "Invalid page size"
           }
-        }
+        },
+        "operationId": "getExerciseTemplates"
       },
       "post": {
         "summary": "Create a new custom exercise template.",
@@ -789,7 +801,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "postExerciseTemplates"
       }
     },
     "/v1/exercise_templates/{exerciseTemplateId}": {
@@ -829,7 +842,8 @@
           "404": {
             "description": "Exercise template not found"
           }
-        }
+        },
+        "operationId": "getExerciseTemplatesExerciseTemplateId"
       }
     },
     "/v1/routine_folders": {
@@ -899,7 +913,8 @@
           "400": {
             "description": "Invalid page size"
           }
-        }
+        },
+        "operationId": "getRoutineFolders"
       },
       "post": {
         "summary": "Create a new routine folder. The folder will be created at index 0, and all other folders will have their indexes incremented.",
@@ -954,7 +969,8 @@
               }
             }
           }
-        }
+        },
+        "operationId": "postRoutineFolders"
       }
     },
     "/v1/routine_folders/{folderId}": {
@@ -994,7 +1010,8 @@
           "404": {
             "description": "Routine folder not found"
           }
-        }
+        },
+        "operationId": "getRoutineFoldersFolderId"
       }
     },
     "/v1/exercise_history/{exerciseTemplateId}": {
@@ -1064,7 +1081,8 @@
           "400": {
             "description": "Invalid request parameters or date format"
           }
-        }
+        },
+        "operationId": "getExerciseHistoryExerciseTemplateId"
       }
     }
   },

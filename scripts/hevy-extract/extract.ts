@@ -1,6 +1,53 @@
 import { createCLI, defineCommand, option } from "@bunli/core";
 import { z } from "zod";
 
+function generateOperationId(method: string, path: string): string {
+	const segments = path
+		.replace(/^\/v\d+\//, "")
+		.split("/")
+		.map((seg) => {
+			const clean = seg.replace(/[{}]/g, "");
+			return clean
+				.split("_")
+				.map(
+					(part, i) =>
+						i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1),
+				)
+				.join("");
+		});
+
+	const pathPart = segments
+		.map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1))
+		.join("");
+
+	return method + pathPart;
+}
+
+function addOperationIds(spec: Record<string, unknown>): void {
+	const paths = spec.paths as
+		| Record<string, Record<string, Record<string, unknown>>>
+		| undefined;
+	if (!paths) return;
+
+	const httpMethods = new Set([
+		"get",
+		"post",
+		"put",
+		"delete",
+		"patch",
+		"options",
+		"head",
+	]);
+
+	for (const [path, methods] of Object.entries(paths)) {
+		for (const [method, operation] of Object.entries(methods)) {
+			if (!httpMethods.has(method)) continue;
+			if (operation.operationId) continue;
+			operation.operationId = generateOperationId(method, path);
+		}
+	}
+}
+
 function extractSpec(jsSource: string): Record<string, unknown> {
 	let captured: Record<string, unknown> | null = null;
 
@@ -63,6 +110,7 @@ const extract = defineCommand({
 
 		const jsSource = await fetch(flags.url).then((r) => r.text());
 		const spec = extractSpec(jsSource);
+		addOperationIds(spec);
 
 		spin.update(`Writing to ${flags.output}`);
 		await Bun.write(flags.output, JSON.stringify(spec, null, 2) + "\n");
