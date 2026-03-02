@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: blacksmith-4vcpu-ubuntu-2404-arm
     name: build
+    env:
+      MISE_AUTO_INSTALL: false
     strategy:
       matrix:
         project: [cli]
@@ -18,6 +20,10 @@ jobs:
         with:
           persist-credentials: false
       - uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
+        with:
+          install: false
+          cache: false
+          version: 2026.3.0
       - uses: useblacksmith/setup-docker-builder@ef12d5b165b596e3aa44ea8198d8fde563eab402 # v1.4.0
       - name: build
         working-directory: packages/${{ matrix.project }}
