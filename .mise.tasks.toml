@@ -1,0 +1,68 @@
+[tasks.pre-commit]
+run = "hk pre-commit -a"
+
+[tasks.format]
+run = "hk fix -a"
+
+[tasks.lint]
+run = "hk check -a"
+
+[prepare.uv]
+run = "uv sync --all-packages"
+
+[tasks.all-ci]
+description = "Will simulate CI environment by running all checks and tests"
+run = [
+  { task = "//...:generate-libs*" },
+  { task = "//:format" },
+  { tasks = [
+    "//:lint",
+    "//...:build",
+    "//...:test",
+  ] },
+]
+
+[tasks.test]
+run = "echo no tests defined"
+
+[tasks.registry-login]
+description = "Log in to Docker registry"
+env = { REGISTRY_PASSWORD = { required = true }, REGISTRY_URL = { required = true }, REGISTRY_USERNAME = { required = true } }
+run = 'echo "${REGISTRY_PASSWORD}" | docker login "${REGISTRY_URL}" -u "${REGISTRY_USERNAME}" --password-stdin'
+
+[task_templates.scan-docker]
+description = "Scan Docker image for leaked secrets with TruffleHog"
+run = """
+trufflehog docker --image docker://$IMAGE_NAME:local --results=verified --fail --json > scan-results.json
+"""
+
+[task_templates.push]
+description = "Push Docker image to registry"
+usage = 'arg "<tag>" var=#true var_min=1 help="Image tags to push"'
+run = """
+FULL_IMAGE="${REGISTRY_URL}/${REGISTRY_USERNAME}/${IMAGE_NAME}"
+for tag in ${usage_tag}; do
+  docker tag "${IMAGE_NAME}:local" "${FULL_IMAGE}:${tag}"
+  docker push "${FULL_IMAGE}:${tag}"
+done
+"""
+depends = ["//:registry-login"]
+
+[task_templates.build]
+env = { '_'.source = { path = "./github-token.env.sh" } }
+usage = 'arg "[tag]" default="local" help="Image tag to use"'
+run = "docker buildx build --load --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME:${usage_tag} ../.."
+description = "Build the CLI Docker image"
+
+# We use `--load` + separate `docker push` instead of the faster `buildx build --push`.
+# `--push` skips the local daemon export, but we need the image locally so TruffleHog can
+# scan it for secrets before anything reaches the registry. This is a public repo — a leaked secret is instantly exposed with no undo. The ~30-60s overhead (export + re-upload) is an acceptable trade-off for gating pushes behind a secret scan.
+[task_templates.build-push]
+env = { '_'.source = { path = "./git-diff-hash.sh" } }
+usage = 'arg "[tag]" var=#true help="Image tags to push"'
+description = "Build and auto push Docker image to registry with current git branch and hash along local changes"
+run = [
+  { task = "build" },
+  { task = "scan-docker" },
+  'mise run push ${usage_tag:-"$GIT_SHA_SHORT-$GIT_DIFF_HASH"}',
+]

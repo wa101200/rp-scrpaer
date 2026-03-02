@@ -1,13 +1,20 @@
 [env]
 RP_APP_BASE_URL = "https://training.rpstrength.com/api"
 HEVY_API_BASE_URL = "https://api.hevyapp.com"
-
 RP_APP_VERSION = "1.1.13"
-
+IMAGE_NAME = "rp-to-hevy-cli"
 
 [tasks.build]
-run = "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} docker build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t rp-to-strong-cli ../.."
-description = "Build the CLI Docker image"
+extends = "build"
+
+[tasks.push]
+extends = "push"
+
+[tasks.scan-docker]
+extends = "scan-docker"
+
+[tasks.build-push]
+extends = "build-push"
 
 [tasks.cli]
 description = "Run CLI"
