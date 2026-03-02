@@ -1,10 +1,10 @@
-id: hevy_file_change_s3
+id: exercises_data_change_s3
 namespace: rp_to_hevy.embeddings
 tasks:
   - id: execute_bash
     type: io.kestra.plugin.scripts.shell.Commands
     commands:
-      - echo "S3 file change detected in bucket {{ envs.bucket_name }}"
+      - I will launch the embeddings workflow in the future here
 triggers:
   - id: s3_changes
     type: io.kestra.plugin.aws.s3.Trigger
