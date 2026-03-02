@@ -11,14 +11,11 @@ from cloudpathlib import AnyPath, CloudPath
 from embeddings import (
     ApiEmbedder,
     ClientMode,
-    LocalEmbedder,
     RateLimitConfig,
     build_match_results,
     compute_metrics,
     create_client,
     create_collection,
-    create_local_embedder,
-    detect_device,
     encode_and_store,
     load_hevy_exercises,
     load_muscle_group_mappings,
@@ -58,22 +55,9 @@ def _data_options(f):
 
 
 def _embedder_options(f):
-    @click.option(
-        "--backend",
-        type=click.Choice(["local", "api"], case_sensitive=False),
-        default="local",
-        help="Embedding backend.",
-    )
-    @click.option(
-        "--model-name", default="Qwen/Qwen3-Embedding-8B", help="Local model name."
-    )
-    @click.option(
-        "--api-base-url", default=None, help="API base URL (required for api backend)."
-    )
-    @click.option("--api-key", default=None, help="API key (required for api backend).")
-    @click.option(
-        "--api-model", default=None, help="API model name (required for api backend)."
-    )
+    @click.option("--api-base-url", required=True, help="API base URL.")
+    @click.option("--api-key", required=True, help="API key.")
+    @click.option("--api-model", required=True, help="API model name.")
     @click.option(
         "--api-dimensions", type=int, default=None, help="API embedding dimensions."
     )
@@ -122,32 +106,23 @@ def _common_options(f):
 
 
 def _build_embedder(
-    backend: str,
-    model_name: str,
-    api_base_url: str | None,
-    api_key: str | None,
-    api_model: str | None,
+    api_base_url: str,
+    api_key: str,
+    api_model: str,
     api_dimensions: int | None,
     api_max_rpm: int,
     api_batch_size: int,
-) -> ApiEmbedder | LocalEmbedder:
-    if backend == "api":
-        if not api_base_url or not api_key or not api_model:
-            raise click.ClickException(
-                "api_base_url, api_key, and api_model are required when backend='api'"
-            )
-        return ApiEmbedder(
-            base_url=api_base_url,
-            api_key=api_key,
-            model=api_model,
-            dimensions=api_dimensions,
-            rate_limit=RateLimitConfig(
-                max_requests_per_minute=api_max_rpm,
-                batch_size=api_batch_size,
-            ),
-        )
-    device = detect_device()
-    return create_local_embedder(model_name, device)
+) -> ApiEmbedder:
+    return ApiEmbedder(
+        base_url=api_base_url,
+        api_key=api_key,
+        model=api_model,
+        dimensions=api_dimensions,
+        rate_limit=RateLimitConfig(
+            max_requests_per_minute=api_max_rpm,
+            batch_size=api_batch_size,
+        ),
+    )
 
 
 def _build_chroma_client(
@@ -207,11 +182,9 @@ def embd(
     rp_path: str,
     hevy_path: str,
     mappings_path: str,
-    backend: str,
-    model_name: str,
-    api_base_url: str | None,
-    api_key: str | None,
-    api_model: str | None,
+    api_base_url: str,
+    api_key: str,
+    api_model: str,
     api_dimensions: int | None,
     api_max_rpm: int,
     api_batch_size: int,
@@ -224,8 +197,6 @@ def embd(
 ):
     """Embed exercises into ChromaDB."""
     embedder = _build_embedder(
-        backend,
-        model_name,
         api_base_url,
         api_key,
         api_model,

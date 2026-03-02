@@ -9,16 +9,16 @@ dependencies = [
   "aiohttp>=3.13.3",
   "aiohttp-retry>=2.9.1",
   "pydantic>=2.12.5",
-  "transformers>=5.2.0",
   "polars>=1.38.1",
-  "sentence-transformers>=5.2.3",
   "chromadb>=1.5.2",
+  "numpy>=1.26.0",
 ]
 
 [project.optional-dependencies]
 api = ["openai>=1.0.0"]
-cpu = ["torch>=2.10.0"]
-cu130 = ["torch>=2.10.0"]
+local = ["transformers>=5.2.0", "sentence-transformers>=5.2.3"]
+cpu = ["embeddings[local]", "torch>=2.10.0"]
+cu130 = ["embeddings[local]", "torch>=2.10.0"]
 
 [tool.uv]
 conflicts = [[{ extra = "cpu" }, { extra = "cu130" }]]
