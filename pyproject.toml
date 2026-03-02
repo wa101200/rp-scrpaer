@@ -6,10 +6,10 @@ requires-python = ">=3.12"
 
 [tool.uv.workspace]
 members = ["packages/*"]
+exclude = ["packages/pipeline"]
 
 [tool.uv.sources]
 rp-to-strong-cli = { workspace = true }
-rp-to-strong-pipeline = { workspace = true }
 api-service = { workspace = true }
 embeddings = { workspace = true }
 

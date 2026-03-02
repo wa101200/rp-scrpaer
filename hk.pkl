@@ -62,6 +62,15 @@ local containers_linters = new Mapping<String, Step> {
   ["hadolint"] = Builtins.hadolint
 }
 
+local custom_linters = new Mapping<String, Step> {
+  ["dclint"] {
+    glob = List("**/docker-compose.yaml")
+    check = " dclint --recursive ."
+    fix = "dclint --fix --recursive ."
+    batch = true
+  }
+}
+
 local all_linters = new Mapping<String, Step> {
   ...python_linters
   ...config_linters
@@ -69,6 +78,7 @@ local all_linters = new Mapping<String, Step> {
   ...containers_linters
   ...javascript_linters
   ...openapi_linters
+  ...custom_linters
 }
 
 fail_fast = false

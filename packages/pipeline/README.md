@@ -1,76 +1,79 @@
 # rp-to-strong-pipeline
 
-Dagster-based orchestration pipeline for automated workout data extraction, transformation, and export. This package handles the same data flow as the [CLI](../cli/README.md) but runs on a schedule with DAG-based execution, failure handling, retries, and user notifications.
+Kestra-based orchestration pipeline for automated workout data extraction, transformation, and export. This package handles the same data flow as the [CLI](../cli/README.md) but runs on a schedule with event-driven triggers, failure handling, retries, and user notifications.
 
-**Status: scaffolded, not yet implemented.** The package structure and Dockerfile are in place; assets and resources are placeholders.
+**Status: in progress.** Flow definitions are in place with S3 triggers; task implementations are placeholders.
 
-## Planned Architecture
+## Architecture
 
 ```
                 ┌──────────────┐
-                │   Scheduler  │  (cron / sensor)
+                │  S3 Trigger  │  (file change on rp-to-hevy-data bucket)
                 └──────┬───────┘
                        │
-          ┌────────────▼────────────┐
-          │  Extract RP + Hevy Data │  (assets)
-          └────────────┬────────────┘
-                       │
-          ┌────────────▼────────────┐
-          │   Transform with Polars │  (assets)
-          └────────────┬────────────┘
-                       │
        ┌───────────────┼───────────────┐
-       │               │               │
-  ┌────▼────┐   ┌──────▼──────┐  ┌────▼────┐
-  │  Export  │   │  Embedding  │  │  Notify │
-  │      │   │  Matching   │  │  User   │
-  │  CSV     │   │  (optional) │  │         │
-  └─────────┘   └─────────────┘  └─────────┘
+       │                               │
+  ┌────▼──────────────┐   ┌───────────▼───────────┐
+  │  rp_to_hevy.api   │   │  rp_to_hevy.embeddings │
+  │  Refresh exercises │   │  Exercise matching      │
+  │  from RP + Hevy    │   │  on data change         │
+  └────────────────────┘   └─────────────────────────┘
 ```
 
-### Responsibilities
+## Flows
 
-- **Scheduled extraction** --- Pull workout data from RP and Hevy APIs on a cron schedule (or triggered by a sensor)
-- **DAG execution** --- Dagster manages the dependency graph so steps run in the right order with proper retries on failure
-- **Failure handling** --- Built-in retry policies and alerting when API calls or transformations fail
-- **User communication** --- Notify users on successful exports or when manual intervention is needed (e.g., expired tokens)
+| Flow | Namespace | Trigger | Description |
+|------|-----------|---------|-------------|
+| `refresh_rp_exercises_s3` | `rp_to_hevy.api` | — | Refresh exercises list from RP API |
+| `refresh_hevy_exercises_s3` | `rp_to_hevy.api` | — | Refresh exercises list from Hevy API |
+| `exercises_data_change_s3` | `rp_to_hevy.embeddings` | S3 `CREATE_OR_UPDATE` on `exports/exercises` | Run embeddings workflow on exercise data change |
 
-### Differences from the CLI
+## Local Development
 
-| | CLI | Pipeline |
-|---|---|---|
-| Trigger | Manual (user runs a command) | Scheduled (cron) or event-driven (sensor) |
-| Failure handling | Exits with error code | Retries with backoff, sends alerts |
-| User input | Token file, CLI flags | Dagster UI / config, stored credentials |
-| Orchestration | Single async function | Dagster DAG with observable assets |
-| Monitoring | Terminal output | Dagster webserver dashboard |
+### Prerequisites
 
-## Package Structure
+- [Docker](https://docs.docker.com/get-docker/) (for the Kestra server)
+- [mise](https://mise.jdx.dev/) (installed at the repo root)
 
-```
-src/rp_to_strong_pipeline/
-  __init__.py
-  assets/           # Dagster software-defined assets (placeholder)
-    __init__.py
-  resources/        # Dagster resources — API clients, config (placeholder)
-    __init__.py
-```
+### Setup
 
-## Dependencies
+1. Copy the environment template and fill in your credentials:
 
-| Package | Purpose |
-|---|---|
-| `dagster` >=1.9 | Orchestration framework |
-| `dagster-webserver` >=1.9 | Web UI for monitoring and triggering runs |
-| `polars` >=1.0 | Data transformation |
-| `httpx` >=0.27 | Async HTTP client |
+   ```bash
+   cp .env.example .env
+   # Edit .env with your values
+   ```
 
-Requires **Python >= 3.12**.
+2. Start the Kestra stack:
 
-## Docker
+   ```bash
+   mise //packages/pipeline:up
+   ```
+
+3. Open the Kestra UI at [http://localhost:8080](http://localhost:8080)
+
+4. Flows are synced automatically from `flows/` via `micronaut.io.watch`.
+
+### mise tasks
 
 ```bash
-mise //packages/pipeline:build
+mise //packages/pipeline:up     # Start the Kestra stack
+mise //packages/pipeline:down   # Stop the Kestra stack
+mise //packages/pipeline:logs   # Tail Kestra container logs
 ```
 
-Multi-stage build (debian:trixie-slim runtime). Runs `dagster-webserver` on port 3000 as non-root `app` user.
+## Configuration
+
+Non-sensitive settings live in `application.yml` (tracked in git). Secrets (basic-auth credentials, AI keys) are injected via `KESTRA_CONFIGURATION` environment variable in `docker-compose.yaml`, sourced from `.env` (gitignored).
+
+See `.env.example` for the required variables.
+
+## Flow file naming
+
+Flow files follow Kestra's local sync naming convention:
+
+```
+main_<namespace>.<flow_id>.yml
+```
+
+Where `main` is the tenant ID (always `main` in OSS Kestra), `<namespace>` uses dots for hierarchy, and `<flow_id>` is the flow identifier.

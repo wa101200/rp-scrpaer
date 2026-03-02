@@ -27,6 +27,7 @@ hadolint = "latest"
 watchexec = "latest"
 "npm:@quobix/vacuum" = "latest"
 "npm:@biomejs/biome" = "latest"
+"npm:dclint" = "latest"
 
 [tasks.pre-commit]
 run = "hk pre-commit -a"
