@@ -28,8 +28,8 @@ depends = ["registry-login"]
 
 [tasks.build-push]
 description = "Build and push Docker image to registry"
-usage = 'arg "<tag>" var=#true default="$(git rev-parse --short HEAD)-local" help="Image tags to push"'
-run = [{ task = "build" }, "mise run push ${usage_tag}"]
+usage = 'arg "[tag]" var=#true help="Image tags to push"'
+run = [{ task = "build" }, 'mise run push ${usage_tag:-"$GIT_SHA_SHORT-local"}']
 
 [tasks.cli]
 description = "Run CLI"
