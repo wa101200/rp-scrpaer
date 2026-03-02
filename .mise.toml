@@ -94,5 +94,6 @@ usage = 'arg "[tag]" var=#true help="Image tags to push"'
 run = [
   { task = "build" },
   { task = "scan-docker" },
+  'echo pushing $IMAGE_NAME:${usage_tag:-"$GIT_SHA_SHORT-$GIT_DIFF_HASH"}',
   'mise run push ${usage_tag:-"$GIT_SHA_SHORT-$GIT_DIFF_HASH"}',
 ]
