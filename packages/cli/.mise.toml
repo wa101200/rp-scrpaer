@@ -21,8 +21,8 @@ run = """
 FULL_IMAGE="${REGISTRY_URL}/${REGISTRY_USERNAME}/${IMAGE_NAME}"
 for tag in ${usage_tag}; do
   docker tag "${IMAGE_NAME}" "${FULL_IMAGE}:${tag}"
+  docker push "${FULL_IMAGE}:${tag}"
 done
-docker push -a "${FULL_IMAGE}"
 """
 depends = ["registry-login"]
 
