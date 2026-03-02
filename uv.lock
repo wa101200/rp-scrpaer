@@ -545,10 +545,9 @@ dependencies = [
     { name = "aiohttp" },
     { name = "aiohttp-retry" },
     { name = "chromadb" },
+    { name = "numpy" },
     { name = "polars" },
     { name = "pydantic" },
-    { name = "sentence-transformers" },
-    { name = "transformers" },
 ]
 
 [package.optional-dependencies]
@@ -556,11 +555,19 @@ api = [
     { name = "openai" },
 ]
 cpu = [
+    { name = "sentence-transformers" },
     { name = "torch", version = "2.10.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'extra-10-embeddings-cpu') or (extra == 'extra-10-embeddings-cpu' and extra == 'extra-10-embeddings-cu130')" },
     { name = "torch", version = "2.10.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-10-embeddings-cpu') or (extra == 'extra-10-embeddings-cpu' and extra == 'extra-10-embeddings-cu130')" },
+    { name = "transformers" },
 ]
 cu130 = [
+    { name = "sentence-transformers" },
     { name = "torch", version = "2.10.0+cu130", source = { registry = "https://download.pytorch.org/whl/cu130" } },
+    { name = "transformers" },
+]
+local = [
+    { name = "sentence-transformers" },
+    { name = "transformers" },
 ]
 
 [package.metadata]
@@ -569,16 +576,19 @@ requires-dist = [
     { name = "aiohttp", specifier = ">=3.13.3" },
     { name = "aiohttp-retry", specifier = ">=2.9.1" },
     { name = "chromadb", specifier = ">=1.5.2" },
+    { name = "embeddings", extras = ["local"], marker = "extra == 'cpu'", editable = "packages/embeddings" },
+    { name = "embeddings", extras = ["local"], marker = "extra == 'cu130'", editable = "packages/embeddings" },
+    { name = "numpy", specifier = ">=1.26.0" },
     { name = "openai", marker = "extra == 'api'", specifier = ">=1.0.0" },
     { name = "polars", specifier = ">=1.38.1" },
     { name = "pydantic", specifier = "~=2.12" },
     { name = "pydantic", specifier = ">=2.12.5" },
-    { name = "sentence-transformers", specifier = ">=5.2.3" },
+    { name = "sentence-transformers", marker = "extra == 'local'", specifier = ">=5.2.3" },
     { name = "torch", marker = "extra == 'cpu'", specifier = ">=2.10.0", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "embeddings", extra = "cpu" } },
     { name = "torch", marker = "extra == 'cu130'", specifier = ">=2.10.0", index = "https://download.pytorch.org/whl/cu130", conflict = { package = "embeddings", extra = "cu130" } },
-    { name = "transformers", specifier = ">=5.2.0" },
+    { name = "transformers", marker = "extra == 'local'", specifier = ">=5.2.0" },
 ]
-provides-extras = ["api", "cpu", "cu130"]
+provides-extras = ["api", "local", "cpu", "cu130"]
 
 [[package]]
 name = "filelock"
@@ -2355,7 +2365,7 @@ dependencies = [
     { name = "api-service" },
     { name = "click" },
     { name = "cloudpathlib", extra = ["s3"] },
-    { name = "embeddings" },
+    { name = "embeddings", extra = ["api"] },
     { name = "pydantic" },
     { name = "pyyaml" },
 ]
@@ -2365,7 +2375,7 @@ requires-dist = [
     { name = "api-service", editable = "packages/api-service" },
     { name = "click", specifier = ">=8.1" },
     { name = "cloudpathlib", extras = ["s3"] },
-    { name = "embeddings", editable = "packages/embeddings" },
+    { name = "embeddings", extras = ["api"], editable = "packages/embeddings" },
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "pyyaml", specifier = ">=6.0" },
 ]

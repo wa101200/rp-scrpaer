@@ -1,14 +1,17 @@
+from __future__ import annotations
+
 import logging
 import statistics
 import time
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Any, Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Any, Protocol, runtime_checkable
 
 import chromadb
 import numpy as np
-import torch
-from sentence_transformers import SentenceTransformer
+
+if TYPE_CHECKING:
+    from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
 
@@ -98,16 +101,20 @@ class ApiEmbedder(Embedder):
 
 
 def detect_device() -> str:
+    import torch
+
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     logger.info("Using device: %s", device)
     return device
 
 
 def load_model(model_name: str, device: str | None = None) -> SentenceTransformer:
+    from sentence_transformers import SentenceTransformer as _ST
+
     if device is None:
         device = detect_device()
     logger.info("Loading model %s on %s", model_name, device)
-    return SentenceTransformer(model_name, device=device)
+    return _ST(model_name, device=device)
 
 
 def encode_and_store(
