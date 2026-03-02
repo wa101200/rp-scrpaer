@@ -54,7 +54,10 @@ usage = 'arg "[tag]" default="local" help="Image tag to use"'
 run = "docker buildx build --load --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME:${usage_tag} ../.."
 description = "Build the CLI Docker image"
 
-[task_templates.build-push-local]
+# We use `--load` + separate `docker push` instead of the faster `buildx build --push`.
+# `--push` skips the local daemon export, but we need the image locally so TruffleHog can
+# scan it for secrets before anything reaches the registry. This is a public repo — a leaked secret is instantly exposed with no undo. The ~30-60s overhead (export + re-upload) is an acceptable trade-off for gating pushes behind a secret scan.
+[task_templates.build-push]
 env = { '_'.source = { path = "./git-diff-hash.sh" } }
 usage = 'arg "[tag]" var=#true help="Image tags to push"'
 description = "Build and auto push Docker image to registry with current git branch and hash along local changes"

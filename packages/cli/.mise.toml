@@ -14,7 +14,7 @@ extends = "push"
 extends = "scan-docker"
 
 [tasks.build-push]
-extends = "build-push-local"
+extends = "build-push"
 
 [tasks.cli]
 description = "Run CLI"
