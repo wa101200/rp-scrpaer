@@ -11,3 +11,6 @@ dependencies = [
   "embeddings",
   "pyyaml>=6.0",
 ]
+
+[project.scripts]
+rp-to-strong-cli = "rp_to_strong_cli.__main__:cli"
