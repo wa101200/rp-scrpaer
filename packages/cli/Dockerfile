@@ -20,13 +20,14 @@ ENV MISE_YES=1 \
 
 # Install Python and uv via mise (versions from root .mise.toml)
 WORKDIR /app
-COPY .mise.toml ./
+COPY .mise.env.toml .mise.tools.toml ./
 COPY packages/cli/.mise.toml packages/cli/.mise.toml
 
 WORKDIR /app/packages/cli
 RUN --mount=type=secret,id=GITHUB_TOKEN \
     GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
-    mise install python uv \
+    mise install python uv \ 
+    && mise use python uv \ 
     && cp -a "$(mise where python)" /opt/python \
     && cp -a "$(mise which uv)" /usr/local/bin/uv
 
@@ -36,7 +37,8 @@ WORKDIR /app
 COPY --parents **/pyproject.toml uv.lock ./
 
 # copy packages that cli depends on
-COPY packages/pipeline/ packages/pipeline/
+COPY packages/api-service/ packages/api-service/
+COPY packages/embeddings/ packages/embeddings/
 
 RUN uv sync --frozen --package rp-to-strong-cli --no-editable
 
