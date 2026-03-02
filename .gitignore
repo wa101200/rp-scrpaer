@@ -11,12 +11,6 @@ build/
 .venv/
 venv/
 
-# Dagster
-/storage/
-/schedules/
-/logs/
-.dagster/
-
 # IDE
 .idea/
 .vscode/
@@ -34,3 +28,4 @@ Thumbs.db
 token.txt
 packages/cli/export/subscriptions.json
 packages/cli/export/profile.json
+

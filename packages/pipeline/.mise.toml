@@ -1,5 +1,12 @@
 
+[tasks.up]
+run = "docker compose -f ../../docker-compose.yaml up -d"
+description = "Start the Kestra stack"
 
-[tasks.build]
-run = "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} docker buildx build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t rp-to-strong-pipeline ../.."
-description = "Build the pipeline Docker image"
+[tasks.down]
+run = "docker compose -f ../../docker-compose.yaml down"
+description = "Stop the Kestra stack"
+
+[tasks.logs]
+run = "docker compose -f ../../docker-compose.yaml logs -f kestra"
+description = "Tail Kestra container logs"
