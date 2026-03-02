@@ -5,31 +5,16 @@ RP_APP_VERSION = "1.1.13"
 IMAGE_NAME = "rp-to-hevy-cli"
 
 [tasks.build]
-env = { '_'.source = { path = "../../github-token.env.sh" } }
-run = "docker buildx build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME ../.."
-description = "Build the CLI Docker image"
-
-[tasks.registry-login]
-description = "Log in to Docker registry"
-env = { REGISTRY_PASSWORD = { required = true }, REGISTRY_URL = { required = true }, REGISTRY_USERNAME = { required = true } }
-run = 'echo "${REGISTRY_PASSWORD}" | docker login "${REGISTRY_URL}" -u "${REGISTRY_USERNAME}" --password-stdin'
+extends = "build"
 
 [tasks.push]
-description = "Push Docker image to registry"
-usage = 'arg "<tag>" var=#true var_min=1 help="Image tags to push"'
-run = """
-FULL_IMAGE="${REGISTRY_URL}/${REGISTRY_USERNAME}/${IMAGE_NAME}"
-for tag in ${usage_tag}; do
-  docker tag "${IMAGE_NAME}" "${FULL_IMAGE}:${tag}"
-  docker push "${FULL_IMAGE}:${tag}"
-done
-"""
-depends = ["registry-login"]
+extends = "push"
+
+[tasks.scan-docker]
+extends = "scan-docker"
 
 [tasks.build-push]
-description = "Build and push Docker image to registry"
-usage = 'arg "[tag]" var=#true help="Image tags to push"'
-run = [{ task = "build" }, 'mise run push ${usage_tag:-"$GIT_SHA_SHORT-local"}']
+extends = "build-push-local"
 
 [tasks.cli]
 description = "Run CLI"
