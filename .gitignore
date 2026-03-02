@@ -11,12 +11,6 @@ build/
 .venv/
 venv/
 
-# Dagster
-/storage/
-/schedules/
-/logs/
-.dagster/
-
 # IDE
 .idea/
 .vscode/

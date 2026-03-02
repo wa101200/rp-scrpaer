@@ -20,7 +20,9 @@ services:
         source: packages/pipeline/application.yml
         target: /app/confs/application.yml
     env_file:
+      - path: .env.example
       - path: .env
+        required: false
     ports:
       - target: 8080
         host_ip: 127.0.0.1

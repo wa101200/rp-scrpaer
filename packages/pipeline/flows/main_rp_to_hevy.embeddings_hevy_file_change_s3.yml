@@ -4,7 +4,7 @@ tasks:
   - id: execute_bash
     type: io.kestra.plugin.scripts.shell.Commands
     commands:
-      -  echo "I will launch the embeddings workflow in the future here"
+      - echo "I will launch the embeddings workflow in the future here"
 triggers:
   - id: s3_changes
     type: io.kestra.plugin.aws.s3.Trigger

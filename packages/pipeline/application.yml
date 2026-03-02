@@ -1,14 +1,10 @@
 kestra:
-  ai:
-    type: "gemini"
-    gemini:
-      model-name: gemini-3-flash-preview
-  server:
-    basic-auth:
-      username: "wadhah.mahroug15@gmail.com"
-      password: "s/VewFv3L8Yg8N5m"
   tutorial-flows:
     enabled: false
+  ai:
+    type: gemini
+    gemini:
+      model-name: "gemini-3-flash-preview"
 micronaut:
   io:
     watch:

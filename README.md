@@ -2,7 +2,7 @@
 
 > **Showcase project** demonstrating the best modern Python tooling: [uv](https://docs.astral.sh/uv/) workspaces, [mise](https://mise.jdx.dev/) monorepo tasks, [hk](https://hk.jdx.dev/) git hooks, multi-stage Docker builds, and GitHub Actions CI — all wired together into a single, reproducible developer experience.
 
-Extract workout data from the [RP Hypertrophy](https://rpstrength.com/) and [Hevy](https://www.hevyapp.com/) apps, match exercises across platforms using semantic embeddings, and convert training history to portable formats. The CLI handles on-demand exports; a Dagster pipeline (in progress) will add scheduled extraction with DAG-based orchestration, failure handling, and user notifications.
+Extract workout data from the [RP Hypertrophy](https://rpstrength.com/) and [Hevy](https://www.hevyapp.com/) apps, match exercises across platforms using semantic embeddings, and convert training history to portable formats. The CLI handles on-demand exports; a [Kestra](https://kestra.io/) pipeline adds scheduled extraction with event-driven orchestration, S3 triggers, failure handling, and user notifications.
 
 ## The Problem
 
@@ -44,16 +44,16 @@ This project is a **uv + mise driven Python monorepo** — uv manages Python pac
        └─────────┬──────────────────────────┬──────────┘
                  │                          │
        ┌─────────▼─────────┐    ┌──────────▼──────────┐
-       │   embeddings       │    │   pipeline (planned) │
-       │  Similarity search │    │  Dagster scheduled   │
-       │  ChromaDB + LLM    │    │  extraction + DAG    │
+       │   embeddings       │    │   pipeline            │
+       │  Similarity search │    │  Kestra scheduled    │
+       │  ChromaDB + LLM    │    │  extraction + flows  │
        └───────────────────┘    └─────────────────────┘
 ```
 
 - **[`api-service`](packages/api-service/README.md)** --- Auto-generated async Python SDKs for the RP and Hevy APIs, produced from OpenAPI specs. The foundation that all other packages build on.
 - **[`cli`](packages/cli/README.md)** --- Click-based CLI frontend. Exports workout data to JSON (local or cloud storage), runs embedding and similarity search. The primary user-facing interface today.
 - **[`embeddings`](packages/embeddings/README.md)** --- Semantic exercise matching library. Encodes RP and Hevy exercises with LLM-based embedding models, stores them in ChromaDB, and finds the best cross-platform matches. Achieves 91.75% muscle group precision@1 with `Qwen/Qwen3-Embedding-8B`.
-- **[`pipeline`](packages/pipeline/README.md)** *(not yet implemented)* --- Dagster orchestration layer. Will do the same data extraction as the CLI but on a cron schedule with DAG-based execution, automatic retries, failure alerts, and user notifications. Currently scaffolded with empty assets and resources.
+- **[`pipeline`](packages/pipeline/README.md)** --- [Kestra](https://kestra.io/) orchestration layer. Runs the same data extraction as the CLI but on a schedule with event-driven S3 triggers, automatic retries, failure alerts, and user notifications. Flows are declarative YAML definitions synced to the Kestra server via Docker Compose.
 
 ## Quick Start
 
@@ -85,7 +85,6 @@ The root `pyproject.toml` declares a [uv workspace](https://docs.astral.sh/uv/co
 | [`api-service`](packages/api-service/README.md)           | `packages/api-service`  | Auto-generated async API SDKs (RP + Hevy)       | External only                     |
 | [`embeddings`](packages/embeddings/README.md)            | `packages/embeddings`   | Semantic exercise matching (ChromaDB + LLM)     | External only                     |
 | [`rp-to-strong-cli`](packages/cli/README.md)      | `packages/cli`          | Click CLI frontend                              | `api-service`, `embeddings`       |
-| [`rp-to-strong-pipeline`](packages/pipeline/README.md) | `packages/pipeline`     | Dagster pipeline *(not yet implemented)*        | External only                     |
 
 Key properties of uv workspaces:
 
@@ -169,7 +168,7 @@ run = "uv sync --all-packages"
 
 ## Docker Builds
 
-Each package has a multi-stage Dockerfile following the same pattern:
+Packages with a Dockerfile use multi-stage builds following the same pattern:
 
 ```
 Stage 1: mise          Grab the mise binary from jdxcode/mise:2026.2.23
@@ -200,7 +199,6 @@ Other techniques used:
 mise //...:build
 
 # Build a specific package
-mise //packages/pipeline:build
 mise //packages/cli:build
 mise //packages/api-service:build
 ```
