@@ -1,29 +1,7 @@
 name: kestra-stack
-
 services:
   kestra:
-    image: kestra/kestra:latest
-    pull_policy: always
-    restart: unless-stopped # Better than 'always' as it won't restart if manually stopped
-    
-    user: root 
-
-    env_file:
-      - path: .env
-    
-    ports:
-      - target: 8080
-        published: 8080
-        protocol: tcp
-        mode: host
-
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-        reservations:
-          memory: 512M
-
+    image: kestra/kestra:v1.2.8
     volumes:
       - type: volume
         source: kestra_data
@@ -41,22 +19,30 @@ services:
       - type: bind
         source: packages/pipeline/application.yml
         target: /app/confs/application.yml
-
+    env_file:
+      - path: .env
+    ports:
+      - target: 8080
+        host_ip: 127.0.0.1
+        published: 8080
+        protocol: tcp
+        mode: host
     command: server local --config /app/confs/application.yml
-
+    restart: unless-stopped # Better than 'always' as it won't restart if manually stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
-
-    # develop:
-    #   watch:
-    #     - action: sync
-    #       source: packages/pipeline/workflows
-    #       target: /app/workflows
-
+    user: root
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+    pull_policy: always
 volumes:
   kestra_data:
     name: kestra_persistence

@@ -1,12 +1,10 @@
 id: hevy_file_change_s3
 namespace: rp_to_hevy.hevy
-
 tasks:
   - id: execute_bash
     type: io.kestra.plugin.scripts.shell.Commands
     commands:
       - echo "S3 file change detected in bucket {{ envs.bucket_name }}"
-
 triggers:
   - id: s3_changes
     type: io.kestra.plugin.aws.s3.Trigger
@@ -18,6 +16,5 @@ triggers:
     logLevel: WARN
     failOnTriggerError: true
     logToFile: false
-
 concurrency:
   limit: 1
