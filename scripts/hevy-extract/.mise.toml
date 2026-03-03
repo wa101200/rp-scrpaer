@@ -1,7 +1,7 @@
 [tools]
-"yq" = "latest"
-"bun" = "latest"
-"jq" = "latest"
+"yq" = "4.52.4"
+"bun" = "1.3.10"
+"jq" = "1.8.1"
 
 [tasks.export]
 description = "Extract Hevy OpenAPI spec and export as YAML to packages/api-service/openapi/"
@@ -15,6 +15,6 @@ run = [
 depends = ["export"]
 description = "Vacuum the Hevy OpenAPI spec"
 run = [
-  "vacuum  spectral-report openapi.json",
+  "vacuum spectral-report openapi.json",
   "jq '[.[] | select(.severity == 0)]' vacuum-spectral-report.json > vacuum-severity-0.json",
 ]

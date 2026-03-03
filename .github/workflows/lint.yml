@@ -20,7 +20,7 @@ jobs:
         env:
           HK_JOBS: "1"
   generate-no-diff:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-latest
     name: Assert no diff on generated files
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -30,9 +30,14 @@ jobs:
       - uses: jdx/mise-action@e79ddf65a11cec7b0e882bedced08d6e976efb2d # v3.6.2
         with:
           working_directory: packages/api-service
+          cache_key_prefix: api-service
       - uses: jdx/mise-action@e79ddf65a11cec7b0e882bedced08d6e976efb2d # v3.6.2
         with:
           working_directory: scripts/hevy-extract
+          cache_key_prefix: hevy-extract
+      - name: mise prepare
+        run: mise prepare
+        working-directory: scripts/hevy-extract
       - name: mise generate
         run: mise "//...:generate-libs*"
       - name: fix formatting
