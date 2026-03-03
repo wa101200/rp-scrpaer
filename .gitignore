@@ -28,4 +28,4 @@ Thumbs.db
 token.txt
 packages/cli/export/subscriptions.json
 packages/cli/export/profile.json
-
+scan-results.json

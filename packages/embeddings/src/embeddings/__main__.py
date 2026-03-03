@@ -49,8 +49,6 @@ def main(
     api_max_rpm: int = 60,
     api_batch_size: int = 100,
 ) -> None:
-    device = detect_device()
-
     # Build embedder
     embedder: Embedder
     if backend == "api":
@@ -68,8 +66,10 @@ def main(
                 batch_size=api_batch_size,
             ),
         )
+        device = "api"
         logger.info("Using API backend: %s (%s)", api_base_url, api_model)
     else:
+        device = detect_device()
         embedder = create_local_embedder(model_name, device)
         logger.info("Using local backend: %s on %s", model_name, device)
 
