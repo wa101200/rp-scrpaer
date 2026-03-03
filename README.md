@@ -55,6 +55,8 @@ mise lint                             # hk check -a
 mise //...:test                       # test every package
 ```
 
+See [.github/README.md](.github/README.md) for CI/CD pipeline details — remote Docker builds over Tailscale, TruffleHog secret scanning, image tagging, and generated code drift detection.
+
 ## References
 
 - [uv Workspaces](https://docs.astral.sh/uv/concepts/projects/workspaces/) — multi-package Python monorepo management
