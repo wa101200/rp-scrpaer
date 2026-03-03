@@ -21,7 +21,6 @@ COPY packages/cli/.mise.toml packages/cli/.mise.toml
 
 WORKDIR /app/packages/cli
 RUN --mount=type=secret,id=GITHUB_TOKEN \
-    --mount=type=cache,target=/opt/mise \
     GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN 2>/dev/null || true) \
     mise install python uv \
     && cp -a "$(mise where python)" /opt/python \
@@ -33,7 +32,7 @@ WORKDIR /app
 COPY --parents **/pyproject.toml uv.lock ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --package rp-to-strong-cli --no-editable --compile-bytecode
+    uv sync --frozen --package rp-to-hevy-cli --no-editable --compile-bytecode
 
 FROM debian:trixie-slim@sha256:1d3c811171a08a5adaa4a163fbafd96b61b87aa871bbc7aa15431ac275d3d430
 
@@ -57,4 +56,4 @@ USER app
 COPY packages/cli/src packages/api-service/src packages/embeddings/src /app/packages/
 
 WORKDIR /app/packages
-CMD ["python", "rp_to_strong_cli/__main__.py"]
+CMD ["python", "rp_to_hevy_cli/__main__.py"]
