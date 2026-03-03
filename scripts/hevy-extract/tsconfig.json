@@ -4,6 +4,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "types": ["@types/bun"]
+    "types": ["@types/bun"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }
