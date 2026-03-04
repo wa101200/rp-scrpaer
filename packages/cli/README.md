@@ -1,6 +1,6 @@
 # rp-to-hevy-cli
 
-Command-line tool for exporting workout data from the [RP Hypertrophy](https://rpstrength.com/) and [Hevy](https://www.hevyapp.com/) apps to JSON, plus semantic exercise matching via embeddings. Built with [Click](https://click.palletsprojects.com/) and powered by the workspace packages `api-service` and `embeddings`.
+Command-line tool for porting workout history from [RP Hypertrophy](https://rpstrength.com/) to [Hevy](https://www.hevyapp.com/). Exports data from both platforms, matches exercises via semantic embeddings, and imports complete training blocks into Hevy. Built with [Click](https://click.palletsprojects.com/) and powered by the workspace packages `api-service` and `embeddings`.
 
 ## Quick Start
 
@@ -13,11 +13,11 @@ mise //packages/cli:cli embedding embd
 
 ## Command Groups
 
-The CLI has three top-level groups:
+The CLI has three top-level groups plus a standalone command:
 
 ### `rp` — RP Hypertrophy Export
 
-Export personal workout data from the RP Hypertrophy app to JSON.
+Export personal workout data from RP Hypertrophy's reverse-engineered internal API to JSON. The API has no public documentation — endpoints were discovered by inspecting the mobile app's network traffic.
 
 ```
 Usage: rp export [OPTIONS]
@@ -57,9 +57,13 @@ Options:
 | `all` *(default)* | All data types to a directory |
 | `exercise-templates` | Hevy exercise template catalog (~433 exercises) |
 
-### `embedding` — Similarity Search
+### `embedding` — AI-Powered Exercise Matching
 
-Embed RP and Hevy exercises into ChromaDB, then run similarity search to match RP exercises to their Hevy equivalents. See the [embeddings package](../embeddings/README.md) for background on the approach.
+RP and Hevy have completely different exercise catalogs (~315 vs ~433 exercises) with different naming conventions, so we use a multi-stage AI pipeline to match them:
+
+1. **Embed** — Each exercise is turned into a rich text representation (name + equipment + muscle groups) and encoded into a vector using [Qwen3-Embedding-8B](https://huggingface.co/Qwen/Qwen3-Embedding-8B) (FP16), a local sentence-transformer model. Vectors are stored in ChromaDB for fast retrieval.
+2. **Search** — For every RP exercise, we query the Hevy collection by cosine similarity and retrieve the top-K nearest candidates.
+3. **Judge** — An LLM (`gemini-3.1-pro-preview` via OpenRouter) reviews each RP exercise and its top-K candidates, then picks the single best match. Results are written to [`data/embeddings/llm-matches.yaml`](../../data/embeddings/llm-matches.yaml) — a flat list mapping every RP exercise ID/name to a Hevy exercise ID/name with a confidence rating (`high`, `medium`, or `low`).
 
 **`embedding embd`** — Encode exercises and store in ChromaDB:
 
@@ -77,11 +81,60 @@ mise //packages/cli:cli embedding run-rp-similarity-search \
   --metrics-output metrics.yaml --exercise-output-dir output/
 ```
 
-Key options for both commands:
+**`embedding llm-judge`** — LLM picks the best match from candidates:
+
+```bash
+mise //packages/cli:cli embedding llm-judge \
+  --api-base-url https://openrouter.ai/api/v1 \
+  --api-key $OPENROUTER_API_KEY \
+  --api-model google/gemini-3.1-pro-preview
+```
+
+Key options:
 - `--backend` (`local` | `api`) — Use a local sentence-transformer or an OpenAI-compatible API
-- `--model-name` — Model to load (default: `Qwen/Qwen3-Embedding-8B`)
+- `--model-name` — Embedding model to load (default: `Qwen/Qwen3-Embedding-8B`)
 - `--chroma-mode` (`memory` | `persistent` | `http`) — ChromaDB client mode
 - `--rp-prompt` / `--hevy-prompt` — Instruction prompts prepended to exercise text
+
+### `port-rp-workout-to-hevy` — Import RP Workouts into Hevy
+
+The core command of the project. Reads every mesocycle from RP's reverse-engineered internal API (no public docs — endpoints were discovered by inspecting the mobile app's network traffic), maps each exercise to its Hevy equivalent using the AI-generated match file, transforms the training history into Hevy workout payloads, and creates (or updates) them via the Hevy API.
+
+```
+Usage: port-rp-workout-to-hevy [OPTIONS]
+
+Options:
+  --matches PATH           Path to llm-matches.yaml file  [default: data/embeddings/llm-matches.yaml]
+  --token-file TEXT        Path to file containing RP bearer token  [default: token.txt]
+  --dry-run                Show what would be imported without posting
+  --start-date [%Y-%m-%d]  Only import days finished on or after this date
+  --upsert                 Update existing imported workouts instead of skipping them
+```
+
+```bash
+# Preview what would be imported
+mise //packages/cli:cli port-rp-workout-to-hevy --dry-run
+
+# Import everything from January 2026 onwards
+mise //packages/cli:cli port-rp-workout-to-hevy --start-date 2026-01-01
+
+# Re-sync previously imported workouts
+mise //packages/cli:cli port-rp-workout-to-hevy --upsert
+```
+
+**How it works:**
+
+1. Loads the AI-generated exercise match file ([`llm-matches.yaml`](../../data/embeddings/llm-matches.yaml)) produced by the embedding pipeline above
+2. Fetches all mesocycles from RP's reverse-engineered API (training blocks containing weeks, days, exercises, and sets with weight/reps/RIR)
+3. Fetches existing Hevy workouts for deduplication (by date and embedded `rp-day-id` tag)
+4. Filters days — skips unfinished, skipped, or already-imported days
+5. Transforms RP training data into Hevy workout payloads — maps each RP exercise to its Hevy equivalent using the AI match file, converts sets (lb→kg), and clamps duration to 45min–2h
+6. Shows a preview table and asks for confirmation
+7. Creates or updates workouts via the Hevy API, then prints a summary
+
+**Deduplication:** Each imported workout's description contains an `#import-from-rp` tag and `rp-day-id:<id>` marker. On subsequent runs, days already in Hevy are skipped unless `--upsert` is passed.
+
+**Requirements:** `HEVY_API_KEY` environment variable and an RP bearer token file.
 
 ## Cloud Storage
 
@@ -107,11 +160,17 @@ mise //packages/cli:cli hevy export -o s3://my-bucket/exports/hevy/exercises.jso
 
 ```
 src/rp_to_hevy_cli/
-  __main__.py      # Click group: rp, hevy, embedding
-  rp.py            # RP Hypertrophy export commands
-  hevy.py          # Hevy export commands
-  embedding.py     # Embedding + similarity search commands
-  _utils.py        # Shared helpers (token reading, JSON serialization)
+  __main__.py        # Click group: rp, hevy, embedding, port
+  rp.py              # RP Hypertrophy export commands
+  hevy.py            # Hevy export commands
+  utils.py           # Shared helpers (token reading, JSON serialization)
+  embedding/         # Embedding + similarity search commands
+  port/              # RP → Hevy workout importer
+    __init__.py      # Re-exports the click command
+    models.py        # ExerciseMatch dataclass, constants, YAML loader
+    transform.py     # Workout builder, day filtering, duration clamping
+    sync.py          # RP API fetching, Hevy dedup parsing, summary
+    command.py       # Click command + async orchestration
 ```
 
 ## Dependencies
@@ -124,6 +183,7 @@ src/rp_to_hevy_cli/
 | `embeddings` | Embedding and similarity search library (workspace) |
 | `cloudpathlib[s3]` | Cloud storage abstraction (S3, GCS, Azure) |
 | `pyyaml` >=6.0 | YAML output for embedding results |
+| `ruamel.yaml` | YAML loading for exercise match files |
 
 Requires **Python >= 3.12**.
 
@@ -153,3 +213,4 @@ mise //packages/cli:build-push
 | `RP_APP_BASE_URL` | `https://training.rpstrength.com/api` | RP API base URL |
 | `RP_APP_VERSION` | `1.1.13` | `accept-version` header value |
 | `HEVY_API_KEY` | *(required)* | Hevy developer API key |
+| `HEVY_API_BASE_URL` | `https://api.hevyapp.com` | Hevy API base URL |

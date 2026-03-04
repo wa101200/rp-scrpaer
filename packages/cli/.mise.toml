@@ -22,14 +22,14 @@ run = "uv run python -m rp_to_hevy_cli"
 
 [tasks.export-hevy-local]
 env = { HEVY_API_KEY = { required = true } }
-run = "uv run python -m rp_to_hevy_cli hevy export --type exercise-templates -o exports/hevy/exercises.json"
+run = "uv run python -m rp_to_hevy_cli hevy export --type all -o exports/hevy/"
 
 [tasks.export-hevy-s3]
 env = { BUCKET_NAME = { required = true }, HEVY_API_KEY = { required = true } }
 run = "uv run python -m rp_to_hevy_cli hevy export --type exercise-templates --output s3://$BUCKET_NAME/exports/exercises/hevy-exercises.json"
 
 [tasks.export-rp-local]
-run = "uv run python -m rp_to_hevy_cli rp export --all --output exports/rp"
+run = "uv run python -m rp_to_hevy_cli rp export --type all --output exports/rp"
 
 [tasks.export-rp-s3]
 env = { BUCKET_NAME = { required = true } }
@@ -80,3 +80,22 @@ uv run python -m rp_to_hevy_cli embedding llm-judge \
 
 [tasks.llm-judge.env]
 OPENROUTER_API_KEY = { required = true }
+
+[tasks.port-rp-workout-to-hevy]
+description = "Port RP workout data to Hevy format"
+env = { HEVY_API_KEY = { required = true } }
+run = """
+uv run python -m rp_to_hevy_cli port-rp-workout-to-hevy \
+  --matches "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
+  --start-date 2026-02-28
+"""
+
+[tasks.port-rp-workout-to-hevy-dry-run]
+description = "Dry run: preview RP workouts that would be imported to Hevy"
+env = { HEVY_API_KEY = { required = true } }
+run = """
+uv run python -m rp_to_hevy_cli port-rp-workout-to-hevy \
+  --matches "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
+  --start-date 2026-01-01 \
+  --dry-run
+"""
