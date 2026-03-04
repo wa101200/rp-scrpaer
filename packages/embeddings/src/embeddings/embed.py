@@ -138,7 +138,7 @@ def encode_and_store(
     if metadatas is not None:
         add_kwargs["metadatas"] = metadatas
 
-    collection.add(**add_kwargs)
+    collection.upsert(**add_kwargs)
     logger.info(
         "Stored %d embeddings, collection count: %d", len(ids), collection.count()
     )
