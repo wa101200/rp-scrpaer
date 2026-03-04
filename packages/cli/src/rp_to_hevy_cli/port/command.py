@@ -2,176 +2,28 @@ from __future__ import annotations
 
 import asyncio
 import os
-import re
-from dataclasses import dataclass
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from pathlib import Path
 from uuid import UUID
 
 import click
-from api_service_rp import ApiClient as RpApiClient
-from api_service_rp import Configuration as RpConfiguration
-from api_service_rp import TrainingDataApi
-from api_service_rp.models.day import Day
-from api_service_rp.models.mesocycle import Mesocycle
 from hevy_api_service import ApiClient as HevyApiClient
 from hevy_api_service import Configuration as HevyConfiguration
 from hevy_api_service import WorkoutsApi
 from hevy_api_service.models import (
     PostWorkoutsRequestBody as HevyPostWorkoutsRequestBody,
 )
-from hevy_api_service.models.post_workouts_request_body_workout import (
-    PostWorkoutsRequestBodyWorkout,
-)
-from hevy_api_service.models.post_workouts_request_exercise import (
-    PostWorkoutsRequestExercise,
-)
-from hevy_api_service.models.post_workouts_request_set import PostWorkoutsRequestSet
-from ruamel.yaml import YAML
 
 from rp_to_hevy_cli.hevy import _fetch_all_workouts
+from rp_to_hevy_cli.port.models import DEFAULT_MATCHES_PATH, _load_matches
+from rp_to_hevy_cli.port.sync import (
+    _fetch_mesocycles,
+    _parse_existing_workout_dates,
+    _parse_imported_day_ids,
+    _print_summary,
+)
+from rp_to_hevy_cli.port.transform import _build_hevy_workout, _is_day_importable
 from rp_to_hevy_cli.utils import read_token
-
-yaml = YAML()
-yaml.width = 4096
-
-DEFAULT_MATCHES_PATH = Path("data/embeddings/llm-matches.yaml")
-
-IMPORT_TAG = "#import-from-rp"
-RP_DAY_ID_PATTERN = re.compile(r"rp-day-id:(\d+)")
-MIN_DURATION = timedelta(minutes=45)
-MAX_DURATION = timedelta(hours=2)
-
-
-@dataclass
-class ExerciseMatch:
-    rp_id: str
-    rp_name: str
-    hevy_best_match_id: str
-    hevy_best_match_name: str
-    confidence: str
-
-
-def _load_matches(path: Path) -> list[ExerciseMatch]:
-    data = yaml.load(path)
-    return [ExerciseMatch(**item) for item in data]
-
-
-async def _fetch_mesocycles(token: str) -> list[Mesocycle]:
-    config = RpConfiguration(access_token=token)
-    async with RpApiClient(config) as client:
-        api = TrainingDataApi(client)
-        summaries = await api.get_mesocycles()
-        return list(
-            await asyncio.gather(*(api.get_mesocycle(m.key) for m in summaries))
-        )
-
-
-def _make_description(day_id: int) -> str:
-    return f"{IMPORT_TAG}\nrp-day-id:{day_id}"
-
-
-def _parse_existing_workout_dates(workouts: list) -> set[date]:
-    """Extract the calendar date from each Hevy workout's start_time."""
-    dates: set[date] = set()
-    for w in workouts:
-        st = getattr(w, "start_time", None)
-        if isinstance(st, str):
-            st = datetime.fromisoformat(st)
-        if isinstance(st, datetime):
-            dates.add(st.date())
-    return dates
-
-
-def _parse_imported_day_ids(workouts: list) -> dict[int, str]:
-    """Map RP day IDs to Hevy workout IDs from descriptions."""
-    mapping: dict[int, str] = {}
-    for w in workouts:
-        desc = getattr(w, "description", None) or ""
-        match = RP_DAY_ID_PATTERN.search(desc)
-        if match:
-            mapping[int(match.group(1))] = w.id
-    return mapping
-
-
-def _is_day_importable(day: Day) -> bool:
-    if not day.finished_at:
-        return False
-    if day.status in ("skipped", "ready"):
-        return False
-    for exercise in day.exercises:
-        for s in exercise.sets:
-            if s.status == "complete":
-                return True
-    return False
-
-
-def _build_hevy_workout(
-    day: Day,
-    meso_name: str,
-    week_index: int,
-    matches: list[ExerciseMatch],
-) -> HevyPostWorkoutsRequestBody | None:
-    title = f"{meso_name} W{week_index + 1} - {day.label}"
-
-    exercises: list[PostWorkoutsRequestExercise] = []
-    earliest_finished_at: datetime | None = None
-
-    for exercise in day.exercises:
-        exercise_match = next(
-            (m for m in matches if str(m.rp_id) == str(exercise.exercise_id)), None
-        )
-
-        if exercise_match is None:
-            click.echo(
-                click.style(
-                    f"  WARNING: No match for exercise_id "
-                    f"{exercise.exercise_id}, skipping",
-                    fg="yellow",
-                )
-            )
-            continue
-
-        hevy_exercise = PostWorkoutsRequestExercise(
-            exercise_template_id=exercise_match.hevy_best_match_id, sets=[]
-        )
-
-        for s in exercise.sets:
-            if s.status == "skipped":
-                continue
-            if s.status == "complete":
-                weight_kg = s.weight if s.unit == "kg" else s.weight * 0.453592
-                hevy_set = PostWorkoutsRequestSet(
-                    weight_kg=weight_kg, reps=s.reps, type="normal"
-                )
-                hevy_exercise.sets.append(hevy_set)
-
-                if s.finished_at and (
-                    earliest_finished_at is None or s.finished_at < earliest_finished_at
-                ):
-                    earliest_finished_at = s.finished_at
-
-        if len(hevy_exercise.sets) > 0:
-            exercises.append(hevy_exercise)
-
-    if not exercises:
-        return None
-
-    start = earliest_finished_at or day.finished_at
-    duration = day.finished_at - start
-    clamped = max(MIN_DURATION, min(MAX_DURATION, duration))
-    end = start + clamped
-
-    return HevyPostWorkoutsRequestBody(
-        workout=PostWorkoutsRequestBodyWorkout(
-            is_private=False,
-            title=title,
-            description=_make_description(day.id),
-            start_time=start.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            end_time=end.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            exercises=exercises,
-        )
-    )
 
 
 @click.command("port-rp-workout-to-hevy")
@@ -382,15 +234,3 @@ async def _port_rp_workout_to_hevy(
 
     # Phase 7: Summary
     _print_summary(stats)
-
-
-def _print_summary(stats: dict[str, int]) -> None:
-    click.echo("\n--- Summary ---")
-    click.echo(f"  Scanned:                {stats['scanned']}")
-    click.echo(f"  Skipped (not importable): {stats['skipped_not_importable']}")
-    click.echo(f"  Skipped (before start):   {stats['skipped_before_start_date']}")
-    click.echo(f"  Skipped (already in Hevy):{stats['skipped_already_imported']}")
-    click.echo(f"  Skipped (no exercises):   {stats['skipped_no_exercises']}")
-    click.echo(f"  Created:                  {stats['created']}")
-    click.echo(f"  Updated:                  {stats['updated']}")
-    click.echo(f"  Failed:                   {stats['failed']}")
