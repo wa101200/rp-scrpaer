@@ -80,3 +80,11 @@ uv run python -m rp_to_hevy_cli embedding llm-judge \
 
 [tasks.llm-judge.env]
 OPENROUTER_API_KEY = { required = true }
+
+[tasks.port-rp-workout-to-hevy]
+description = "Port RP workout data to Hevy format"
+run = """
+uv run python -m rp_to_hevy_cli port-rp-workout-to-hevy \
+  --matches "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
+  --mesocycles "$MONOREPO_ROOT/packages/cli/exports/rp/mesocycles.json"
+"""
