@@ -85,7 +85,7 @@ async def _port_rp_workout_to_hevy(matches_path: Path, mesocycles_path: Path) ->
         workout=PostWorkoutsRequestBodyWorkout(
             is_private=False,
             title=example_day.label,
-            description="#api-test",
+            description="#import-from-rp",
             start_time=example_day.exercises[0]
             .sets[0]
             .finished_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
