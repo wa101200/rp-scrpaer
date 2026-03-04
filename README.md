@@ -10,26 +10,26 @@
 
 ## Architecture
 
-```
-  ┌──────────────────────────────────────────────────────────┐
-  │                      RP & Hevy APIs                      │
-  └──────────────┬──────────────────────────┬────────────────┘
-                 │                          │
-       ┌─────────▼─────────┐    ┌──────────▼──────────┐
-       │   api-service     │    │   api-service       │
-       │  (RP SDK)         │    │  (Hevy SDK)         │
-       └─────────┬─────────┘    └──────────┬──────────┘
-                 │                          │
-       ┌─────────▼──────────────────────────▼──────────┐
-       │                    cli                        │
-       │  rp export · hevy export · embedding commands │
-       └─────────┬──────────────────────────┬──────────┘
-                 │                          │
-       ┌─────────▼─────────┐    ┌──────────▼──────────┐
-       │   embeddings      │    │   pipeline          │
-       │ Similarity search │    │ Kestra scheduled    │
-       │  ChromaDB  + LLM  │    │ extraction + flows. │
-       └───────────────────┘    └─────────────────────┘
+```mermaid
+flowchart TD
+    APIs["RP & Hevy APIs"]
+    
+    RPSDK["api-service<br/>(RP SDK)"]
+    HevySDK["api-service<br/>(Hevy SDK)"]
+    
+    CLI["cli<br/>rp export · hevy export · embedding commands"]
+    
+    Embeddings["embeddings<br/>Similarity search<br/>ChromaDB + LLM"]
+    Pipeline["pipeline<br/>Kestra scheduled<br/>extraction + flows."]
+
+    APIs --> RPSDK
+    APIs --> HevySDK
+    
+    RPSDK --> CLI
+    HevySDK --> CLI
+    
+    CLI --> Embeddings
+    CLI --> Pipeline
 ```
 
 ## Packages
