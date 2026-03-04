@@ -5,7 +5,7 @@ import json
 import os
 import re
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from uuid import UUID
 
@@ -36,7 +36,9 @@ DEFAULT_MATCHES_PATH = Path("data/embeddings/llm-matches.yaml")
 DEFAULT_MESOCYCLES_PATH = Path("packages/cli/exports/rp/mesocycles.json")
 
 IMPORT_TAG = "#import-from-rp"
-RP_DAY_ID_PATTERN = re.compile(r"rp_day_id:(\d+)")
+RP_DAY_ID_PATTERN = re.compile(r"rp-day-id:(\d+)")
+MIN_DURATION = timedelta(minutes=45)
+MAX_DURATION = timedelta(hours=2)
 
 
 @dataclass
@@ -59,7 +61,7 @@ def _load_mesocycles(path: Path) -> list[Mesocycle]:
 
 
 def _make_description(day_id: int) -> str:
-    return f"{IMPORT_TAG}\nrp_day_id:{day_id}"
+    return f"{IMPORT_TAG}\nrp-day-id:{day_id}"
 
 
 def _parse_existing_workout_dates(workouts: list) -> set[date]:
@@ -148,19 +150,18 @@ def _build_hevy_workout(
     if not exercises:
         return None
 
-    start_time = (
-        earliest_finished_at.strftime("%Y-%m-%dT%H:%M:%SZ")
-        if earliest_finished_at
-        else day.finished_at.strftime("%Y-%m-%dT%H:%M:%SZ")
-    )
+    start = earliest_finished_at or day.finished_at
+    duration = day.finished_at - start
+    clamped = max(MIN_DURATION, min(MAX_DURATION, duration))
+    end = start + clamped
 
     return HevyPostWorkoutsRequestBody(
         workout=PostWorkoutsRequestBodyWorkout(
             is_private=False,
             title=title,
             description=_make_description(day.id),
-            start_time=start_time,
-            end_time=day.finished_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            start_time=start.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            end_time=end.strftime("%Y-%m-%dT%H:%M:%SZ"),
             exercises=exercises,
         )
     )
@@ -303,13 +304,22 @@ async def _port_rp_workout_to_hevy(
     n_create = sum(1 for *_, hid in to_import if hid is None)
     n_update = sum(1 for *_, hid in to_import if hid is not None)
     click.echo(f"\n{len(to_import)} workout(s) ({n_create} new, {n_update} update):\n")
-    click.echo(f"{'#':<4} {'Action':<8} {'Title':<40} {'Date':<20} {'Exercises':<10}")
-    click.echo("-" * 82)
-    for i, (workout, _wdate, _day_id, hevy_id) in enumerate(to_import, 1):
+    header = (
+        f"{'#':<4} {'Action':<8} {'Title':<35} {'Date':<12} {'Duration':<10} {'Ex':>3}"
+    )
+    click.echo(header)
+    click.echo("-" * len(header))
+    for i, (workout, _, _, hevy_id) in enumerate(to_import, 1):
         w = workout.workout
         action = "UPDATE" if hevy_id else "CREATE"
+        start = datetime.fromisoformat(w.start_time)
+        end = datetime.fromisoformat(w.end_time)
+        mins = int((end - start).total_seconds() // 60)
+        duration = f"{mins // 60}h{mins % 60:02d}m"
         click.echo(
-            f"{i:<4} {action:<8} {w.title:<40} {w.end_time:<20} {len(w.exercises):<10}"
+            f"{i:<4} {action:<8} {w.title:<35} "
+            f"{end.strftime('%Y-%m-%d'):<12} "
+            f"{duration:<10} {len(w.exercises):>3}"
         )
 
     if dry_run:
