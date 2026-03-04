@@ -9,13 +9,14 @@ import click
 from cloudpathlib import AnyPath, CloudPath
 from hevy_api_service import ApiClient as HevyApiClient
 from hevy_api_service import Configuration as HevyConfiguration
-from hevy_api_service import ExerciseTemplatesApi
+from hevy_api_service import ExerciseTemplatesApi, WorkoutsApi
 
 from rp_to_hevy_cli.utils import write_json
 
 HEVY_EXPORT_TYPES = [
     "all",
     "exercise-templates",
+    "workouts",
 ]
 
 
@@ -36,6 +37,19 @@ async def _fetch_all_exercise_templates(
     return all_templates
 
 
+async def _fetch_all_workouts(workouts_api: WorkoutsApi, api_key: UUID) -> list:
+    page = 1
+    all_workouts = []
+    while True:
+        resp = await workouts_api.get_workouts(api_key=api_key, page=page, page_size=10)
+        if resp.workouts:
+            all_workouts.extend(resp.workouts)
+        if page >= (resp.page_count or 1):
+            break
+        page += 1
+    return all_workouts
+
+
 async def _hevy_export(
     api_key: str, export_type: str, output: Path | CloudPath
 ) -> None:
@@ -43,17 +57,26 @@ async def _hevy_export(
     config = HevyConfiguration(host=os.environ.get("HEVY_API_BASE_URL"))
     async with HevyApiClient(config) as client:
         templates_api = ExerciseTemplatesApi(client)
+        workouts_api = WorkoutsApi(client)
 
         if export_type == "exercise-templates":
             data = await _fetch_all_exercise_templates(templates_api, key)
             write_json(data, output)
             return
 
+        if export_type == "workouts":
+            data = await _fetch_all_workouts(workouts_api, key)
+            write_json(data, output)
+            return
+
         # all
+        templates, workouts = await asyncio.gather(
+            _fetch_all_exercise_templates(templates_api, key),
+            _fetch_all_workouts(workouts_api, key),
+        )
         data = {
-            "exercise_templates": await _fetch_all_exercise_templates(
-                templates_api, key
-            ),
+            "exercise_templates": templates,
+            "workouts": workouts,
         }
         if output.suffix == ".json":
             write_json(data, output)
