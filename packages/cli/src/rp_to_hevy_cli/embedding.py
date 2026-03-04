@@ -30,6 +30,7 @@ from embeddings.embed import DEFAULT_N_RESULTS
 from ruamel.yaml import YAML
 
 yaml = YAML()
+yaml.width = 4096
 yaml.indent(mapping=2, sequence=4, offset=2)
 
 
