@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: D928C232
     hevy_embedding_name: crunch weighted, abdominals
     distance: 0.13
+  - hevy_id: B2398CD1
+    hevy_embedding_name: decline crunch weighted, abdominals
+    distance: 0.15
+  - hevy_id: 23A48484
+    hevy_embedding_name: cable crunch, abdominals
+    distance: 0.18

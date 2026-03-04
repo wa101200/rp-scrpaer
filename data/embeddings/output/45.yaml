@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 473CF5B8
     hevy_embedding_name: lat pulldown machine, lats, upper_back, biceps, forearms
     distance: 0.14
+  - hevy_id: BC3492DA
+    hevy_embedding_name: iso-lateral high row machine, lats, upper_back, biceps, forearms
+    distance: 0.16
+  - hevy_id: 914F3A96
+    hevy_embedding_name: chest supported incline row dumbbell, upper_back, lats, biceps, forearms
+    distance: 0.17

@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 1ADF8723
     hevy_embedding_name: rear kick machine, glutes, hamstrings
     distance: 0.17
+  - hevy_id: 987234AB
+    hevy_embedding_name: glute kickback on floor, glutes, hamstrings
+    distance: 0.21
+  - hevy_id: ACB2751D
+    hevy_embedding_name: standing cable glute kickbacks, glutes, hamstrings
+    distance: 0.21

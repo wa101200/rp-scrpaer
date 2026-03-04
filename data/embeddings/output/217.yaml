@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 7E3BC8B6
     hevy_embedding_name: hammer curl dumbbell, biceps, forearms
     distance: 0.12
+  - hevy_id: 942BAD12
+    hevy_embedding_name: pinwheel curl dumbbell, biceps, forearms
+    distance: 0.13
+  - hevy_id: 72297E8C
+    hevy_embedding_name: waiter curl dumbbell, biceps, forearms
+    distance: 0.14

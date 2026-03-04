@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: BD86EFD5
     hevy_embedding_name: front raise barbell, shoulders
     distance: 0.13
+  - hevy_id: 9372FFAA
+    hevy_embedding_name: seated lateral raise dumbbell, shoulders
+    distance: 0.14
+  - hevy_id: DBF9273A
+    hevy_embedding_name: plate front raise, shoulders
+    distance: 0.14

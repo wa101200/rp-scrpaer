@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: ADA8623C
     hevy_embedding_name: bicep curl cable, biceps
     distance: 0.21
+  - hevy_id: 2DBCA395
+    hevy_embedding_name: behind the back curl cable, biceps
+    distance: 0.21
+  - hevy_id: 0B4C1902
+    hevy_embedding_name: bicep curl suspension, biceps
+    distance: 0.22

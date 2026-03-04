@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 2348AB72
     hevy_embedding_name: spider curl barbell, biceps
     distance: 0.16
+  - hevy_id: ADA8623C
+    hevy_embedding_name: bicep curl cable, biceps
+    distance: 0.16
+  - hevy_id: B33B526E
+    hevy_embedding_name: single arm curl cable, biceps
+    distance: 0.17

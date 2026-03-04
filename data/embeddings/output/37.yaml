@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 0393F233
     hevy_embedding_name: seated cable row - v grip cable, upper_back, lats, biceps, forearms
     distance: 0.1
+  - hevy_id: 1DF4A847
+    hevy_embedding_name: seated row machine, upper_back, lats, biceps, forearms
+    distance: 0.12
+  - hevy_id: D0C4A899
+    hevy_embedding_name: single arm cable row, upper_back, lats, biceps, forearms
+    distance: 0.14

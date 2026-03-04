@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 4E5257DE
     hevy_embedding_name: lat pulldown - close grip cable, lats, upper_back, biceps, forearms
     distance: 0.09
+  - hevy_id: D0C4A899
+    hevy_embedding_name: single arm cable row, upper_back, lats, biceps, forearms
+    distance: 0.11
+  - hevy_id: 473CF5B8
+    hevy_embedding_name: lat pulldown machine, lats, upper_back, biceps, forearms
+    distance: 0.12

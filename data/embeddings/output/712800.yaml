@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 1ADF8723
     hevy_embedding_name: rear kick machine, glutes, hamstrings
     distance: 0.32
+  - hevy_id: CBA02382
+    hevy_embedding_name: glute kickback machine, glutes, hamstrings
+    distance: 0.32
+  - hevy_id: B8127AD1
+    hevy_embedding_name: lying leg curl machine, hamstrings, calves
+    distance: 0.32

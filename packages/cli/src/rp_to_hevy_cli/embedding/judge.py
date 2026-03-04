@@ -28,9 +28,10 @@ best match. The exercises may have different names but refer to the \
 same or very similar movement.
 
 Rules:
-- Pick the single best match from the candidates.
-- If NONE of the candidates are a reasonable match, set \
-best_match to "none"."""
+- You MUST pick exactly one candidate from the list. \
+There is no "none" option.
+- Return the candidate name EXACTLY as written in the list.
+- Even if the match is imperfect, pick the closest one."""
 
 _MAX_RETRIES = 3
 
@@ -47,19 +48,44 @@ class JudgeResult(BaseModel):
 
 
 def _build_user_prompt(rp_name: str, candidates: list[str]) -> str:
-    numbered = "\n".join(f"  {i}. {c}" for i, c in enumerate(candidates, 1))
-    return f"RP Exercise: {rp_name}\n\nHevy Candidates:\n{numbered}"
+    lines = "\n".join(f"  - {c}" for c in candidates)
+    return f"RP Exercise: {rp_name}\n\nHevy Candidates:\n{lines}"
 
 
-def _resolve_hevy_id(name: str, matches: list[dict]) -> tuple[str | None, str]:
-    """Map best_match name back to hevy_id and canonical name."""
+class _ResolveResult:
+    __slots__ = ("hevy_id", "hevy_name", "fallback")
+
+    def __init__(self, hevy_id: str, hevy_name: str, *, fallback: bool):
+        self.hevy_id = hevy_id
+        self.hevy_name = hevy_name
+        self.fallback = fallback
+
+
+def _resolve_hevy_id(name: str, matches: list[dict]) -> _ResolveResult:
+    """Map best_match name back to hevy_id and canonical name.
+
+    Falls back to first candidate if no match found.
+    """
     name_lower = name.lower().strip()
+
+    # Exact or prefix match
     for m in matches:
         candidate = m["hevy_embedding_name"]
-        if candidate == name or candidate.lower().startswith(name_lower):
-            return m["hevy_id"], candidate
+        candidate_lower = candidate.lower()
+        if (
+            candidate_lower == name_lower
+            or candidate_lower.startswith(name_lower)
+            or name_lower.startswith(candidate_lower)
+        ):
+            return _ResolveResult(m["hevy_id"], candidate, fallback=False)
 
-    return None, name
+    # Fallback: pick the first candidate (closest by embedding distance)
+    first = matches[0]
+    return _ResolveResult(
+        first["hevy_id"],
+        first["hevy_embedding_name"],
+        fallback=True,
+    )
 
 
 async def _judge_one(
@@ -94,37 +120,44 @@ async def _judge_one(
         else:
             return None
 
-    best_match = judge.best_match
-    confidence = judge.confidence.value
+    resolved = _resolve_hevy_id(judge.best_match, matches)
 
-    if best_match.lower() == "none":
-        hevy_id = None
-        hevy_name = "none"
-    else:
-        hevy_id, hevy_name = _resolve_hevy_id(best_match, matches)
-        if hevy_id is None:
-            msg = (
+    if resolved.fallback:
+        click.echo(
+            click.style(
+                f"  FALLBACK: rp_id={rp_id} — LLM returned "
+                f"'{judge.best_match}' which does not match "
+                f"any candidate. Falling back to closest "
+                f"embedding match: '{resolved.hevy_name}'",
+                fg="red",
+                bold=True,
+            ),
+            err=True,
+        )
+        if strict:
+            raise click.ClickException(
                 f"rp_id={rp_id} — LLM returned "
-                f"'{best_match}' which does not match "
-                f"any candidate."
+                f"'{judge.best_match}' which does not "
+                f"match any candidate."
             )
-            click.echo(
-                click.style(
-                    f"  ERROR: {msg}",
-                    fg="red",
-                    bold=True,
-                ),
-                err=True,
-            )
-            if strict:
-                raise click.ClickException(msg)
+    elif resolved.hevy_name != judge.best_match:
+        click.echo(
+            click.style(
+                f"  WARN: rp_id={rp_id} — LLM returned "
+                f"'{judge.best_match}', resolved to "
+                f"'{resolved.hevy_name}'",
+                fg="yellow",
+                bold=True,
+            ),
+            err=True,
+        )
 
     return {
         "rp_id": rp_id,
         "rp_name": rp_name,
-        "hevy_best_match_id": hevy_id,
-        "hevy_best_match_name": hevy_name,
-        "confidence": confidence,
+        "hevy_best_match_id": resolved.hevy_id,
+        "hevy_best_match_name": resolved.hevy_name,
+        "confidence": judge.confidence.value,
     }
 
 
@@ -216,7 +249,7 @@ async def _run(
     "--strict",
     is_flag=True,
     default=False,
-    help="Exit on unresolved hevy_best_match_id.",
+    help="Exit if LLM returns a name not matching any candidate.",
 )
 def llm_judge(
     api_base_url: str,

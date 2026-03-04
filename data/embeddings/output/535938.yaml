@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: CBA02382
     hevy_embedding_name: glute kickback machine, glutes, hamstrings
     distance: 0.14
+  - hevy_id: D1CD146F
+    hevy_embedding_name: single leg hip thrust dumbbell, glutes, hamstrings, quadriceps
+    distance: 0.16
+  - hevy_id: 487B3755
+    hevy_embedding_name: single leg hip thrust, glutes, hamstrings, quadriceps
+    distance: 0.16

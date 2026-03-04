@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 046E25A2
     hevy_embedding_name: reverse grip lat pulldown cable, lats, upper_back, biceps
     distance: 0.12
+  - hevy_id: 7C50F118
+    hevy_embedding_name: wide pull up, lats, upper_back, biceps, forearms
+    distance: 0.14
+  - hevy_id: C3BCABB3
+    hevy_embedding_name: seated cable row - bar wide grip, upper_back, lats, traps, biceps, forearms
+    distance: 0.15

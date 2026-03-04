@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: D950429E
     hevy_embedding_name: drag curl, biceps
     distance: 0.16
+  - hevy_id: 0B4C1902
+    hevy_embedding_name: bicep curl suspension, biceps
+    distance: 0.16
+  - hevy_id: 01A35BF9
+    hevy_embedding_name: ez bar biceps curl, biceps
+    distance: 0.16

@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.14
   - hevy_id: FBF92739
     hevy_embedding_name: incline chest press machine, chest, shoulders, triceps
+    distance: 0.17
+  - hevy_id: 7EB3F7C3
+    hevy_embedding_name: chest press machine, chest, shoulders, triceps
     distance: 0.18
+  - hevy_id: 24706DCD
+    hevy_embedding_name: iso-lateral chest press machine, chest, shoulders, triceps
+    distance: 0.19

@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 50DFDFAB
     hevy_embedding_name: incline bench press barbell, chest, triceps, shoulders
     distance: 0.18
+  - hevy_id: FBF92739
+    hevy_embedding_name: incline chest press machine, chest, shoulders, triceps
+    distance: 0.19
+  - hevy_id: BE89C631
+    hevy_embedding_name: hex press dumbbell, chest, shoulders, triceps
+    distance: 0.2

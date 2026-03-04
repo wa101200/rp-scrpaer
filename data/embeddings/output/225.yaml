@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 2982AA23
     hevy_embedding_name: russian twist weighted, abdominals
     distance: 0.17
+  - hevy_id: 32B0B590
+    hevy_embedding_name: jackknife sit up, abdominals
+    distance: 0.19
+  - hevy_id: 99D5F10E
+    hevy_embedding_name: ab wheel, abdominals
+    distance: 0.19

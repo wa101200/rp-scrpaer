@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 3A6FA3D1
     hevy_embedding_name: incline bench press smith machine, chest, shoulders, triceps
     distance: 0.14
+  - hevy_id: E644F828
+    hevy_embedding_name: bench press - wide grip barbell, chest, shoulders, triceps
+    distance: 0.15
+  - hevy_id: FAF31231
+    hevy_embedding_name: decline bench press machine, chest, shoulders, triceps
+    distance: 0.18

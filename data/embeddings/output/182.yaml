@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 937292AB
     hevy_embedding_name: single leg romanian deadlift dumbbell, hamstrings, glutes, lower_back
     distance: 0.17
+  - hevy_id: CBC0D834
+    hevy_embedding_name: single leg glute bridge, glutes, hamstrings, quadriceps
+    distance: 0.2
+  - hevy_id: BF6ECE89
+    hevy_embedding_name: dumbbell step up, quadriceps, glutes, hamstrings
+    distance: 0.21

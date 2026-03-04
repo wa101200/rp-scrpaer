@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 32HKJ34K
     hevy_embedding_name: walking lunge, quadriceps, glutes, hamstrings
     distance: 0.14
+  - hevy_id: FFDA283B
+    hevy_embedding_name: reverse lunge dumbbell, quadriceps, glutes, hamstrings
+    distance: 0.16
+  - hevy_id: BF6ECE89
+    hevy_embedding_name: dumbbell step up, quadriceps, glutes, hamstrings
+    distance: 0.19

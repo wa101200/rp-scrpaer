@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 7C50F118
     hevy_embedding_name: wide pull up, lats, upper_back, biceps, forearms
     distance: 0.14
+  - hevy_id: 023943F1
+    hevy_embedding_name: chin up weighted, lats, upper_back, biceps, forearms
+    distance: 0.15
+  - hevy_id: 1B2B1E7C
+    hevy_embedding_name: pull up, lats, upper_back, biceps, forearms
+    distance: 0.15

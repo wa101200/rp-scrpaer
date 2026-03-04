@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 234897AB
     hevy_embedding_name: rope cable curl, biceps, forearms
     distance: 0.29
+  - hevy_id: 1006DF48
+    hevy_embedding_name: seated palms up wrist curl, forearms
+    distance: 0.3
+  - hevy_id: 72880C57
+    hevy_embedding_name: vertical traction machine, lats, upper_back, biceps, forearms
+    distance: 0.3

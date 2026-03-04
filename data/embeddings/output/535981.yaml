@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 923874CA
     hevy_embedding_name: landmine 180, abdominals, shoulders, chest, upper_back, traps, biceps, forearms
     distance: 0.18
+  - hevy_id: 425805F4
+    hevy_embedding_name: inverted row, upper_back, lats, biceps, forearms
+    distance: 0.18
+  - hevy_id: C732C341
+    hevy_embedding_name: meadows rows barbell, upper_back, lats, biceps, forearms
+    distance: 0.18

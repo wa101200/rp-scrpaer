@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 9372FFAA
     hevy_embedding_name: seated lateral raise dumbbell, shoulders
     distance: 0.18
+  - hevy_id: 742E5BD5
+    hevy_embedding_name: shrug smith machine, traps, neck
+    distance: 0.18
+  - hevy_id: 797F0782
+    hevy_embedding_name: upright row dumbbell, shoulders, traps, upper_back, biceps, forearms
+    distance: 0.19

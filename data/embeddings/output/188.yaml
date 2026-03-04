@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 7C0028C3
     hevy_embedding_name: reverse hyperextension, glutes, hamstrings, lower_back
     distance: 0.17
+  - hevy_id: 93472AC1
+    hevy_embedding_name: single leg romanian deadlift barbell, hamstrings, glutes, lower_back, upper_back, lats
+    distance: 0.18
+  - hevy_id: 8C331CD8
+    hevy_embedding_name: cable pull through, glutes, hamstrings, lower_back
+    distance: 0.18

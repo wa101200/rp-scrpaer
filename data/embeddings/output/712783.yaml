@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.13
   - hevy_id: 1B89CA1B
     hevy_embedding_name: renegade row dumbbell, upper_back, lats, biceps, forearms
-    distance: 0.16
+    distance: 0.15
+  - hevy_id: 55E6546F
+    hevy_embedding_name: bent over row barbell, upper_back, lats, biceps, forearms
+    distance: 0.17
+  - hevy_id: 914F3A96
+    hevy_embedding_name: chest supported incline row dumbbell, upper_back, lats, biceps, forearms
+    distance: 0.17

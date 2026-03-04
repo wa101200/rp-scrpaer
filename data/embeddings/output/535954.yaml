@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: B05C2C29
     hevy_embedding_name: single leg standing calf raise machine, calves
     distance: 0.06
+  - hevy_id: E53CCBE5
+    hevy_embedding_name: standing calf raise barbell, calves
+    distance: 0.08
+  - hevy_id: 6DA40660
+    hevy_embedding_name: standing calf raise dumbbell, calves
+    distance: 0.09

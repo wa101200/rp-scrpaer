@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: '67280085'
     hevy_embedding_name: pullover dumbbell, lats, chest, upper_back, triceps
     distance: 0.2
+  - hevy_id: D2FE7B2E
+    hevy_embedding_name: lat pulldown band, lats, upper_back, biceps, forearms
+    distance: 0.23
+  - hevy_id: 6A6C31A5
+    hevy_embedding_name: lat pulldown cable, lats, upper_back, biceps, forearms
+    distance: 0.23

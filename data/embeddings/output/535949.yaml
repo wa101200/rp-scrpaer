@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 724CDE60
     hevy_embedding_name: concentration curl, biceps
     distance: 0.15
+  - hevy_id: A5AC6449
+    hevy_embedding_name: bicep curl barbell, biceps
+    distance: 0.16
+  - hevy_id: 582ADA23
+    hevy_embedding_name: overhead curl cable, biceps
+    distance: 0.17

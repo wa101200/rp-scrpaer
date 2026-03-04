@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 0B841777
     hevy_embedding_name: shrug barbell, traps, neck
     distance: 0.21
+  - hevy_id: 073032BB
+    hevy_embedding_name: standing military press barbell, shoulders, triceps
+    distance: 0.23
+  - hevy_id: '8293E554'
+    hevy_embedding_name: front raise dumbbell, shoulders
+    distance: 0.23

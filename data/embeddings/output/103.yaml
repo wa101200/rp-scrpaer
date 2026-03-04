@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 1D4B3D6B
     hevy_embedding_name: hammer curl band, biceps, forearms
     distance: 0.1
+  - hevy_id: 36E8F14E
+    hevy_embedding_name: hammer curl cable, biceps, forearms
+    distance: 0.11
+  - hevy_id: 90427D4A
+    hevy_embedding_name: spider curl dumbbell, biceps
+    distance: 0.12

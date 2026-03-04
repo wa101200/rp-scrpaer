@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: D928C232
     hevy_embedding_name: crunch weighted, abdominals
     distance: 0.18
+  - hevy_id: BB83BDDE
+    hevy_embedding_name: russian twist bodyweight, abdominals
+    distance: 0.18
+  - hevy_id: 2982AA23
+    hevy_embedding_name: russian twist weighted, abdominals
+    distance: 0.19

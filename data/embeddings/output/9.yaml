@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 10D76E8F
     hevy_embedding_name: clap push ups, chest, triceps, shoulders
     distance: 0.17
+  - hevy_id: 392887AA
+    hevy_embedding_name: push up, chest, triceps, shoulders
+    distance: 0.19
+  - hevy_id: 947DAC23
+    hevy_embedding_name: push up - close grip, chest, triceps, shoulders
+    distance: 0.19

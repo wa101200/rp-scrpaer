@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 10347BAC
     hevy_embedding_name: triceps dip weighted, triceps, chest, shoulders
     distance: 0.18
+  - hevy_id: 5122E7D9
+    hevy_embedding_name: seated dip machine, triceps, chest, shoulders
+    distance: 0.19
+  - hevy_id: 28BB4A95
+    hevy_embedding_name: triceps dip, triceps, chest, shoulders
+    distance: 0.2

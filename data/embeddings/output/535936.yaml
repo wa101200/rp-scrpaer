@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: DCFF3E9F
     hevy_embedding_name: squat dumbbell, quadriceps, hamstrings, glutes
     distance: 0.23
+  - hevy_id: 05293BCA
+    hevy_embedding_name: sumo squat dumbbell, quadriceps, glutes, adductors, hamstrings
+    distance: 0.24
+  - hevy_id: D1CD146F
+    hevy_embedding_name: single leg hip thrust dumbbell, glutes, hamstrings, quadriceps
+    distance: 0.25

@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.09
   - hevy_id: 6127A3AD
     hevy_embedding_name: triceps kickback dumbbell, triceps
-    distance: 0.11
+    distance: 0.1
+  - hevy_id: 552AB030
+    hevy_embedding_name: single arm triceps pushdown cable, triceps
+    distance: 0.13
+  - hevy_id: B5EFBF9C
+    hevy_embedding_name: overhead triceps extension cable, triceps
+    distance: 0.13

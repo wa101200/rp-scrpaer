@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.09
   - hevy_id: D2387AB1
     hevy_embedding_name: straight arm lat pulldown cable, lats, triceps
-    distance: 0.09
+    distance: 0.1
+  - hevy_id: 2EE45F81
+    hevy_embedding_name: single arm lat pulldown, lats, upper_back, biceps, forearms
+    distance: 0.12
+  - hevy_id: 473CF5B8
+    hevy_embedding_name: lat pulldown machine, lats, upper_back, biceps, forearms
+    distance: 0.14

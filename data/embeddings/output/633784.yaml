@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 9264ADA1
     hevy_embedding_name: reverse fly single arm cable, shoulders, upper_back
     distance: 0.15
+  - hevy_id: 473CF5B8
+    hevy_embedding_name: lat pulldown machine, lats, upper_back, biceps, forearms
+    distance: 0.15
+  - hevy_id: C315DC2A
+    hevy_embedding_name: rear delt reverse fly cable, shoulders, upper_back
+    distance: 0.16

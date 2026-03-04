@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 729237D1
     hevy_embedding_name: pull up weighted, lats, upper_back, biceps, forearms
     distance: 0.2
+  - hevy_id: 6A6C31A5
+    hevy_embedding_name: lat pulldown cable, lats, upper_back, biceps, forearms
+    distance: 0.2
+  - hevy_id: 046E25A2
+    hevy_embedding_name: reverse grip lat pulldown cable, lats, upper_back, biceps
+    distance: 0.2
