@@ -31,6 +31,7 @@ same or very similar movement.
 Rules:
 - You MUST pick exactly one candidate by its number.
 - There is no "none" option — always pick the closest match.
+- Don't justify your choice for me
 - Return ONLY the candidate number (1, 2, 3, etc.)."""
 
 _MAX_RETRIES = 3
@@ -70,6 +71,7 @@ async def _judge_one(
     exercise: dict,
     sem: asyncio.Semaphore,
     counter: _Counter,
+    timeout: float,
     strict: bool = False,
 ) -> dict | None:
     """Judge a single exercise with retries."""
@@ -82,9 +84,21 @@ async def _judge_one(
     async with sem:
         for attempt in range(_MAX_RETRIES):
             try:
-                result = await agent.run(user_prompt)
+                result = await asyncio.wait_for(
+                    agent.run(user_prompt), timeout=timeout
+                )
                 judge = result.output
                 break
+            except TimeoutError:
+                logger.warning(
+                    "Timeout for rp_id=%s (attempt %d/%d)",
+                    rp_id,
+                    attempt + 1,
+                    _MAX_RETRIES,
+                )
+                if attempt < _MAX_RETRIES - 1:
+                    continue
+                return None
             except Exception as exc:
                 if attempt < _MAX_RETRIES - 1:
                     await asyncio.sleep(2**attempt)
@@ -136,6 +150,7 @@ async def _run(
     input_dir: str,
     output: str,
     concurrency: int,
+    timeout: float,
     strict: bool = False,
 ) -> None:
     input_path = Path(input_dir)
@@ -169,7 +184,7 @@ async def _run(
     )
 
     counter = _Counter(total)
-    tasks = [_judge_one(agent, ex, sem, counter, strict) for ex in exercises]
+    tasks = [_judge_one(agent, ex, sem, counter, timeout, strict) for ex in exercises]
     raw_results = await asyncio.gather(*tasks)
     click.echo(err=True)  # newline after progress
 
@@ -215,6 +230,12 @@ async def _run(
     help="Combined YAML output path.",
 )
 @click.option(
+    "--timeout",
+    type=float,
+    default=30.0,
+    help="Per-request timeout in seconds.",
+)
+@click.option(
     "--strict",
     is_flag=True,
     default=False,
@@ -228,6 +249,7 @@ def llm_judge(
     concurrency: int,
     input_dir: str,
     output: str,
+    timeout: float,
     strict: bool,
 ) -> None:
     """Use an LLM to pick the best Hevy match for each RP exercise."""
@@ -240,6 +262,7 @@ def llm_judge(
             input_dir,
             output,
             concurrency,
+            timeout,
             strict,
         )
     )
