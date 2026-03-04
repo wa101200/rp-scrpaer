@@ -84,9 +84,7 @@ async def _judge_one(
     async with sem:
         for attempt in range(_MAX_RETRIES):
             try:
-                result = await asyncio.wait_for(
-                    agent.run(user_prompt), timeout=timeout
-                )
+                result = await asyncio.wait_for(agent.run(user_prompt), timeout=timeout)
                 judge = result.output
                 break
             except TimeoutError:

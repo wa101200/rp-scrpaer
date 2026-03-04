@@ -1,4 +1,4 @@
-rp_id: '191'
+rp_id: "191"
 rp_embedding_name: stiff-legged deadlift, barbell, hamstrings
 semantic_matches:
   - hevy_id: 93472AC1

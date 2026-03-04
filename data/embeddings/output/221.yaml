@@ -1,4 +1,4 @@
-rp_id: '221'
+rp_id: "221"
 rp_embedding_name: hanging straight leg raise, bodyweight-only, abdominals
 semantic_matches:
   - hevy_id: 09C9F635
@@ -13,6 +13,6 @@ semantic_matches:
   - hevy_id: 0482DA98
     hevy_embedding_name: leg raise parallel bars, abdominals
     distance: 0.18
-  - hevy_id: '08590920'
+  - hevy_id: "08590920"
     hevy_embedding_name: hanging knee raise, abdominals, forearms
     distance: 0.18

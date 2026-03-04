@@ -1,4 +1,4 @@
-rp_id: '172'
+rp_id: "172"
 rp_embedding_name: barbell hip thrust, barbell, glutes
 semantic_matches:
   - hevy_id: D57C2EC7

@@ -1,4 +1,4 @@
-rp_id: '535984'
+rp_id: "535984"
 rp_embedding_name: cable flye seated, cable, chest
 semantic_matches:
   - hevy_id: 6B4C797E
@@ -10,7 +10,7 @@ semantic_matches:
   - hevy_id: D3E2AB55
     hevy_embedding_name: incline chest fly dumbbell, chest
     distance: 0.15
-  - hevy_id: '78683336'
+  - hevy_id: "78683336"
     hevy_embedding_name: chest fly machine, chest
     distance: 0.15
   - hevy_id: A351AED7

@@ -42,7 +42,9 @@ local config_linters = new Mapping<String, Step> {
   // Formats TOML files consistently
   ["taplo-format"] = Builtins.taplo_format
   // Formats YAML files consistently
-  ["yamlfmt"] = Builtins.yamlfmt
+  ["yamlfmt"] = (Builtins.yamlfmt) {
+    exclude = List("**/docker-compose.yaml")
+  }
   ["pkl"] = Builtins.pkl
   ["pkl-format"] = Builtins.pkl_format
 }
@@ -65,8 +67,9 @@ local containers_linters = new Mapping<String, Step> {
 local custom_linters = new Mapping<String, Step> {
   ["dclint"] {
     glob = List("**/docker-compose.yaml")
-    check = " dclint --recursive ."
+    check = " dclint {{ files }}"
     fix = "dclint --fix --recursive ."
+    exclude = List("**/node_modules/**", "**/.venv/**")
     batch = true
   }
 }

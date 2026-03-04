@@ -1,4 +1,4 @@
-rp_id: '49'
+rp_id: "49"
 rp_embedding_name: barbell flexion row, barbell, lats, upper_back
 semantic_matches:
   - hevy_id: 55E6546F

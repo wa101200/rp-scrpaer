@@ -1,4 +1,4 @@
-rp_id: '1'
+rp_id: "1"
 rp_embedding_name: pushup deficit, bodyweight-only, chest
 semantic_matches:
   - hevy_id: C43825EA

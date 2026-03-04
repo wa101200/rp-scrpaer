@@ -1,4 +1,4 @@
-rp_id: '535947'
+rp_id: "535947"
 rp_embedding_name: deadlift, barbell, lats, upper_back
 semantic_matches:
   - hevy_id: C6272009
@@ -10,7 +10,7 @@ semantic_matches:
   - hevy_id: B923B230
     hevy_embedding_name: deadlift trap bar, glutes, hamstrings, quadriceps, lower_back, upper_back, lats, traps
     distance: 0.15
-  - hevy_id: '99507114'
+  - hevy_id: "99507114"
     hevy_embedding_name: deadlift band, glutes, hamstrings, quadriceps, lower_back, upper_back, lats, traps
     distance: 0.16
   - hevy_id: 20870ED5

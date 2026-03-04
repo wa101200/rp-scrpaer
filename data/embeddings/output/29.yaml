@@ -1,4 +1,4 @@
-rp_id: '29'
+rp_id: "29"
 rp_embedding_name: bench press incline, wide grip, barbell, chest
 semantic_matches:
   - hevy_id: 50DFDFAB

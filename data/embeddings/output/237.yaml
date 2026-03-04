@@ -1,4 +1,4 @@
-rp_id: '237'
+rp_id: "237"
 rp_embedding_name: pushup weighted, narrow grip, bodyweight-loadable, chest
 semantic_matches:
   - hevy_id: 19372ABC

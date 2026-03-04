@@ -1,7 +1,7 @@
-rp_id: '24'
+rp_id: "24"
 rp_embedding_name: pec dec flye, machine, chest
 semantic_matches:
-  - hevy_id: '78683336'
+  - hevy_id: "78683336"
     hevy_embedding_name: chest fly machine, chest
     distance: 0.12
   - hevy_id: 720B0D70
@@ -13,6 +13,6 @@ semantic_matches:
   - hevy_id: A351AED7
     hevy_embedding_name: decline chest fly dumbbell, chest
     distance: 0.2
-  - hevy_id: '12017185'
+  - hevy_id: "12017185"
     hevy_embedding_name: chest fly dumbbell, chest
     distance: 0.2
