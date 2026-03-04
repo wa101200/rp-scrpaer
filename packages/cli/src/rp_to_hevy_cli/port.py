@@ -74,15 +74,15 @@ def _parse_existing_workout_dates(workouts: list) -> set[date]:
     return dates
 
 
-def _parse_imported_day_ids(workouts: list) -> set[int]:
-    """Extract RP day IDs from Hevy workout descriptions."""
-    ids: set[int] = set()
+def _parse_imported_day_ids(workouts: list) -> dict[int, str]:
+    """Map RP day IDs to Hevy workout IDs from descriptions."""
+    mapping: dict[int, str] = {}
     for w in workouts:
         desc = getattr(w, "description", None) or ""
         match = RP_DAY_ID_PATTERN.search(desc)
         if match:
-            ids.add(int(match.group(1)))
-    return ids
+            mapping[int(match.group(1))] = w.id
+    return mapping
 
 
 def _is_day_importable(day: Day) -> bool:
@@ -193,14 +193,23 @@ def _build_hevy_workout(
     default=None,
     help="Only import days finished on or after this date (YYYY-MM-DD).",
 )
+@click.option(
+    "--upsert",
+    is_flag=True,
+    default=False,
+    help="Update existing imported workouts instead of skipping them.",
+)
 def port_rp_workout_to_hevy(
     matches_path: Path,
     mesocycles_path: Path,
     dry_run: bool,
     start_date: datetime | None,
+    upsert: bool,
 ):
     asyncio.run(
-        _port_rp_workout_to_hevy(matches_path, mesocycles_path, dry_run, start_date)
+        _port_rp_workout_to_hevy(
+            matches_path, mesocycles_path, dry_run, start_date, upsert
+        )
     )
 
 
@@ -209,6 +218,7 @@ async def _port_rp_workout_to_hevy(
     mesocycles_path: Path,
     dry_run: bool,
     start_date: datetime | None,
+    upsert: bool = False,
 ) -> None:
     """Port RP workout data to Hevy format."""
 
@@ -241,15 +251,17 @@ async def _port_rp_workout_to_hevy(
         f"and {len(imported_day_ids)} RP day IDs in Hevy"
     )
 
-    # Phase 4: Collect missing days
-    to_import: list[tuple[HevyPostWorkoutsRequestBody, date, int]] = []
+    # Phase 4: Collect days to create/update
+    # Each entry: (workout_body, day_date, day_id, hevy_workout_id | None)
+    to_import: list[tuple[HevyPostWorkoutsRequestBody, date, int, str | None]] = []
     stats = {
         "scanned": 0,
         "skipped_not_importable": 0,
         "skipped_before_start_date": 0,
         "skipped_already_imported": 0,
         "skipped_no_exercises": 0,
-        "posted": 0,
+        "created": 0,
+        "updated": 0,
         "failed": 0,
     }
 
@@ -267,7 +279,11 @@ async def _port_rp_workout_to_hevy(
                     continue
 
                 day_date = day.finished_at.date()
-                if day_date in existing_dates or day.id in imported_day_ids:
+                hevy_id = imported_day_ids.get(day.id)
+
+                if hevy_id and upsert:
+                    pass  # will update below
+                elif day_date in existing_dates or hevy_id:
                     stats["skipped_already_imported"] += 1
                     continue
 
@@ -276,7 +292,7 @@ async def _port_rp_workout_to_hevy(
                     stats["skipped_no_exercises"] += 1
                     continue
 
-                to_import.append((workout, day_date, day.id))
+                to_import.append((workout, day_date, day.id, hevy_id))
 
     # Phase 5: Preview & confirm
     if not to_import:
@@ -284,12 +300,17 @@ async def _port_rp_workout_to_hevy(
         _print_summary(stats)
         return
 
-    click.echo(f"\n{len(to_import)} workout(s) to import:\n")
-    click.echo(f"{'#':<4} {'Title':<45} {'Date':<20} {'Exercises':<10}")
-    click.echo("-" * 79)
-    for i, (workout, _wdate, _day_id) in enumerate(to_import, 1):
+    n_create = sum(1 for *_, hid in to_import if hid is None)
+    n_update = sum(1 for *_, hid in to_import if hid is not None)
+    click.echo(f"\n{len(to_import)} workout(s) ({n_create} new, {n_update} update):\n")
+    click.echo(f"{'#':<4} {'Action':<8} {'Title':<40} {'Date':<20} {'Exercises':<10}")
+    click.echo("-" * 82)
+    for i, (workout, _wdate, _day_id, hevy_id) in enumerate(to_import, 1):
         w = workout.workout
-        click.echo(f"{i:<4} {w.title:<45} {w.end_time:<20} {len(w.exercises):<10}")
+        action = "UPDATE" if hevy_id else "CREATE"
+        click.echo(
+            f"{i:<4} {action:<8} {w.title:<40} {w.end_time:<20} {len(w.exercises):<10}"
+        )
 
     if dry_run:
         click.echo("\n--dry-run enabled, not posting.")
@@ -300,25 +321,40 @@ async def _port_rp_workout_to_hevy(
         click.echo("Aborted.")
         return
 
-    # Phase 6: Post
+    # Phase 6: Post / Put
     async with HevyApiClient(config) as client:
         workouts_api = WorkoutsApi(client)
 
-        for workout, workout_date, day_id in to_import:
+        for workout, workout_date, day_id, hevy_id in to_import:
             try:
-                result = await workouts_api.post_workouts(
-                    api_key=api_key,
-                    post_workouts_request_body=workout,
-                )
-                click.echo(
-                    click.style(
-                        f"  Created: {workout.workout.title} (hevy id: {result.id})",
-                        fg="green",
+                if hevy_id:
+                    await workouts_api.put_workouts_workout_id(
+                        api_key=api_key,
+                        workout_id=hevy_id,
+                        post_workouts_request_body=workout,
                     )
-                )
-                stats["posted"] += 1
+                    click.echo(
+                        click.style(
+                            f"  Updated: {workout.workout.title}",
+                            fg="cyan",
+                        )
+                    )
+                    stats["updated"] += 1
+                else:
+                    result = await workouts_api.post_workouts(
+                        api_key=api_key,
+                        post_workouts_request_body=workout,
+                    )
+                    click.echo(
+                        click.style(
+                            f"  Created: {workout.workout.title} "
+                            f"(hevy id: {result.id})",
+                            fg="green",
+                        )
+                    )
+                    stats["created"] += 1
                 existing_dates.add(workout_date)
-                imported_day_ids.add(day_id)
+                imported_day_ids[day_id] = hevy_id or ""
             except Exception as e:
                 click.echo(
                     click.style(
@@ -339,5 +375,6 @@ def _print_summary(stats: dict[str, int]) -> None:
     click.echo(f"  Skipped (before start):   {stats['skipped_before_start_date']}")
     click.echo(f"  Skipped (already in Hevy):{stats['skipped_already_imported']}")
     click.echo(f"  Skipped (no exercises):   {stats['skipped_no_exercises']}")
-    click.echo(f"  Posted:                   {stats['posted']}")
+    click.echo(f"  Created:                  {stats['created']}")
+    click.echo(f"  Updated:                  {stats['updated']}")
     click.echo(f"  Failed:                   {stats['failed']}")
