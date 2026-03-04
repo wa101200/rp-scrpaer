@@ -73,7 +73,7 @@ uv run python -m rp_to_hevy_cli embedding llm-judge \
   --api-model "${LLM_JUDGE_MODEL:-google/gemini-3-flash-preview}" \
   --input-dir "$MONOREPO_ROOT/data/embeddings/output" \
   --output "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
-  ${SAMPLE_SIZE:+--sample-size $SAMPLE_SIZE}
+  --strict
 """
 
 [tasks.llm-judge.env]

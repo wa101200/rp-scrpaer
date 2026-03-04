@@ -46,54 +46,6 @@ class JudgeResult(BaseModel):
     confidence: Confidence
 
 
-class _AdaptiveRateLimiter:
-    """Async token-bucket rate limiter that backs off on 429s."""
-
-    _MIN_INTERVAL = 0.01  # 6000 RPM ceiling
-
-    def __init__(self, initial_rpm: int = 1000) -> None:
-        self._interval = 60.0 / initial_rpm
-        self._lock = asyncio.Lock()
-        self._next_allowed: float = 0.0
-
-    @property
-    def current_rpm(self) -> int:
-        return int(60.0 / self._interval)
-
-    async def acquire(self) -> None:
-        async with self._lock:
-            loop = asyncio.get_event_loop()
-            now = loop.time()
-            if now < self._next_allowed:
-                await asyncio.sleep(self._next_allowed - now)
-            self._next_allowed = loop.time() + self._interval
-
-    def on_success(self) -> None:
-        self._interval = max(
-            self._interval * 0.95, self._MIN_INTERVAL
-        )
-
-    async def on_rate_limit(
-        self, retry_after: float | None
-    ) -> None:
-        async with self._lock:
-            self._interval *= 1.5
-            pause = max(
-                retry_after
-                if retry_after and retry_after > 0
-                else 0,
-                self._interval,
-            )
-            click.echo(
-                f"  Rate limited, sleeping {pause:.1f}s "
-                f"(~{self.current_rpm} RPM)",
-                err=True,
-            )
-            await asyncio.sleep(pause)
-            loop = asyncio.get_event_loop()
-            self._next_allowed = loop.time() + self._interval
-
-
 def _build_user_prompt(
     rp_name: str, candidates: list[str]
 ) -> str:
@@ -108,42 +60,26 @@ def _build_user_prompt(
 
 def _resolve_hevy_id(
     name: str, matches: list[dict]
-) -> str | None:
-    """Map best_match name back to hevy_id from candidates."""
+) -> tuple[str | None, str]:
+    """Map best_match name back to hevy_id and canonical name."""
+    name_lower = name.lower().strip()
     for m in matches:
-        if m["hevy_embedding_name"] == name:
-            return m["hevy_id"]
-    return None
-
-
-def _is_rate_limit(exc: Exception) -> tuple[bool, float | None]:
-    """Check if exception is a 429 and extract retry-after."""
-    from openai import RateLimitError
-
-    if isinstance(exc, RateLimitError):
-        retry = None
-        if (
-            hasattr(exc, "response")
-            and exc.response is not None
+        candidate = m["hevy_embedding_name"]
+        if candidate == name or candidate.lower().startswith(
+            name_lower
         ):
-            val = exc.response.headers.get("retry-after")
-            if val:
-                retry = float(val)
-        return True, retry
-    if hasattr(exc, "__cause__") and isinstance(
-        exc.__cause__, RateLimitError
-    ):
-        return _is_rate_limit(exc.__cause__)
-    return False, None
+            return m["hevy_id"], candidate
+
+    return None, name
 
 
 async def _judge_one(
     agent: Agent[None, JudgeResult],
-    limiter: _AdaptiveRateLimiter,
     exercise: dict,
     sem: asyncio.Semaphore,
+    strict: bool = False,
 ) -> dict | None:
-    """Judge a single exercise with retries and rate limiting."""
+    """Judge a single exercise with retries."""
     rp_id = str(exercise["rp_id"])
     rp_name = exercise["rp_embedding_name"]
     matches = exercise["semantic_matches"]
@@ -152,18 +88,13 @@ async def _judge_one(
 
     async with sem:
         for attempt in range(_MAX_RETRIES):
-            await limiter.acquire()
             try:
                 result = await agent.run(user_prompt)
-                limiter.on_success()
                 judge = result.output
                 break
             except Exception as exc:
-                is_429, retry_after = _is_rate_limit(exc)
-                if is_429:
-                    await limiter.on_rate_limit(retry_after)
-                    continue
                 if attempt < _MAX_RETRIES - 1:
+                    await asyncio.sleep(2**attempt)
                     continue
                 logger.warning(
                     "Failed for rp_id=%s, skipping: %s",
@@ -172,9 +103,6 @@ async def _judge_one(
                 )
                 return None
         else:
-            logger.warning(
-                "Exhausted retries for rp_id=%s", rp_id
-            )
             return None
 
     best_match = judge.best_match
@@ -184,8 +112,25 @@ async def _judge_one(
         hevy_id = None
         hevy_name = "none"
     else:
-        hevy_id = _resolve_hevy_id(best_match, matches)
-        hevy_name = best_match
+        hevy_id, hevy_name = _resolve_hevy_id(
+            best_match, matches
+        )
+        if hevy_id is None:
+            msg = (
+                f"rp_id={rp_id} — LLM returned "
+                f"'{best_match}' which does not match "
+                f"any candidate."
+            )
+            click.echo(
+                click.style(
+                    f"  ERROR: {msg}",
+                    fg="red",
+                    bold=True,
+                ),
+                err=True,
+            )
+            if strict:
+                raise click.ClickException(msg)
 
     return {
         "rp_id": rp_id,
@@ -204,6 +149,7 @@ async def _run(
     input_dir: str,
     output: str,
     concurrency: int,
+    strict: bool = False,
 ) -> None:
     input_path = Path(input_dir)
     files = sorted(input_path.glob("*.yaml"))
@@ -234,8 +180,6 @@ async def _run(
         system_prompt=_SYSTEM_PROMPT,
         output_type=JudgeResult,
     )
-
-    limiter = _AdaptiveRateLimiter()
     sem = asyncio.Semaphore(concurrency)
 
     click.echo(
@@ -244,7 +188,7 @@ async def _run(
     )
 
     tasks = [
-        _judge_one(agent, limiter, ex, sem)
+        _judge_one(agent, ex, sem, strict)
         for ex in exercises
     ]
     raw_results = await asyncio.gather(*tasks)
@@ -290,6 +234,12 @@ async def _run(
     default="data/embeddings/llm-matches.yaml",
     help="Combined YAML output path.",
 )
+@click.option(
+    "--strict",
+    is_flag=True,
+    default=False,
+    help="Exit on unresolved hevy_best_match_id.",
+)
 def llm_judge(
     api_base_url: str,
     api_key: str,
@@ -298,6 +248,7 @@ def llm_judge(
     concurrency: int,
     input_dir: str,
     output: str,
+    strict: bool,
 ) -> None:
     """Use an LLM to pick the best Hevy match for each RP exercise."""
     asyncio.run(
@@ -309,5 +260,6 @@ def llm_judge(
             input_dir,
             output,
             concurrency,
+            strict,
         )
     )
