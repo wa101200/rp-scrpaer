@@ -1,4 +1,4 @@
-rp_id: '79'
+rp_id: "79"
 rp_embedding_name: barbell overhead triceps extension, barbell, triceps
 semantic_matches:
   - hevy_id: 2F8D3067
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 3765684D
     hevy_embedding_name: triceps extension dumbbell, triceps
     distance: 0.12
+  - hevy_id: 8347DFD1
+    hevy_embedding_name: single arm tricep extension dumbbell, triceps
+    distance: 0.14
+  - hevy_id: 6182EE83
+    hevy_embedding_name: triceps extension suspension, triceps
+    distance: 0.14

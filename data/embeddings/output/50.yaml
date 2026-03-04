@@ -1,4 +1,4 @@
-rp_id: '50'
+rp_id: "50"
 rp_embedding_name: cable flexion row, cable, lats, upper_back
 semantic_matches:
   - hevy_id: D0C4A899
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 0393F233
     hevy_embedding_name: seated cable row - v grip cable, upper_back, lats, biceps, forearms
     distance: 0.15
+  - hevy_id: C3BCABB3
+    hevy_embedding_name: seated cable row - bar wide grip, upper_back, lats, traps, biceps, forearms
+    distance: 0.15
+  - hevy_id: 6A6C31A5
+    hevy_embedding_name: lat pulldown cable, lats, upper_back, biceps, forearms
+    distance: 0.16

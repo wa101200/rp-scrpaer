@@ -1,4 +1,4 @@
-rp_id: '712803'
+rp_id: "712803"
 rp_embedding_name: barbell front raise overhand, barbell, shoulders
 semantic_matches:
   - hevy_id: BD86EFD5
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: DBF9273A
     hevy_embedding_name: plate front raise, shoulders
     distance: 0.16
+  - hevy_id: DBB91A3C
+    hevy_embedding_name: front raise cable, shoulders
+    distance: 0.19
+  - hevy_id: 47B036EF
+    hevy_embedding_name: front raise band, shoulders
+    distance: 0.2

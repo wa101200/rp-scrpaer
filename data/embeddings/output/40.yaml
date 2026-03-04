@@ -1,4 +1,4 @@
-rp_id: '40'
+rp_id: "40"
 rp_embedding_name: cambered bar row, barbell, lats, upper_back
 semantic_matches:
   - hevy_id: 55E6546F
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.17
   - hevy_id: F1D60854
     hevy_embedding_name: seated cable row - bar grip, upper_back, lats, biceps, forearms
+    distance: 0.18
+  - hevy_id: 425805F4
+    hevy_embedding_name: inverted row, upper_back, lats, biceps, forearms
+    distance: 0.18
+  - hevy_id: C3BCABB3
+    hevy_embedding_name: seated cable row - bar wide grip, upper_back, lats, traps, biceps, forearms
     distance: 0.18

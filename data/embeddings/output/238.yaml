@@ -1,4 +1,4 @@
-rp_id: '238'
+rp_id: "238"
 rp_embedding_name: pushup weighted, normal grip, bodyweight-loadable, chest
 semantic_matches:
   - hevy_id: 19372ABC
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: D3E2AB55
     hevy_embedding_name: incline chest fly dumbbell, chest
     distance: 0.17
+  - hevy_id: 10D76E8F
+    hevy_embedding_name: clap push ups, chest, triceps, shoulders
+    distance: 0.18
+  - hevy_id: 023943F1
+    hevy_embedding_name: chin up weighted, lats, upper_back, biceps, forearms
+    distance: 0.18

@@ -1,4 +1,4 @@
-rp_id: '219'
+rp_id: "219"
 rp_embedding_name: cable rope crunch, cable, abdominals
 semantic_matches:
   - hevy_id: 23A48484
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: B2398CD1
     hevy_embedding_name: decline crunch weighted, abdominals
     distance: 0.19
+  - hevy_id: EB43ADD4
+    hevy_embedding_name: crunch machine, abdominals
+    distance: 0.19
+  - hevy_id: 2982AA23
+    hevy_embedding_name: russian twist weighted, abdominals
+    distance: 0.2

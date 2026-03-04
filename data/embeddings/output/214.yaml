@@ -1,4 +1,4 @@
-rp_id: '214'
+rp_id: "214"
 rp_embedding_name: barbell standing wrist curl, barbell, forearms
 semantic_matches:
   - hevy_id: DDB29047
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 9202CC23
     hevy_embedding_name: seated wrist extension barbell, forearms
     distance: 0.12
+  - hevy_id: 112FC6B7
+    hevy_embedding_name: reverse curl barbell, biceps, forearms
+    distance: 0.13
+  - hevy_id: 1D4B3D6B
+    hevy_embedding_name: hammer curl band, biceps, forearms
+    distance: 0.16

@@ -1,4 +1,4 @@
-rp_id: '400804'
+rp_id: "400804"
 rp_embedding_name: lying cable curl, cable, biceps
 semantic_matches:
   - hevy_id: ADA8623C
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 582ADA23
     hevy_embedding_name: overhead curl cable, biceps
     distance: 0.1
+  - hevy_id: 2DBCA395
+    hevy_embedding_name: behind the back curl cable, biceps
+    distance: 0.11
+  - hevy_id: 234897AB
+    hevy_embedding_name: rope cable curl, biceps, forearms
+    distance: 0.12

@@ -148,8 +148,19 @@ def _resolve_input(path_str: str) -> str:
     return path_str
 
 
-def _write_yaml(data: object, output_path: str) -> None:
+# Custom representer function
+def string_representer(representer, data):
+    # Condition: if the string is just digits, force double quotes
+    if data.isdigit():
+        return representer.represent_scalar("tag:yaml.org,2002:str", data, style='"')
+    # Otherwise, output normally
+    return representer.represent_scalar("tag:yaml.org,2002:str", data)
 
+
+yaml.representer.add_representer(str, string_representer)
+
+
+def _write_yaml(data: object, output_path: str) -> None:
     path = AnyPath(output_path)
     string_stream = io.StringIO()
     yaml.dump(data, string_stream)

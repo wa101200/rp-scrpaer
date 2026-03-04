@@ -1,4 +1,4 @@
-rp_id: '155'
+rp_id: "155"
 rp_embedding_name: barbell split squat, barbell, quadriceps
 semantic_matches:
   - hevy_id: D04AC939
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.14
   - hevy_id: 38FC1AB9
     hevy_embedding_name: box squat barbell, quadriceps, hamstrings, glutes
+    distance: 0.14
+  - hevy_id: CE1054CE
+    hevy_embedding_name: pause squat barbell, quadriceps, glutes, hamstrings
     distance: 0.15
+  - hevy_id: B5D3A742
+    hevy_embedding_name: bulgarian split squat, quadriceps, glutes, hamstrings
+    distance: 0.16

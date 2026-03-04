@@ -1,4 +1,4 @@
-rp_id: '73'
+rp_id: "73"
 rp_embedding_name: dumbbell skullcrusher, dumbbell, triceps
 semantic_matches:
   - hevy_id: 68F8A292
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 3765684D
     hevy_embedding_name: triceps extension dumbbell, triceps
     distance: 0.12
+  - hevy_id: 6127A3AD
+    hevy_embedding_name: triceps kickback dumbbell, triceps
+    distance: 0.12
+  - hevy_id: 8347DFD1
+    hevy_embedding_name: single arm tricep extension dumbbell, triceps
+    distance: 0.13

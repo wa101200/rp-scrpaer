@@ -1,4 +1,4 @@
-rp_id: '712804'
+rp_id: "712804"
 rp_embedding_name: cable front raise overhand, cable, shoulders
 semantic_matches:
   - hevy_id: BE289E45
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: DE68C825
     hevy_embedding_name: single arm lateral raise cable, shoulders
     distance: 0.13
+  - hevy_id: '8293E554'
+    hevy_embedding_name: front raise dumbbell, shoulders
+    distance: 0.16
+  - hevy_id: DBF9273A
+    hevy_embedding_name: plate front raise, shoulders
+    distance: 0.17

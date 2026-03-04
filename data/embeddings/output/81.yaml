@@ -1,4 +1,4 @@
-rp_id: '81'
+rp_id: "81"
 rp_embedding_name: cable overhead triceps extension rope, cable, triceps
 semantic_matches:
   - hevy_id: B5EFBF9C
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: EC3B69A3
     hevy_embedding_name: triceps kickback cable, triceps
     distance: 0.14
+  - hevy_id: 6182EE83
+    hevy_embedding_name: triceps extension suspension, triceps
+    distance: 0.15
+  - hevy_id: 3092FADD
+    hevy_embedding_name: triceps extension machine, triceps
+    distance: 0.15

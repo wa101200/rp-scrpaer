@@ -1,4 +1,4 @@
-rp_id: '535976'
+rp_id: "535976"
 rp_embedding_name: reverse curl, barbell, forearms
 semantic_matches:
   - hevy_id: 112FC6B7
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 9F48F858
     hevy_embedding_name: reverse curl cable, biceps, forearms
     distance: 0.06
+  - hevy_id: 1FF4097B
+    hevy_embedding_name: reverse grip concentration curl, biceps, forearms
+    distance: 0.1
+  - hevy_id: DDB29047
+    hevy_embedding_name: behind the back bicep wrist curl barbell, forearms
+    distance: 0.13

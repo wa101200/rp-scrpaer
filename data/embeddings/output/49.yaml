@@ -1,4 +1,4 @@
-rp_id: '49'
+rp_id: "49"
 rp_embedding_name: barbell flexion row, barbell, lats, upper_back
 semantic_matches:
   - hevy_id: 55E6546F
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: '23E92538'
     hevy_embedding_name: bent over row dumbbell, upper_back, lats, biceps, forearms
     distance: 0.17
+  - hevy_id: F1E57334
+    hevy_embedding_name: dumbbell row, lats, upper_back, biceps, forearms
+    distance: 0.17
+  - hevy_id: 08A2974E
+    hevy_embedding_name: t bar row, upper_back, lats, biceps, forearms
+    distance: 0.18

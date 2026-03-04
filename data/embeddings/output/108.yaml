@@ -1,4 +1,4 @@
-rp_id: '108'
+rp_id: "108"
 rp_embedding_name: freemotion curl single-arm, freemotion, biceps
 semantic_matches:
   - hevy_id: B33B526E
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.15
   - hevy_id: D950429E
     hevy_embedding_name: drag curl, biceps
+    distance: 0.16
+  - hevy_id: 0B4C1902
+    hevy_embedding_name: bicep curl suspension, biceps
+    distance: 0.16
+  - hevy_id: 01A35BF9
+    hevy_embedding_name: ez bar biceps curl, biceps
     distance: 0.16

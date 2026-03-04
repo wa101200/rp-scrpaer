@@ -1,4 +1,4 @@
-rp_id: '164'
+rp_id: "164"
 rp_embedding_name: leg press, machine, quadriceps
 semantic_matches:
   - hevy_id: C7973E0E
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 3FD83744
     hevy_embedding_name: single leg press machine, quadriceps, glutes, hamstrings
     distance: 0.11
+  - hevy_id: 75A4F6C4
+    hevy_embedding_name: leg extension machine, quadriceps
+    distance: 0.11
+  - hevy_id: CC35A01F
+    hevy_embedding_name: squat machine, quadriceps, hamstrings, glutes
+    distance: 0.18

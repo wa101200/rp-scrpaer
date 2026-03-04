@@ -1,4 +1,4 @@
-rp_id: '165'
+rp_id: "165"
 rp_embedding_name: barbell squat narrow stance, barbell, quadriceps
 semantic_matches:
   - hevy_id: D04AC939
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: CE1054CE
     hevy_embedding_name: pause squat barbell, quadriceps, glutes, hamstrings
     distance: 0.17
+  - hevy_id: 6622E5A0
+    hevy_embedding_name: sumo squat barbell, quadriceps, hamstrings, glutes, adductors
+    distance: 0.19
+  - hevy_id: DCFF3E9F
+    hevy_embedding_name: squat dumbbell, quadriceps, hamstrings, glutes
+    distance: 0.21

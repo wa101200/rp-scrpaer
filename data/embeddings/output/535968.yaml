@@ -1,4 +1,4 @@
-rp_id: '535968'
+rp_id: "535968"
 rp_embedding_name: hip adduction, machine, quadriceps
 semantic_matches:
   - hevy_id: 8BEBFED6
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 75A4F6C4
     hevy_embedding_name: leg extension machine, quadriceps
     distance: 0.16
+  - hevy_id: 68CE0B9B
+    hevy_embedding_name: hip thrust machine, glutes, hamstrings, quadriceps, adductors
+    distance: 0.17
+  - hevy_id: CC35A01F
+    hevy_embedding_name: squat machine, quadriceps, hamstrings, glutes
+    distance: 0.18

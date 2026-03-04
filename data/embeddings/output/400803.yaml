@@ -1,4 +1,4 @@
-rp_id: '400803'
+rp_id: "400803"
 rp_embedding_name: lying biceps dumbbell curl, dumbbell, biceps
 semantic_matches:
   - hevy_id: 37FCC2BB
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.13
   - hevy_id: 90427D4A
     hevy_embedding_name: spider curl dumbbell, biceps
+    distance: 0.14
+  - hevy_id: 8BAB2735
+    hevy_embedding_name: seated incline curl dumbbell, biceps
+    distance: 0.14
+  - hevy_id: ADA8623C
+    hevy_embedding_name: bicep curl cable, biceps
     distance: 0.14

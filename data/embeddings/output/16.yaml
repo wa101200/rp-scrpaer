@@ -1,4 +1,4 @@
-rp_id: '16'
+rp_id: "16"
 rp_embedding_name: cable flye underhand, cable, chest
 semantic_matches:
   - hevy_id: 651F844C
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 293483AD
     hevy_embedding_name: low cable fly crossovers, chest
     distance: 0.15
+  - hevy_id: 8372BBCC
+    hevy_embedding_name: single arm cable crossover, chest
+    distance: 0.19
+  - hevy_id: 720B0D70
+    hevy_embedding_name: chest fly suspension, chest
+    distance: 0.19

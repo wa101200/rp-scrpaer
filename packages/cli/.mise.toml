@@ -61,7 +61,8 @@ uv run python -m rp_to_hevy_cli embedding run-rp-similarity-search \
   --rp-path "$MONOREPO_ROOT/packages/cli/exports/rp/exercises.json" \
   --mappings-path "$MONOREPO_ROOT/data/muscle_group_mapping.json" \
   --metrics-output "$MONOREPO_ROOT/data/embeddings/metrics.yaml" \
-  --ground-truths-dir "$MONOREPO_ROOT/data/embeddings/ground-truths"
+  --ground-truths-dir "$MONOREPO_ROOT/data/embeddings/ground-truths" \
+  --n-results 5
 """
 
 [tasks.llm-judge]
@@ -70,10 +71,11 @@ run = """
 uv run python -m rp_to_hevy_cli embedding llm-judge \
   --api-base-url "https://openrouter.ai/api/v1" \
   --api-key "$OPENROUTER_API_KEY" \
-  --api-model "${LLM_JUDGE_MODEL:-google/gemini-3-flash-preview}" \
+  --api-model "google/gemini-3.1-pro-preview" \
   --input-dir "$MONOREPO_ROOT/data/embeddings/output" \
   --output "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
-  ${SAMPLE_SIZE:+--sample-size $SAMPLE_SIZE}
+  --concurrency "200" \
+  # --strict
 """
 
 [tasks.llm-judge.env]

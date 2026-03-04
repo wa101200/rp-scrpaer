@@ -1,4 +1,4 @@
-rp_id: '535985'
+rp_id: "535985"
 rp_embedding_name: cable curl single-arm, cable, biceps
 semantic_matches:
   - hevy_id: B33B526E
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.06
   - hevy_id: 582ADA23
     hevy_embedding_name: overhead curl cable, biceps
+    distance: 0.11
+  - hevy_id: 36E8F14E
+    hevy_embedding_name: hammer curl cable, biceps, forearms
+    distance: 0.12
+  - hevy_id: AF328E3D
+    hevy_embedding_name: bicep curl machine, biceps
     distance: 0.12

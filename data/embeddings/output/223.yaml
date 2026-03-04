@@ -1,4 +1,4 @@
-rp_id: '223'
+rp_id: "223"
 rp_embedding_name: modified candlestick, bodyweight-only, abdominals
 semantic_matches:
   - hevy_id: 9237BA12
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 99D5F10E
     hevy_embedding_name: ab wheel, abdominals
     distance: 0.21
+  - hevy_id: B2398CD1
+    hevy_embedding_name: decline crunch weighted, abdominals
+    distance: 0.21
+  - hevy_id: 2982AA23
+    hevy_embedding_name: russian twist weighted, abdominals
+    distance: 0.22

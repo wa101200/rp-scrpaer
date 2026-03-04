@@ -1,4 +1,4 @@
-rp_id: '135'
+rp_id: "135"
 rp_embedding_name: cable front raise underhand, cable, shoulders
 semantic_matches:
   - hevy_id: DBB91A3C
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: DE68C825
     hevy_embedding_name: single arm lateral raise cable, shoulders
     distance: 0.16
+  - hevy_id: 9264ADA1
+    hevy_embedding_name: reverse fly single arm cable, shoulders, upper_back
+    distance: 0.19
+  - hevy_id: 286C1D0B
+    hevy_embedding_name: upright row cable, shoulders, traps, upper_back, biceps, forearms
+    distance: 0.19

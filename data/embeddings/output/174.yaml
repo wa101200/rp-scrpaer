@@ -1,4 +1,4 @@
-rp_id: '174'
+rp_id: "174"
 rp_embedding_name: cable pull through, cable, glutes
 semantic_matches:
   - hevy_id: 8C331CD8
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 4E5257DE
     hevy_embedding_name: lat pulldown - close grip cable, lats, upper_back, biceps, forearms
     distance: 0.24
+  - hevy_id: 23A48484
+    hevy_embedding_name: cable crunch, abdominals
+    distance: 0.24
+  - hevy_id: CBA02382
+    hevy_embedding_name: glute kickback machine, glutes, hamstrings
+    distance: 0.25

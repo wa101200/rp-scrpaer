@@ -1,4 +1,4 @@
-rp_id: '160'
+rp_id: "160"
 rp_embedding_name: front squat cross grip, barbell, quadriceps
 semantic_matches:
   - hevy_id: 5046D0A9
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.19
   - hevy_id: CE1054CE
     hevy_embedding_name: pause squat barbell, quadriceps, glutes, hamstrings
+    distance: 0.2
+  - hevy_id: F5DEF1EB
+    hevy_embedding_name: sissy squat weighted, quadriceps
+    distance: 0.2
+  - hevy_id: D04AC939
+    hevy_embedding_name: squat barbell, quadriceps, hamstrings, glutes
     distance: 0.2

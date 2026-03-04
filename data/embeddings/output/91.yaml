@@ -1,4 +1,4 @@
-rp_id: '91'
+rp_id: "91"
 rp_embedding_name: cable curl, cable, biceps
 semantic_matches:
   - hevy_id: ADA8623C
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 582ADA23
     hevy_embedding_name: overhead curl cable, biceps
     distance: 0.09
+  - hevy_id: 2DBCA395
+    hevy_embedding_name: behind the back curl cable, biceps
+    distance: 0.1
+  - hevy_id: 36E8F14E
+    hevy_embedding_name: hammer curl cable, biceps, forearms
+    distance: 0.11

@@ -1,4 +1,4 @@
-rp_id: '44'
+rp_id: "44"
 rp_embedding_name: inverted row, bodyweight-only, lats, upper_back
 semantic_matches:
   - hevy_id: 425805F4
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.18
   - hevy_id: 55E6546F
     hevy_embedding_name: bent over row barbell, upper_back, lats, biceps, forearms
+    distance: 0.19
+  - hevy_id: AA1EB7D8
+    hevy_embedding_name: iso-lateral row machine, upper_back, lats, biceps, forearms
+    distance: 0.19
+  - hevy_id: 914F3A96
+    hevy_embedding_name: chest supported incline row dumbbell, upper_back, lats, biceps, forearms
     distance: 0.19

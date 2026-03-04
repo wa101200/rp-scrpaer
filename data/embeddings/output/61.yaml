@@ -1,4 +1,4 @@
-rp_id: '61'
+rp_id: "61"
 rp_embedding_name: pullup parallel grip, bodyweight-only, lats, upper_back
 semantic_matches:
   - hevy_id: 7C50F118
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 2C37EC5E
     hevy_embedding_name: pull up assisted, lats, upper_back, biceps, forearms
     distance: 0.15
+  - hevy_id: 1B2B1E7C
+    hevy_embedding_name: pull up, lats, upper_back, biceps, forearms
+    distance: 0.15
+  - hevy_id: C7AE420A
+    hevy_embedding_name: scapular pull ups, upper_back, lats, forearms
+    distance: 0.17

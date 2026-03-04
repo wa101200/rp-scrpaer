@@ -1,4 +1,4 @@
-rp_id: '215'
+rp_id: "215"
 rp_embedding_name: cable wrist curl, cable, forearms
 semantic_matches:
   - hevy_id: 9F48F858
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 1006DF48
     hevy_embedding_name: seated palms up wrist curl, forearms
     distance: 0.1
+  - hevy_id: 234897AB
+    hevy_embedding_name: rope cable curl, biceps, forearms
+    distance: 0.13
+  - hevy_id: 9283ABD5
+    hevy_embedding_name: plate curl, biceps, forearms
+    distance: 0.13

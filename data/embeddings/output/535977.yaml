@@ -1,4 +1,4 @@
-rp_id: '535977'
+rp_id: "535977"
 rp_embedding_name: smith machine split squat, smith-machine, glutes
 semantic_matches:
   - hevy_id: DDCC3821
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 20870ED5
     hevy_embedding_name: deadlift smith machine, glutes, hamstrings, quadriceps, lower_back, upper_back, lats, traps
     distance: 0.19
+  - hevy_id: 291ABA92
+    hevy_embedding_name: hip thrust smith machine, glutes, hamstrings, quadriceps, adductors
+    distance: 0.2
+  - hevy_id: CBA02382
+    hevy_embedding_name: glute kickback machine, glutes, hamstrings
+    distance: 0.2

@@ -1,12 +1,18 @@
-rp_id: '5'
+rp_id: "5"
 rp_embedding_name: machine chest press, machine, chest
 semantic_matches:
   - hevy_id: 7EB3F7C3
     hevy_embedding_name: chest press machine, chest, shoulders, triceps
     distance: 0.11
-  - hevy_id: '78683336'
+  - hevy_id: "78683336"
     hevy_embedding_name: chest fly machine, chest
     distance: 0.11
   - hevy_id: FBF92739
     hevy_embedding_name: incline chest press machine, chest, shoulders, triceps
     distance: 0.13
+  - hevy_id: 98f23dd1-b0d5-45ad-afc8-54bfdeb78b84
+    hevy_embedding_name: bench presshammer machine, chest, triceps
+    distance: 0.14
+  - hevy_id: 24706DCD
+    hevy_embedding_name: iso-lateral chest press machine, chest, shoulders, triceps
+    distance: 0.14

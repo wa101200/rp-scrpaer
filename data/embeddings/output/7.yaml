@@ -1,4 +1,4 @@
-rp_id: '7'
+rp_id: "7"
 rp_embedding_name: bench press narrow grip, barbell, chest
 semantic_matches:
   - hevy_id: E644F828
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.11
   - hevy_id: 99C1F2AD
     hevy_embedding_name: bench press cable, chest, shoulders, triceps
+    distance: 0.15
+  - hevy_id: 79D0BB3A
+    hevy_embedding_name: bench press barbell, chest, triceps, shoulders
+    distance: 0.15
+  - hevy_id: DA0F0470
+    hevy_embedding_name: decline bench press barbell, chest, shoulders, triceps
     distance: 0.15

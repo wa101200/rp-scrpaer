@@ -1,4 +1,4 @@
-rp_id: '200'
+rp_id: "200"
 rp_embedding_name: stair calves single leg, bodyweight-only, calves
 semantic_matches:
   - hevy_id: 238BA231
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: E51CCBE5
     hevy_embedding_name: single leg standing calf raise barbell, calves
     distance: 0.12
+  - hevy_id: '06745E58'
+    hevy_embedding_name: standing calf raise, calves
+    distance: 0.13
+  - hevy_id: 062AB91A
+    hevy_embedding_name: seated calf raise, calves
+    distance: 0.14

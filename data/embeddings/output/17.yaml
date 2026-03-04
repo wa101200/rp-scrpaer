@@ -1,4 +1,4 @@
-rp_id: '17'
+rp_id: "17"
 rp_embedding_name: bench press cambered bar, barbell, chest
 semantic_matches:
   - hevy_id: E644F828
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.14
   - hevy_id: 35B51B87
     hevy_embedding_name: bench press - close grip barbell, triceps, chest, shoulders
+    distance: 0.15
+  - hevy_id: 99C1F2AD
+    hevy_embedding_name: bench press cable, chest, shoulders, triceps
+    distance: 0.15
+  - hevy_id: 50DFDFAB
+    hevy_embedding_name: incline bench press barbell, chest, triceps, shoulders
     distance: 0.15

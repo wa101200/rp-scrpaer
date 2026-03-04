@@ -1,4 +1,4 @@
-rp_id: '203'
+rp_id: "203"
 rp_embedding_name: belt squat calves, machine, calves
 semantic_matches:
   - hevy_id: 91237BDD
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.09
   - hevy_id: E05C2C38
     hevy_embedding_name: standing calf raise machine, calves
+    distance: 0.09
+  - hevy_id: B05C2C29
+    hevy_embedding_name: single leg standing calf raise machine, calves
     distance: 0.1
+  - hevy_id: 062AB91A
+    hevy_embedding_name: seated calf raise, calves
+    distance: 0.15

@@ -1,4 +1,4 @@
-rp_id: '212'
+rp_id: "212"
 rp_embedding_name: dumbbell shrug, dumbbell, traps
 semantic_matches:
   - hevy_id: ABEC557F
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.15
   - hevy_id: 878CD1D0
     hevy_embedding_name: shoulder press dumbbell, shoulders, triceps
+    distance: 0.17
+  - hevy_id: 742E5BD5
+    hevy_embedding_name: shrug smith machine, traps, neck
+    distance: 0.17
+  - hevy_id: 19A38071
+    hevy_embedding_name: shrug machine, traps, neck
     distance: 0.17

@@ -1,4 +1,4 @@
-rp_id: '207'
+rp_id: "207"
 rp_embedding_name: cable shrug, cable, traps
 semantic_matches:
   - hevy_id: FFABC123
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.17
   - hevy_id: 19A38071
     hevy_embedding_name: shrug machine, traps, neck
+    distance: 0.18
+  - hevy_id: 0B841777
+    hevy_embedding_name: shrug barbell, traps, neck
+    distance: 0.18
+  - hevy_id: ABEC557F
+    hevy_embedding_name: shrug dumbbell, traps, neck
     distance: 0.18

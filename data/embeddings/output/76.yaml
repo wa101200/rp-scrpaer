@@ -1,4 +1,4 @@
-rp_id: '76'
+rp_id: "76"
 rp_embedding_name: cable triceps pushdown single-arm, cable, triceps
 semantic_matches:
   - hevy_id: 552AB030
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 21310F5F
     hevy_embedding_name: triceps extension cable, triceps
     distance: 0.1
+  - hevy_id: EC3B69A3
+    hevy_embedding_name: triceps kickback cable, triceps
+    distance: 0.11
+  - hevy_id: CDC472B1
+    hevy_embedding_name: triceps pressdown, triceps
+    distance: 0.12

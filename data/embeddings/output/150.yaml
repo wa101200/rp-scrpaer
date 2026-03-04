@@ -1,4 +1,4 @@
-rp_id: '150'
+rp_id: "150"
 rp_embedding_name: cable single arm side shrug, cable, shoulders
 semantic_matches:
   - hevy_id: DE68C825
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: DBB91A3C
     hevy_embedding_name: front raise cable, shoulders
     distance: 0.16
+  - hevy_id: 9264ADA1
+    hevy_embedding_name: reverse fly single arm cable, shoulders, upper_back
+    distance: 0.16
+  - hevy_id: B33B526E
+    hevy_embedding_name: single arm curl cable, biceps
+    distance: 0.17

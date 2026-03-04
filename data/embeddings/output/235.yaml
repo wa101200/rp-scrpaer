@@ -1,4 +1,4 @@
-rp_id: '235'
+rp_id: "235"
 rp_embedding_name: pullup weighted, wide grip, bodyweight-loadable, lats, upper_back
 semantic_matches:
   - hevy_id: 729237D1
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.09
   - hevy_id: 1B2B1E7C
     hevy_embedding_name: pull up, lats, upper_back, biceps, forearms
+    distance: 0.15
+  - hevy_id: 2C37EC5E
+    hevy_embedding_name: pull up assisted, lats, upper_back, biceps, forearms
+    distance: 0.15
+  - hevy_id: 473CF5B8
+    hevy_embedding_name: lat pulldown machine, lats, upper_back, biceps, forearms
     distance: 0.15

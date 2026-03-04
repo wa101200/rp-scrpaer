@@ -1,4 +1,4 @@
-rp_id: '196'
+rp_id: "196"
 rp_embedding_name: seated leg curl, machine, hamstrings
 semantic_matches:
   - hevy_id: 11A123F3
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 6120CAAB
     hevy_embedding_name: standing leg curls, hamstrings, calves
     distance: 0.21
+  - hevy_id: 108D7A14
+    hevy_embedding_name: nordic hamstrings curls, hamstrings, glutes
+    distance: 0.22
+  - hevy_id: CBA02382
+    hevy_embedding_name: glute kickback machine, glutes, hamstrings
+    distance: 0.23

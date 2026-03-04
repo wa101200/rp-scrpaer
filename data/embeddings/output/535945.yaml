@@ -1,4 +1,4 @@
-rp_id: '535945'
+rp_id: "535945"
 rp_embedding_name: meadows row, barbell, lats, upper_back
 semantic_matches:
   - hevy_id: C732C341
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 018ADC12
     hevy_embedding_name: pendlay row barbell, upper_back, lats, biceps, forearms
     distance: 0.18
+  - hevy_id: D7D7FCCE
+    hevy_embedding_name: landmine row, upper_back, lats, biceps, forearms
+    distance: 0.19
+  - hevy_id: F1E57334
+    hevy_embedding_name: dumbbell row, lats, upper_back, biceps, forearms
+    distance: 0.19

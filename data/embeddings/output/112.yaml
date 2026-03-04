@@ -1,4 +1,4 @@
-rp_id: '112'
+rp_id: "112"
 rp_embedding_name: cable upright row, cable, shoulders
 semantic_matches:
   - hevy_id: 286C1D0B
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: DE68C825
     hevy_embedding_name: single arm lateral raise cable, shoulders
     distance: 0.14
+  - hevy_id: DBB91A3C
+    hevy_embedding_name: front raise cable, shoulders
+    distance: 0.15
+  - hevy_id: 7AB9A362
+    hevy_embedding_name: upright row barbell, shoulders, traps, upper_back, biceps, forearms
+    distance: 0.17

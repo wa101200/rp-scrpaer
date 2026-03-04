@@ -1,4 +1,4 @@
-rp_id: '226'
+rp_id: "226"
 rp_embedding_name: v-up weighted, bodyweight-loadable, abdominals
 semantic_matches:
   - hevy_id: 6BE68B62
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: 2982AA23
     hevy_embedding_name: russian twist weighted, abdominals
     distance: 0.15
+  - hevy_id: D928C232
+    hevy_embedding_name: crunch weighted, abdominals
+    distance: 0.15
+  - hevy_id: 022DF610
+    hevy_embedding_name: sit up, abdominals
+    distance: 0.16

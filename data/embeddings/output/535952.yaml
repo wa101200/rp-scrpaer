@@ -1,4 +1,4 @@
-rp_id: '535952'
+rp_id: "535952"
 rp_embedding_name: bench press close grip, barbell, triceps
 semantic_matches:
   - hevy_id: 35B51B87
@@ -9,4 +9,10 @@ semantic_matches:
     distance: 0.13
   - hevy_id: 234BC743
     hevy_embedding_name: seated triceps press, triceps
+    distance: 0.14
+  - hevy_id: CDC472B1
+    hevy_embedding_name: triceps pressdown, triceps
+    distance: 0.14
+  - hevy_id: 2F8D3067
+    hevy_embedding_name: triceps extension barbell, triceps
     distance: 0.14

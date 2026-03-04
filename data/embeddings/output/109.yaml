@@ -1,4 +1,4 @@
-rp_id: '109'
+rp_id: "109"
 rp_embedding_name: barbell upright row, barbell, shoulders
 semantic_matches:
   - hevy_id: 7AB9A362
@@ -10,3 +10,9 @@ semantic_matches:
   - hevy_id: BD86EFD5
     hevy_embedding_name: front raise barbell, shoulders
     distance: 0.15
+  - hevy_id: 286C1D0B
+    hevy_embedding_name: upright row cable, shoulders, traps, upper_back, biceps, forearms
+    distance: 0.16
+  - hevy_id: 55E6546F
+    hevy_embedding_name: bent over row barbell, upper_back, lats, biceps, forearms
+    distance: 0.19
