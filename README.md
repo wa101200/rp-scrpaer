@@ -2,6 +2,8 @@
 
 > I love Hevy's UI but I train with RP. So I built a pipeline to port my entire workout history — reverse-engineered API, AI exercise matching, and all.
 
+**Note:** This is a personal project. The data in this repository is mine. If you want to use this for your own data, you'll need to run through several setup steps outlined below.
+
 ## Why This Exists
 
 I use two fitness apps. [RP Hypertrophy](https://rpstrength.com/) programs my training — it auto-regulates weight, volume, and RIR based on sport science, and it's genuinely great at that. But its interface is a laggy PWA that feels like a web page pretending to be an app. [Hevy](https://www.hevyapp.com/) is the opposite — a proper native Android app with a clean UI, social features, and a workout log I actually enjoy using.
@@ -114,6 +116,93 @@ mise //packages/cli:cli port-rp-workout-to-hevy --upsert
 ```
 
 You'll need an RP bearer token (intercepted from app traffic, saved to `token.txt`) and a Hevy API key (`HEVY_API_KEY` env var, from [hevy.com/settings](https://hevy.com/settings?developer)).
+
+## Running the Full Pipeline
+
+If you want to use this project with your own data, follow these steps in order:
+
+### 1. Generate API SDKs
+
+First, generate the Python SDK for both APIs. The RP SDK is reverse-engineered from the mobile app, and the Hevy SDK is generated from their patched OpenAPI spec:
+
+```bash
+# Generate the Hevy SDK from the patched OpenAPI spec
+cd scripts/hevy-extract
+npm install
+npm run start
+
+# The generated SDKs are in packages/api-service
+```
+
+### 2. Export Hevy Data
+
+Export the Hevy exercise catalog (~433 exercises) to use as matching targets:
+
+```bash
+# Set your Hevy API key
+export HEVY_API_KEY="your-api-key-from-hevy-settings"
+
+# Export Hevy exercise templates
+mise //packages/cli:cli hevy export --type exercise-templates -o data/hevy/exercises.json
+```
+
+### 3. Export RP Data
+
+Export your complete RP training history. You'll need a bearer token from the RP app (inspect network traffic to grab it):
+
+```bash
+# Save your RP bearer token to token.txt
+echo "your-rp-bearer-token" > token.txt
+
+# Export all RP data (profile, exercises, mesocycles, templates, etc.)
+mise //packages/cli:cli rp export --type all -o data/rp/
+```
+
+### 4. Run Embedding and Matching
+
+Generate AI-powered exercise matches between the RP and Hevy exercise catalogs using semantic embeddings:
+
+```bash
+# Step 1: Embed all exercises into vectors using Qwen3-Embedding-8B
+mise //packages/cli:cli embedding embd \
+  --backend local \
+  --model-name Qwen/Qwen3-Embedding-8B \
+  --chroma-mode persistent \
+  --chroma-path ./chroma_data
+
+# Step 2: Run similarity search to find top-K candidates
+mise //packages/cli:cli embedding run-rp-similarity-search \
+  --chroma-mode persistent \
+  --chroma-path ./chroma_data \
+  --exercise-output-dir data/embeddings/candidates/
+
+# Step 3: Use an LLM to judge the best match from candidates
+# Requires OpenRouter or OpenAI API key
+export OPENROUTER_API_KEY="your-openrouter-api-key"
+mise //packages/cli:cli embedding llm-judge \
+  --api-base-url https://openrouter.ai/api/v1 \
+  --api-key $OPENROUTER_API_KEY \
+  --api-model google/gemini-3.1-pro-preview
+
+# This produces data/embeddings/llm-matches.yaml
+```
+
+### 5. Port Data to Hevy
+
+Finally, import your entire RP training history into Hevy:
+
+```bash
+# Preview what would be imported (dry run)
+mise //packages/cli:cli port-rp-workout-to-hevy --dry-run
+
+# Import everything from a specific date
+mise //packages/cli:cli port-rp-workout-to-hevy --start-date 2026-01-01
+
+# Re-sync previously imported workouts
+mise //packages/cli:cli port-rp-workout-to-hevy --upsert
+```
+
+Each imported workout will be tagged with `#import-from-rp` and `rp-day-id:<id>` in the description for deduplication.
 
 ## What's Inside
 
