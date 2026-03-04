@@ -40,7 +40,7 @@ jobs:
           ADDR="${{ secrets.REMOTE_BUILDER_ADDRESS }}"
           PORT="${{ secrets.REMOTE_BUILDER_PORT }}"
           if [ -n "$ADDR" ] && [ -n "$PORT" ] && \
-             timeout 15 bash -c "cat < /dev/null > /dev/tcp/$ADDR/$PORT" 2>/dev/null; then
+             timeout 30 bash -c "cat < /dev/null > /dev/tcp/$ADDR/$PORT" 2>/dev/null; then
             echo "Remote builder reachable at $ADDR:$PORT"
             echo "available=true" >> "$GITHUB_OUTPUT"
           else
