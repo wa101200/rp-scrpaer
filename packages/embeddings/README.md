@@ -60,7 +60,7 @@ Embedding quality is evaluated at two levels: automated **muscle group precision
 A dataset of 100 RP-to-Hevy exercise pairs with human-verified correct matches. Each ground truth file is a YAML document:
 
 ```yaml
-# ground-truths/bench-press-medium-grip-barbell-chest.yaml
+# data/embeddings/ground-truths/bench-press-medium-grip-barbell-chest.yaml
 file: bench-press-medium-grip-barbell-chest.yaml
 rp_exercise: "bench press medium grip, barbell, chest"
 candidates:
@@ -129,16 +129,16 @@ src/embeddings/
   db.py          # ChromaDB client modes (memory, persistent, HTTP) and collection init
   embed.py       # Embedder protocol, LocalEmbedder, ApiEmbedder, similarity search, metrics
 
+claude-as-a-judge.sh            # Script to generate ground truths using Claude
+
+# Root data/ directory (shared across packages)
 data/
   rp/exercises.json             # 315 RP exercises
   hevy/exercises.json           # 433 Hevy exercises
   muscle_group_mapping.json     # RP muscleGroupId -> Hevy primary_muscle_group
-
-ground-truths/                  # 100 LLM-judged exercise match labels (YAML)
-claude-as-a-judge.sh            # Script to generate ground truths using Claude
-
-output/                         # ~314 per-exercise YAML match files (generated)
-metrics.yaml                    # Latest evaluation metrics (includes ground truth accuracy)
+  embeddings/
+    output/                     # ~314 per-exercise YAML match files (generated)
+    ground-truths/              # 100 LLM-judged exercise match labels (YAML)
 ```
 
 ## Data Shapes
@@ -189,7 +189,7 @@ mise //packages/cli:cli embedding embd \
 # Run similarity search on already-embedded exercises
 mise //packages/cli:cli embedding run-rp-similarity-search \
   --chroma-mode persistent --chroma-path ./chroma_data \
-  --metrics-output metrics.yaml --exercise-output-dir output/
+  --metrics-output metrics.yaml --exercise-output-dir data/embeddings/output/
 ```
 
 Or run the standalone entrypoint:
@@ -203,7 +203,7 @@ mise //packages/embeddings:embed
 Each RP exercise produces a separate YAML file:
 
 ```yaml
-# output/ab-wheel-bodyweight-only-abdominals.yaml
+# data/embeddings/output/ab-wheel-bodyweight-only-abdominals.yaml
 rp_embedding_name: ab wheel, bodyweight-only, abdominals
 matches:
   - hevy_embedding_name: ab wheel, abdominals

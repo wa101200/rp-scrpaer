@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: build
-    env:
-      MISE_AUTO_INSTALL: false
     strategy:
       matrix:
         project: [cli]
+    env:
+      MISE_AUTO_INSTALL: false
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -34,7 +34,21 @@ jobs:
         uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4.1.1
         with:
           authkey: ${{ secrets.TALSCALE_KEY }}
+      - name: Check remote builder availability
+        id: check-builder
+        run: |
+          ADDR="${{ secrets.REMOTE_BUILDER_ADDRESS }}"
+          PORT="${{ secrets.REMOTE_BUILDER_PORT }}"
+          if [ -n "$ADDR" ] && [ -n "$PORT" ] && \
+             timeout 30 bash -c "cat < /dev/null > /dev/tcp/$ADDR/$PORT" 2>/dev/null; then
+            echo "Remote builder reachable at $ADDR:$PORT"
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Remote builder not available, falling back to local docker buildx"
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Setup remote builder
+        if: steps.check-builder.outputs.available == 'true'
         run: |
           docker buildx create \
             --name remote-builder \
@@ -45,13 +59,3 @@ jobs:
         run: mise //packages/${{ matrix.project }}:build
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          # disabled for now until further work
-
-# - name: build-push
-#   working-directory: packages/${{ matrix.project }}
-#   run: mise run build-push $GIT_SHA_SHORT $GIT_BRANCH_NORM
-#   env:
-#     REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-#     REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
-#     REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-#     GITHUB_TOKEN: ${{ github.token }}

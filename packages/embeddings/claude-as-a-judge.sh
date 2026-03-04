@@ -5,8 +5,9 @@ set -euo pipefail
 SAMPLE_SIZE="${SAMPLE_SIZE:-100}"
 JOBS="${JOBS:-5}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-OUTPUT_DIR="$SCRIPT_DIR/output"
-EVAL_DIR="$SCRIPT_DIR/ground-truths"
+MONOREPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+OUTPUT_DIR="$MONOREPO_ROOT/data/embeddings/output"
+EVAL_DIR="$MONOREPO_ROOT/data/embeddings/ground-truths"
 
 # === Collect all output files ===
 TOTAL="$(find "$OUTPUT_DIR" -maxdepth 1 -name '*.yaml' -type f | wc -l | tr -d ' ')"

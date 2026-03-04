@@ -263,8 +263,8 @@ def embd(
 )
 @click.option(
     "--exercise-output-dir",
-    default=None,
-    help="Directory to write per-exercise YAML (opt-in).",
+    default="data/embeddings/output",
+    help="Directory to write per-exercise YAML.",
 )
 @click.option(
     "--rp-path",
@@ -279,6 +279,11 @@ def embd(
 @click.option("--model-name", default="", help="Model name label for metrics output.")
 @click.option("--rp-prompt", default="", help="RP prompt label for metrics output.")
 @click.option("--hevy-prompt", default="", help="Hevy prompt label for metrics output.")
+@click.option(
+    "--ground-truths-dir",
+    default="data/embeddings/ground-truths",
+    help="Directory containing ground truth YAML files.",
+)
 def run_rp_similarity_search(
     chroma_mode: str,
     chroma_path: str,
@@ -292,6 +297,7 @@ def run_rp_similarity_search(
     model_name: str,
     rp_prompt: str,
     hevy_prompt: str,
+    ground_truths_dir: str,
 ):
     """Run similarity search on already-embedded exercises in ChromaDB."""
     client = _build_chroma_client(chroma_mode, chroma_path, chroma_host, chroma_port)
@@ -325,6 +331,7 @@ def run_rp_similarity_search(
             hevy_docs=hevy_docs,
             rp_expected_muscles=rp_expected_muscles,
             results=results,
+            ground_truths_dir=ground_truths_dir,
         )
         _write_yaml(metrics, metrics_output)
 
