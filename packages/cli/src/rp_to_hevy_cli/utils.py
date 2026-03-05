@@ -5,11 +5,10 @@ import io
 import json
 import os
 from pathlib import Path
-from typing import cast
 from uuid import UUID
 
 import click
-from cloudpathlib import AnyPath, AzureBlobPath, CloudPath, GSPath, S3Path
+from cloudpathlib import AzureBlobPath, CloudPath, GSPath, S3Path
 
 
 def _require_hevy_api_key() -> UUID:
@@ -22,12 +21,14 @@ def _require_hevy_api_key() -> UUID:
     return UUID(raw)
 
 
-def read_token(token_file: str) -> str:
-    # AnyPath() returns Path | CloudPath at runtime
-    path = cast("Path | CloudPath", AnyPath(token_file))
-    if not path.exists():
-        raise click.ClickException(f"Token file not found: {token_file}")
-    return path.read_text().strip()
+def _require_rp_bearer_token() -> str:
+    raw = os.environ.get("RP_BEARER_TOKEN")
+    if not raw:
+        raise click.ClickException(
+            "RP_BEARER_TOKEN environment variable is not set. "
+            "Get your bearer token from the RP Strength web app network traffic."
+        )
+    return raw.strip()
 
 
 def _serialize(obj: object) -> object:

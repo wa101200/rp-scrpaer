@@ -115,7 +115,7 @@ mise //packages/cli:cli port-rp-workout-to-hevy --start-date 2026-01-01
 mise //packages/cli:cli port-rp-workout-to-hevy --upsert
 ```
 
-You'll need an RP bearer token (intercepted from app traffic, saved to `token.txt`) and a Hevy API key (`HEVY_API_KEY` env var, from [hevy.com/settings](https://hevy.com/settings?developer)).
+You'll need an RP bearer token (`RP_BEARER_TOKEN` env var, intercepted from app traffic) and a Hevy API key (`HEVY_API_KEY` env var, from [hevy.com/settings](https://hevy.com/settings?developer)).
 
 ## Running the Full Pipeline
 
@@ -151,8 +151,8 @@ mise //packages/cli:cli hevy export --type exercise-templates -o data/hevy/exerc
 Export your complete RP training history. You'll need a bearer token from the RP app (inspect network traffic to grab it):
 
 ```bash
-# Save your RP bearer token to token.txt
-echo "your-rp-bearer-token" > token.txt
+# Set your RP bearer token
+export RP_BEARER_TOKEN="your-rp-bearer-token"
 
 # Export all RP data (profile, exercises, mesocycles, templates, etc.)
 mise //packages/cli:cli rp export --type all -o data/rp/
