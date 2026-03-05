@@ -183,6 +183,7 @@ async def _port_rp_workout_to_hevy(
         workouts_api = WorkoutsApi(client)
 
         for workout, workout_date, day_id, hevy_id in to_import:
+            assert workout.workout is not None
             try:
                 if hevy_id:
                     await workouts_api.put_workouts_workout_id(

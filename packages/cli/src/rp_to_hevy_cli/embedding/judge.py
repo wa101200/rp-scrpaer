@@ -170,7 +170,7 @@ async def _run(
         api_model,
         provider=OpenAIProvider(base_url=api_base_url, api_key=api_key),
     )
-    agent = Agent(
+    agent: Agent[None, JudgeResult] = Agent(  # ty: ignore[invalid-assignment]
         model,
         system_prompt=_SYSTEM_PROMPT,
         output_type=JudgeResult,

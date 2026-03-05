@@ -30,8 +30,8 @@ def _is_day_importable(day: Day) -> bool:
         return False
     if day.status in ("skipped", "ready"):
         return False
-    for exercise in day.exercises:
-        for s in exercise.sets:
+    for exercise in day.exercises or []:
+        for s in exercise.sets or []:
             if s.status == "complete":
                 return True
     return False
@@ -48,7 +48,7 @@ def _build_hevy_workout(
     exercises: list[PostWorkoutsRequestExercise] = []
     earliest_finished_at: datetime | None = None
 
-    for exercise in day.exercises:
+    for exercise in day.exercises or []:
         exercise_match = next(
             (m for m in matches if str(m.rp_id) == str(exercise.exercise_id)), None
         )
@@ -63,31 +63,37 @@ def _build_hevy_workout(
             )
             continue
 
-        hevy_exercise = PostWorkoutsRequestExercise(
-            exercise_template_id=exercise_match.hevy_best_match_id, sets=[]
-        )
+        hevy_sets: list[PostWorkoutsRequestSet] = []
 
-        for s in exercise.sets:
+        for s in exercise.sets or []:
             if s.status == "skipped":
                 continue
-            if s.status == "complete":
+            if s.status == "complete" and s.weight is not None:
                 weight_kg = s.weight if s.unit == "kg" else s.weight * 0.453592
-                hevy_set = PostWorkoutsRequestSet(
-                    weight_kg=weight_kg, reps=s.reps, type="normal"
+                hevy_sets.append(
+                    PostWorkoutsRequestSet(
+                        weight_kg=weight_kg, reps=s.reps, type="normal"
+                    )
                 )
-                hevy_exercise.sets.append(hevy_set)
 
                 if s.finished_at and (
                     earliest_finished_at is None or s.finished_at < earliest_finished_at
                 ):
                     earliest_finished_at = s.finished_at
 
-        if len(hevy_exercise.sets) > 0:
-            exercises.append(hevy_exercise)
+        if hevy_sets:
+            exercises.append(
+                PostWorkoutsRequestExercise(
+                    exercise_template_id=exercise_match.hevy_best_match_id,
+                    sets=hevy_sets,
+                )
+            )
 
     if not exercises:
         return None
 
+    assert day.finished_at is not None
+    assert day.id is not None
     start = earliest_finished_at or day.finished_at
     duration = day.finished_at - start
     clamped = max(MIN_DURATION, min(MAX_DURATION, duration))

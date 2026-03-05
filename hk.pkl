@@ -19,6 +19,9 @@ local python_linters = new Mapping<String, Step> {
   }
   // Detects leftover breakpoint()/pdb statements
   ["python-debug-statements"] = Builtins.python_debug_statements
+  ["ty"] = (Builtins.ty) {
+    glob = List("packages/cli/src/**/*.py")
+  }
 }
 
 local javascript_linters = new Mapping<String, Step> {

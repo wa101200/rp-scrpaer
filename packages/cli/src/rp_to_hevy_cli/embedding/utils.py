@@ -6,6 +6,7 @@ import io
 import os
 import tempfile
 from pathlib import Path
+from typing import Any
 
 import click
 from cloudpathlib import AnyPath, CloudPath
@@ -149,7 +150,7 @@ def _resolve_input(path_str: str) -> str:
 
 
 # Custom representer function
-def string_representer(representer, data):
+def string_representer(representer: Any, data: str) -> Any:
     # Condition: if the string is just digits, force double quotes
     if data.isdigit():
         return representer.represent_scalar("tag:yaml.org,2002:str", data, style='"')
@@ -161,14 +162,14 @@ yaml.representer.add_representer(str, string_representer)
 
 
 def _write_yaml(data: object, output_path: str) -> None:
-    path = AnyPath(output_path)
     string_stream = io.StringIO()
     yaml.dump(data, string_stream)
     yaml_string = string_stream.getvalue()
 
+    path: Path | CloudPath = AnyPath(output_path)  # type: ignore[assignment]
     if isinstance(path, CloudPath):
         path.write_text(yaml_string)
     else:
-        Path(path).parent.mkdir(parents=True, exist_ok=True)
-        Path(path).write_text(yaml_string)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(yaml_string)
     click.echo(f"Wrote {path}")

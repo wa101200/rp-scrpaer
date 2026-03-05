@@ -16,3 +16,10 @@ dependencies = [
 
 [project.scripts]
 rp-to-hevy-cli = "rp_to_hevy_cli.__main__:cli"
+
+[tool.ty.rules]
+all = "error"
+
+[tool.ty.environment]
+python-version = "3.12"
+root = ["src"]

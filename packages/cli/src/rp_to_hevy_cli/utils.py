@@ -5,6 +5,7 @@ import io
 import json
 import os
 from pathlib import Path
+from typing import cast
 from uuid import UUID
 
 import click
@@ -22,7 +23,8 @@ def _require_hevy_api_key() -> UUID:
 
 
 def read_token(token_file: str) -> str:
-    path = AnyPath(token_file)
+    # AnyPath() returns Path | CloudPath at runtime
+    path = cast("Path | CloudPath", AnyPath(token_file))
     if not path.exists():
         raise click.ClickException(f"Token file not found: {token_file}")
     return path.read_text().strip()

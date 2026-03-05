@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
+from typing import cast
 
 import click
 from api_service_rp import ApiClient, Configuration, TrainingDataApi, UserApi
@@ -37,7 +38,7 @@ async def _fetch_all(user_api: UserApi, training_api: TrainingDataApi) -> dict:
         training_api.get_user_exercise_history(),
     )
     mesocycles = await asyncio.gather(
-        *(training_api.get_mesocycle(m.key) for m in summaries)
+        *(training_api.get_mesocycle(m.key) for m in summaries if m.key)
     )
     return {
         "profile": profile,
@@ -52,7 +53,9 @@ async def _fetch_all(user_api: UserApi, training_api: TrainingDataApi) -> dict:
 async def _fetch_mesocycles(training_api: TrainingDataApi) -> list:
     summaries = await training_api.get_mesocycles()
     return list(
-        await asyncio.gather(*(training_api.get_mesocycle(m.key) for m in summaries))
+        await asyncio.gather(
+            *(training_api.get_mesocycle(m.key) for m in summaries if m.key)
+        )
     )
 
 
@@ -117,10 +120,11 @@ def export(token_file: str, export_type: str, output: str | None):
     token = read_token(token_file)
 
     if output is None:
-        output_path = AnyPath(
-            "export" if export_type == "all" else f"{export_type}.json"
+        output_path = cast(
+            "Path | CloudPath",
+            AnyPath("export" if export_type == "all" else f"{export_type}.json"),
         )
     else:
-        output_path = AnyPath(output)
+        output_path = cast("Path | CloudPath", AnyPath(output))
 
     asyncio.run(_export(token, export_type, output_path))

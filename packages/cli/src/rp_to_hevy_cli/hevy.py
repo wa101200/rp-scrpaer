@@ -4,7 +4,7 @@ import asyncio
 import os
 from collections.abc import Awaitable, Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 from uuid import UUID
 
 import click
@@ -117,10 +117,11 @@ def hevy_export(export_type: str, output: str | None):
     api_key = _require_hevy_api_key()
 
     if output is None:
-        output_path = AnyPath(
-            "hevy-export" if export_type == "all" else f"{export_type}.json"
+        output_path = cast(
+            "Path | CloudPath",
+            AnyPath("hevy-export" if export_type == "all" else f"{export_type}.json"),
         )
     else:
-        output_path = AnyPath(output)
+        output_path = cast("Path | CloudPath", AnyPath(output))
 
     asyncio.run(_hevy_export(api_key, export_type, output_path))
