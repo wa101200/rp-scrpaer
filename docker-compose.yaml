@@ -46,11 +46,11 @@ services:
           memory: 512M
     pull_policy: always
 
-  redka:
-    image: nalgeon/redka:1.0.1
+  valkey:
+    image: valkey/valkey:8-alpine
     volumes:
-      - type: bind
-        source: ./data/redka
+      - type: volume
+        source: valkey_data
         target: /data
     ports:
       - target: 6379
@@ -58,10 +58,10 @@ services:
         published: 6379
         protocol: tcp
         mode: host
-    command: [ "-h", "0.0.0.0", "-p", "6379", "/data/redka.db" ]
+    command: ["valkey-server", "--save", "60", "1", "--loglevel", "warning"]
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "valkey-cli", "PING" ]
+      test: ["CMD", "valkey-cli", "PING"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -79,7 +79,7 @@ volumes:
     name: kestra_persistence
     labels:
       description: "Persistent storage for Kestra flows and executions"
-  redka_data:
-    name: redka_persistence
+  valkey_data:
+    name: valkey_persistence
     labels:
-      description: "Persistent storage for Redka SQLite database"
+      description: "Persistent storage for Valkey data"
