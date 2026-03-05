@@ -23,12 +23,11 @@ Export personal workout data from RP Hypertrophy's reverse-engineered internal A
 Usage: rp export [OPTIONS]
 
 Options:
-  --token-file TEXT   Path to bearer-token file  [default: token.txt]
   --type TEXT         Data type to export         [default: all]
   -o, --output PATH   Output file or directory
 ```
 
-Grab your bearer token from the RP Strength web app and save it to `token.txt`.
+Set `RP_BEARER_TOKEN` to your bearer token from the RP Strength web app network traffic.
 
 | `--type` | Output | Description |
 | --- | --- | --- |
@@ -105,7 +104,6 @@ Usage: port-rp-workout-to-hevy [OPTIONS]
 
 Options:
   --matches PATH           Path to llm-matches.yaml file  [default: data/embeddings/llm-matches.yaml]
-  --token-file TEXT        Path to file containing RP bearer token  [default: token.txt]
   --dry-run                Show what would be imported without posting
   --start-date [%Y-%m-%d]  Only import days finished on or after this date
   --upsert                 Update existing imported workouts instead of skipping them
@@ -134,7 +132,7 @@ mise //packages/cli:cli port-rp-workout-to-hevy --upsert
 
 **Deduplication:** Each imported workout's description contains an `#import-from-rp` tag and `rp-day-id:<id>` marker. On subsequent runs, days already in Hevy are skipped unless `--upsert` is passed.
 
-**Requirements:** `HEVY_API_KEY` environment variable and an RP bearer token file.
+**Requirements:** `HEVY_API_KEY` and `RP_BEARER_TOKEN` environment variables.
 
 ## Cloud Storage
 
@@ -212,5 +210,6 @@ mise //packages/cli:build-push
 | --- | --- | --- |
 | `RP_APP_BASE_URL` | `https://training.rpstrength.com/api` | RP API base URL |
 | `RP_APP_VERSION` | `1.1.13` | `accept-version` header value |
+| `RP_BEARER_TOKEN` | *(required)* | RP bearer token (from web app network traffic) |
 | `HEVY_API_KEY` | *(required)* | Hevy developer API key |
 | `HEVY_API_BASE_URL` | `https://api.hevyapp.com` | Hevy API base URL |

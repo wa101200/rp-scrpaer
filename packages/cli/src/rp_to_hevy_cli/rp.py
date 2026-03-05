@@ -8,7 +8,7 @@ import click
 from api_service_rp import ApiClient, Configuration, TrainingDataApi, UserApi
 from cloudpathlib import AnyPath, CloudPath
 
-from rp_to_hevy_cli.utils import read_token, write_json
+from rp_to_hevy_cli.utils import _require_rp_bearer_token, write_json
 
 EXPORT_TYPES = [
     "all",
@@ -100,9 +100,6 @@ def rp():
 
 @rp.command()
 @click.option(
-    "--token-file", default="token.txt", help="Path to file containing bearer token."
-)
-@click.option(
     "--type",
     "export_type",
     type=click.Choice(EXPORT_TYPES, case_sensitive=False),
@@ -115,9 +112,9 @@ def rp():
     default=None,
     help="Output path. For 'all' without .json extension, exports to a directory with one file per type.",
 )
-def export(token_file: str, export_type: str, output: str | None):
+def export(export_type: str, output: str | None):
     """Export personal data from RP Hypertrophy to JSON."""
-    token = read_token(token_file)
+    token = _require_rp_bearer_token()
 
     if output is None:
         output_path = cast(

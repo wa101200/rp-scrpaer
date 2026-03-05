@@ -19,7 +19,7 @@ from rp_to_hevy_cli.port.sync import (
 )
 from rp_to_hevy_cli.port.transform import _build_hevy_workout, _is_day_importable
 from rp_to_hevy_cli.rp import _fetch_mesocycles_by_token
-from rp_to_hevy_cli.utils import _require_hevy_api_key, read_token
+from rp_to_hevy_cli.utils import _require_hevy_api_key, _require_rp_bearer_token
 
 
 @click.command("port-rp-workout-to-hevy")
@@ -29,11 +29,6 @@ from rp_to_hevy_cli.utils import _require_hevy_api_key, read_token
     type=click.Path(exists=True, path_type=Path),
     default=DEFAULT_MATCHES_PATH,
     help="Path to llm-matches.yaml file.",
-)
-@click.option(
-    "--token-file",
-    default="token.txt",
-    help="Path to file containing RP bearer token.",
 )
 @click.option(
     "--dry-run",
@@ -55,19 +50,15 @@ from rp_to_hevy_cli.utils import _require_hevy_api_key, read_token
 )
 def port_rp_workout_to_hevy(
     matches_path: Path,
-    token_file: str,
     dry_run: bool,
     start_date: datetime | None,
     upsert: bool,
 ):
-    asyncio.run(
-        _port_rp_workout_to_hevy(matches_path, token_file, dry_run, start_date, upsert)
-    )
+    asyncio.run(_port_rp_workout_to_hevy(matches_path, dry_run, start_date, upsert))
 
 
 async def _port_rp_workout_to_hevy(
     matches_path: Path,
-    token_file: str,
     dry_run: bool,
     start_date: datetime | None,
     upsert: bool = False,
@@ -78,7 +69,7 @@ async def _port_rp_workout_to_hevy(
     matches = _load_matches(matches_path)
     click.echo(f"Loaded {len(matches)} exercise matches")
 
-    rp_token = read_token(token_file)
+    rp_token = _require_rp_bearer_token()
     click.echo("Fetching mesocycles from RP...")
     mesocycles = await _fetch_mesocycles_by_token(rp_token)
     click.echo(f"Fetched {len(mesocycles)} mesocycles")

@@ -51,9 +51,8 @@ mise //...:test
 | `HEVY_API_KEY` | Hevy API key (UUID) — required for `hevy export` |
 | `OPENROUTER_API_KEY` | LLM API key — required for `llm-judge` |
 | `RP_APP_BASE_URL` | RP API base (default: `https://training.rpstrength.com/api`) |
+| `RP_BEARER_TOKEN` | RP bearer token — required for `rp export` and `port-rp-workout-to-hevy` |
 | `HEVY_API_BASE_URL` | Hevy API base (default: `https://api.hevyapp.com`) |
-
-RP auth uses a bearer token file (default: `token.txt`).
 
 ## Coding Conventions
 
