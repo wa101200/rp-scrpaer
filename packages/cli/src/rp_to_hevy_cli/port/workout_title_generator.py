@@ -114,21 +114,25 @@ async def generate_workout_titles(
     timeout: float = 120.0,
     cache: RedisCache | None = None,
 ) -> Mesocycle:
+    """Generate titles from the first week's exercises, then apply to all weeks."""
     meso = mesocycle.model_copy(deep=True)
+    weeks = meso.weeks or []
+    if not weeks:
+        return meso
 
     match_map: dict[str, str] = {str(m.rp_id): m.hevy_best_match_name for m in matches}
 
-    day_tasks: list[tuple[int, int, list[str]]] = []
-
-    for week_idx, week in enumerate(meso.weeks or []):
-        for day_idx, day in enumerate(week.days or []):
-            exercise_names: list[str] = []
-            for exercise in day.exercises or []:
-                name = match_map.get(str(exercise.exercise_id))
-                if name:
-                    exercise_names.append(name)
-            if exercise_names:
-                day_tasks.append((week_idx, day_idx, exercise_names))
+    # Collect exercise names only from the first week.
+    first_week = weeks[0]
+    day_tasks: list[tuple[int, list[str]]] = []
+    for day_idx, day in enumerate(first_week.days or []):
+        exercise_names: list[str] = []
+        for exercise in day.exercises or []:
+            name = match_map.get(str(exercise.exercise_id))
+            if name:
+                exercise_names.append(name)
+        if exercise_names:
+            day_tasks.append((day_idx, exercise_names))
 
     if not day_tasks:
         return meso
@@ -136,14 +140,19 @@ async def generate_workout_titles(
     titles = await asyncio.gather(
         *(
             _generate_title_for_day(agent, names, sem, timeout, cache)
-            for _, _, names in day_tasks
+            for _, names in day_tasks
         )
     )
 
-    assert meso.weeks is not None
-    for (week_idx, day_idx, _), title in zip(day_tasks, titles):
-        week = meso.weeks[week_idx]
-        assert week.days is not None
-        week.days[day_idx].label = title
+    # Apply generated titles to the matching day position across all weeks.
+    title_by_day: dict[int, str] = {
+        day_idx: title for (day_idx, _), title in zip(day_tasks, titles, strict=True)
+    }
+    for week in weeks:
+        if week.days is None:
+            continue
+        for day_idx, day in enumerate(week.days):
+            if day_idx in title_by_day:
+                day.label = title_by_day[day_idx]
 
     return meso
