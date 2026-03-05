@@ -69,6 +69,7 @@ async def _generate_title_for_day(
     if cache is not None:
         cached = await cache.get(cache_key)
         if cached is not None:
+            print(f"Cache hit for {cache_key}")
             return WorkoutTitle.model_validate_json(cached).title
 
     async with sem:
