@@ -3,14 +3,28 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
+from typing import cast
+from uuid import UUID
 
 import click
 from cloudpathlib import AnyPath, AzureBlobPath, CloudPath, GSPath, S3Path
 
 
+def _require_hevy_api_key() -> UUID:
+    raw = os.environ.get("HEVY_API_KEY")
+    if not raw:
+        raise click.ClickException(
+            "HEVY_API_KEY environment variable is not set. "
+            "Get your key at https://hevy.com/settings?developer"
+        )
+    return UUID(raw)
+
+
 def read_token(token_file: str) -> str:
-    path = AnyPath(token_file)
+    # AnyPath() returns Path | CloudPath at runtime
+    path = cast("Path | CloudPath", AnyPath(token_file))
     if not path.exists():
         raise click.ClickException(f"Token file not found: {token_file}")
     return path.read_text().strip()

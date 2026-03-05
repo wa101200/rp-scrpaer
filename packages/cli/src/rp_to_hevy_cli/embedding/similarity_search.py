@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import click
 import numpy as np
-from cloudpathlib import AnyPath
 from embeddings import (
     build_match_results,
     compute_metrics,
@@ -79,13 +80,13 @@ def run_rp_similarity_search(
     rp_data = rp_collection.get(include=["embeddings", "documents"])
     rp_embeddings = np.array(rp_data["embeddings"], dtype=np.float32)
     rp_ids = rp_data["ids"]
-    rp_doc_names = rp_data["documents"]
+    rp_doc_names = rp_data["documents"] or []
     rp_docs = [{"id": id_, "name": name} for id_, name in zip(rp_ids, rp_doc_names)]
 
     results = query_matches(hevy_collection, rp_embeddings, n_results)
 
     hevy_data = hevy_collection.get(include=["documents"])
-    hevy_docs = hevy_data["documents"]
+    hevy_docs = hevy_data["documents"] or []
     click.echo(
         f"Queried {len(rp_doc_names)} RP exercises against {len(hevy_docs)} Hevy exercises."
     )
@@ -120,4 +121,4 @@ def run_rp_similarity_search(
                 .replace(")", "")
                 .replace("(", "")
             )
-            _write_yaml(item, str(AnyPath(exercise_output_dir) / f"{normalized}.yaml"))
+            _write_yaml(item, str(Path(exercise_output_dir) / f"{normalized}.yaml"))
