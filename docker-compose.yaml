@@ -49,8 +49,8 @@ services:
   valkey:
     image: valkey/valkey:8-alpine
     volumes:
-      - type: volume
-        source: valkey_data
+      - type: bind
+        source: ./data/valkey
         target: /data
     ports:
       - target: 6379
@@ -58,7 +58,7 @@ services:
         published: 6379
         protocol: tcp
         mode: host
-    command: ["valkey-server", "--save", "60", "1", "--loglevel", "warning"]
+    command: ["valkey-server", "--save", "5", "1", "--loglevel", "warning"]
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "valkey-cli", "PING"]
@@ -79,7 +79,3 @@ volumes:
     name: kestra_persistence
     labels:
       description: "Persistent storage for Kestra flows and executions"
-  valkey_data:
-    name: valkey_persistence
-    labels:
-      description: "Persistent storage for Valkey data"
