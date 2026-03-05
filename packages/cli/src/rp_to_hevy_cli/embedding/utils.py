@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import atexit
 import functools
+import hashlib
 import io
 import os
 import tempfile
@@ -9,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import click
+import redis.asyncio as aioredis
 from cloudpathlib import AnyPath, CloudPath
 from embeddings import (
     ApiEmbedder,
@@ -173,3 +175,36 @@ def _write_yaml(data: object, output_path: str) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(yaml_string)
     click.echo(f"Wrote {path}")
+
+
+# ---------------------------------------------------------------------------
+# Redis hash-based cache
+# ---------------------------------------------------------------------------
+
+
+class RedisCache:
+    """Async Redis hash cache keyed by SHA-256 of a prompt string."""
+
+    __slots__ = ("_client", "_hash_key")
+
+    def __init__(self, client: aioredis.Redis, hash_key: str) -> None:
+        self._client = client
+        self._hash_key = hash_key
+
+    @staticmethod
+    def field(prompt: str) -> str:
+        return hashlib.sha256(prompt.encode()).hexdigest()
+
+    async def get(self, prompt: str) -> str | None:
+        return await self._client.hget(self._hash_key, self.field(prompt))  # ty: ignore[invalid-await]
+
+    async def set(self, prompt: str, value: str) -> None:
+        await self._client.hset(self._hash_key, self.field(prompt), value)  # ty: ignore[invalid-await]
+
+    async def close(self) -> None:
+        await self._client.aclose()
+
+    @classmethod
+    def from_url(cls, redis_url: str, hash_key: str) -> RedisCache:
+        client = aioredis.from_url(redis_url, decode_responses=True)
+        return cls(client, hash_key)

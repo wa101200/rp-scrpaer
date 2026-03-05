@@ -1,143 +1,16 @@
 from __future__ import annotations
 
 import asyncio
-import logging
-import sys
-from enum import Enum
 from pathlib import Path
 
 import click
-from pydantic import BaseModel
-from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
 from ruamel.yaml import YAML
 
-from rp_to_hevy_cli.embedding.utils import _write_yaml
-
-logger = logging.getLogger(__name__)
+from rp_to_hevy_cli.embedding.judge_core import _Counter, _judge_one, build_agent
+from rp_to_hevy_cli.embedding.utils import RedisCache, _write_yaml
 
 yaml = YAML()
 yaml.width = 4096
-
-_SYSTEM_PROMPT = """\
-You are an expert in resistance training and exercise science.
-
-Given an exercise from the RP (Renaissance Periodization) database, \
-determine which numbered candidate from the Hevy exercise database is the \
-best match. The exercises may have different names but refer to the \
-same or very similar movement.
-
-Rules:
-- You MUST pick exactly one candidate by its number.
-- There is no "none" option — always pick the closest match.
-- Don't justify your choice for me
-- Return ONLY the candidate number (1, 2, 3, etc.)."""
-
-_MAX_RETRIES = 10
-
-
-class Confidence(str, Enum):
-    high = "high"
-    medium = "medium"
-    low = "low"
-
-
-class JudgeResult(BaseModel):
-    best_match: int
-    confidence: Confidence
-
-
-def _build_user_prompt(rp_name: str, candidates: list[str]) -> str:
-    lines = "\n".join(f"  {i}. {c}" for i, c in enumerate(candidates, 1))
-    return f"RP Exercise: {rp_name}\n\nHevy Candidates:\n{lines}"
-
-
-class _Counter:
-    __slots__ = ("_done", "_total")
-
-    def __init__(self, total: int) -> None:
-        self._done = 0
-        self._total = total
-
-    def tick(self) -> None:
-        self._done += 1
-        sys.stderr.write(f"\r  {self._done}/{self._total}")
-        sys.stderr.flush()
-
-
-async def _judge_one(
-    agent: Agent[None, JudgeResult],
-    exercise: dict,
-    sem: asyncio.Semaphore,
-    counter: _Counter,
-    timeout: float,
-    strict: bool = False,
-) -> dict | None:
-    """Judge a single exercise with retries."""
-    rp_id = str(exercise["rp_id"])
-    rp_name = exercise["rp_embedding_name"]
-    matches = exercise["semantic_matches"]
-    candidates = [m["hevy_embedding_name"] for m in matches]
-    user_prompt = _build_user_prompt(rp_name, candidates)
-
-    async with sem:
-        for attempt in range(_MAX_RETRIES):
-            try:
-                result = await asyncio.wait_for(agent.run(user_prompt), timeout=timeout)
-                judge = result.output
-                break
-            except TimeoutError:
-                logger.warning(
-                    "Timeout for rp_id=%s (attempt %d/%d)",
-                    rp_id,
-                    attempt + 1,
-                    _MAX_RETRIES,
-                )
-                if attempt < _MAX_RETRIES - 1:
-                    continue
-                return None
-            except Exception as exc:
-                if attempt < _MAX_RETRIES - 1:
-                    await asyncio.sleep(2**attempt)
-                    continue
-                logger.warning(
-                    "Failed for rp_id=%s, skipping: %s",
-                    rp_id,
-                    exc,
-                )
-                return None
-        else:
-            return None
-
-    idx = judge.best_match - 1  # 1-based → 0-based
-    if idx < 0 or idx >= len(matches):
-        click.echo(
-            click.style(
-                f"  OUT OF RANGE: rp_id={rp_id} — LLM returned "
-                f"{judge.best_match} but only {len(matches)} candidates. "
-                f"Falling back to candidate 1.",
-                fg="red",
-                bold=True,
-            ),
-            err=True,
-        )
-        if strict:
-            raise click.ClickException(
-                f"rp_id={rp_id} — LLM returned {judge.best_match} "
-                f"which is out of range (1-{len(matches)})."
-            )
-        idx = 0
-
-    counter.tick()
-    chosen = matches[idx]
-    return {
-        "rp_id": rp_id,
-        "rp_name": rp_name,
-        "hevy_best_match_id": chosen["hevy_id"],
-        "hevy_best_match_name": chosen["hevy_embedding_name"],
-        "confidence": judge.confidence.value,
-    }
 
 
 async def _run(
@@ -150,6 +23,7 @@ async def _run(
     concurrency: int,
     timeout: float,
     strict: bool = False,
+    redis_url: str | None = None,
 ) -> None:
     input_path = Path(input_dir)
     files = sorted(input_path.glob("*.yaml"))
@@ -166,25 +40,26 @@ async def _run(
     exercises = [yaml.load(f.read_text()) for f in files]
     total = len(exercises)
 
-    model = OpenAIChatModel(
-        api_model,
-        provider=OpenAIProvider(base_url=api_base_url, api_key=api_key),
-    )
-    agent: Agent[None, JudgeResult] = Agent(  # ty: ignore[invalid-assignment]
-        model,
-        system_prompt=_SYSTEM_PROMPT,
-        output_type=JudgeResult,
-    )
+    agent = build_agent(api_base_url, api_key, api_model)
     sem = asyncio.Semaphore(concurrency)
+
+    cache: RedisCache | None = None
+    if redis_url is not None:
+        cache = RedisCache.from_url(redis_url, f"llm-judge:{api_model}")
 
     click.echo(
         f"Processing {total} exercises with {api_model} (concurrency={concurrency})..."
     )
 
     counter = _Counter(total)
-    tasks = [_judge_one(agent, ex, sem, counter, timeout, strict) for ex in exercises]
+    tasks = [
+        _judge_one(agent, ex, sem, counter, timeout, strict, cache) for ex in exercises
+    ]
     raw_results = await asyncio.gather(*tasks)
     click.echo(err=True)  # newline after progress
+
+    if cache is not None:
+        await cache.close()
 
     results = [r for r in raw_results if r is not None]
     results.sort(key=lambda r: int(r["rp_id"]))
@@ -192,6 +67,8 @@ async def _run(
     _write_yaml(results, output)
     skipped = total - len(results)
     msg = f"Done. {len(results)}/{total} exercises matched."
+    if counter._cached:
+        msg += f" ({counter._cached} cached, {len(results) - counter._cached} via LLM)"
     if skipped:
         msg += f" ({skipped} skipped)"
     click.echo(msg)
@@ -239,6 +116,11 @@ async def _run(
     default=False,
     help="Exit if LLM returns an out-of-range candidate number.",
 )
+@click.option(
+    "--redis-url",
+    default=None,
+    help="Redis URL for caching LLM results, e.g. redis://127.0.0.1:6379",
+)
 def llm_judge(
     api_base_url: str,
     api_key: str,
@@ -249,6 +131,7 @@ def llm_judge(
     output: str,
     timeout: float,
     strict: bool,
+    redis_url: str | None,
 ) -> None:
     """Use an LLM to pick the best Hevy match for each RP exercise."""
     asyncio.run(
@@ -262,5 +145,6 @@ def llm_judge(
             concurrency,
             timeout,
             strict,
+            redis_url,
         )
     )
