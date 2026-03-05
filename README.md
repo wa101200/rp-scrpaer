@@ -16,7 +16,7 @@ The catch: nothing about this was straightforward.
 
 ### 1. RP has no public API
 
-RP doesn't document or expose an API. I reverse-engineered it by intercepting traffic from the mobile app — mapping endpoints, figuring out auth, and building a Python SDK from scratch. The whole thing is undocumented and could break any time RP ships an update.
+RP doesn't document or expose an API. I reverse-engineered it by intercepting traffic from the web app — mapping endpoints, figuring out auth, and building a Python SDK from hand crafted openapi file. The whole thing is undocumented and could break any time RP ships an update.
 
 ### 2. Hevy's OpenAPI spec is broken
 
