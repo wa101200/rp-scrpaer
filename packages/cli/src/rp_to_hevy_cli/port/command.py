@@ -7,7 +7,7 @@ from pathlib import Path
 import click
 from api_service_rp import TrainingDataApi
 from api_service_rp.models.mesocycle import Mesocycle
-from hevy_api_service import WorkoutsApi
+from hevy_api_service import GetWorkouts200Response, WorkoutsApi
 from hevy_api_service.models import (
     PostWorkoutsRequestBody as HevyPostWorkoutsRequestBody,
 )
@@ -122,8 +122,13 @@ async def _port_rp_workout_to_hevy(
     hevy, api_key = hevy_client()
     async with hevy:
         workouts_api = WorkoutsApi(hevy)
-        existing_workouts = await _fetch_all_pages(
-            workouts_api.get_workouts, "workouts", api_key, 10
+        existing_workouts: list[GetWorkouts200Response] = await _fetch_all_pages(
+            lambda p: workouts_api.get_workouts(
+                api_key=api_key,
+                page=p,
+                page_size=10,
+            ),
+            "workouts",
         )
 
     existing_dates = _parse_existing_workout_dates(existing_workouts)
