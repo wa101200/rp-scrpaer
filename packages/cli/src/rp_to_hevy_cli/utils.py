@@ -7,7 +7,7 @@ import json
 import logging
 import os
 from pathlib import Path
-from typing import Any, TypeVar, cast
+from typing import Any, cast
 from uuid import UUID
 
 import click
@@ -185,10 +185,7 @@ class RedisCache:
 # ---------------------------------------------------------------------------
 
 
-T = TypeVar("T", bound=BaseModel)
-
-
-def build_openai_agent(
+def build_openai_agent[T: BaseModel](
     api_base_url: str,
     api_key: str,
     api_model: str,
@@ -199,14 +196,13 @@ def build_openai_agent(
         api_model,
         provider=OpenAIProvider(base_url=api_base_url, api_key=api_key),
     )
-    return Agent(  # ty: ignore[invalid-return-type]
-        model,
-        system_prompt=system_prompt,
-        output_type=output_type,
+    return cast(
+        "Agent[None, T]",
+        Agent(model, system_prompt=system_prompt, output_type=output_type),
     )
 
 
-async def run_agent_cached(
+async def run_agent_cached[T: BaseModel](
     agent: Agent[None, T],
     user_prompt: str,
     sem: asyncio.Semaphore,
@@ -247,6 +243,6 @@ async def run_agent_cached(
             return None
 
     if cache is not None:
-        await cache.set(key, output.model_dump_json())  # ty: ignore[unresolved-attribute]
+        await cache.set(key, output.model_dump_json())
 
-    return output  # ty: ignore[invalid-return-type]
+    return output
