@@ -1,6 +1,6 @@
 # rp-to-hevy
 
-> I love Hevy's UI but I train with RP. So I built a pipeline to port my entire workout history — reverse-engineered API, AI exercise matching, and all.
+> I love [Hevy](https://www.hevyapp.com/) UI but I train with [RP Hypertrophy](https://rpstrength.com/). So I built a pipeline to port my entire workout history — reverse-engineered API, AI exercise matching, and all.
 
 **Note:** This is a personal project. The data in this repository is mine. If you want to use this for your own data, you'll need to run through several setup steps outlined below.
 
