@@ -34,7 +34,7 @@ def build_title_agent(
     api_key: str,
     api_model: str,
 ) -> Agent[None, WorkoutTitle]:
-    return build_openai_agent(  # ty: ignore[invalid-return-type]
+    return build_openai_agent(
         api_base_url, api_key, api_model, _SYSTEM_PROMPT, WorkoutTitle
     )
 
@@ -52,7 +52,7 @@ async def _generate_title_for_day(
     )
 
     result = await run_agent_cached(
-        agent,  # ty: ignore[invalid-argument-type]
+        agent,
         user_prompt,
         sem,
         timeout,
@@ -60,10 +60,7 @@ async def _generate_title_for_day(
         cache_key=cache_key,
         output_type=WorkoutTitle,
     )
-    if result is None:
-        return "Workout"
-    title: WorkoutTitle = result  # ty: ignore[invalid-assignment]
-    return title.title
+    return result.title if result else "Workout"
 
 
 async def generate_workout_titles(

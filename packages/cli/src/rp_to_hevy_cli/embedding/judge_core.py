@@ -95,7 +95,7 @@ def build_agent(
     api_key: str,
     api_model: str,
 ) -> Agent[None, JudgeResult]:
-    return build_openai_agent(  # ty: ignore[invalid-return-type]
+    return build_openai_agent(
         api_base_url, api_key, api_model, _SYSTEM_PROMPT, JudgeResult
     )
 
@@ -113,8 +113,8 @@ async def _judge_one(
     candidates = [m["hevy_embedding_name"] for m in exercise["semantic_matches"]]
     user_prompt = _build_user_prompt(exercise["rp_embedding_name"], candidates)
 
-    result = await run_agent_cached(
-        agent,  # ty: ignore[invalid-argument-type]
+    judge = await run_agent_cached(
+        agent,
         user_prompt,
         sem,
         timeout,
@@ -122,9 +122,8 @@ async def _judge_one(
         cache=cache,
         output_type=JudgeResult,
     )
-    if result is None:
+    if judge is None:
         return None
 
     counter.tick()
-    judge: JudgeResult = result  # ty: ignore[invalid-assignment]
     return _resolve_match(judge, exercise, strict)

@@ -7,7 +7,7 @@ import json
 import logging
 import os
 from pathlib import Path
-from typing import Any, cast
+from typing import Any, TypeVar, cast
 from uuid import UUID
 
 import click
@@ -185,18 +185,21 @@ class RedisCache:
 # ---------------------------------------------------------------------------
 
 
+T = TypeVar("T", bound=BaseModel)
+
+
 def build_openai_agent(
     api_base_url: str,
     api_key: str,
     api_model: str,
     system_prompt: str,
-    output_type: type[BaseModel],
-) -> Agent:
+    output_type: type[T],
+) -> Agent[None, T]:
     model = OpenAIChatModel(
         api_model,
         provider=OpenAIProvider(base_url=api_base_url, api_key=api_key),
     )
-    return Agent(
+    return Agent(  # ty: ignore[invalid-return-type]
         model,
         system_prompt=system_prompt,
         output_type=output_type,
@@ -204,15 +207,15 @@ def build_openai_agent(
 
 
 async def run_agent_cached(
-    agent: Agent,
+    agent: Agent[None, T],
     user_prompt: str,
     sem: asyncio.Semaphore,
     timeout: float,
     max_retries: int = 3,
     cache: RedisCache | None = None,
     cache_key: str | None = None,
-    output_type: type[BaseModel] | None = None,
-) -> BaseModel | None:
+    output_type: type[T] | None = None,
+) -> T | None:
     """Run an agent with semaphore, retries, timeout, and optional cache."""
     key = cache_key or user_prompt
 
