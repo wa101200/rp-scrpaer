@@ -3,8 +3,8 @@ FROM jdxcode/mise:2026.2.23 AS mise
 
 FROM debian:trixie-slim@sha256:1d3c811171a08a5adaa4a163fbafd96b61b87aa871bbc7aa15431ac275d3d430 AS builder
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+RUN --mount=type=cache,id=apt-builder,target=/var/cache/apt \
+    --mount=type=cache,id=apt-lists-builder,target=/var/lib/apt/lists \
     apt-get update && apt-get install -y --no-install-recommends \
     build-essential=12.12 \
     ca-certificates=20250419 \
@@ -31,13 +31,13 @@ ENV PATH="/opt/python/bin:$PATH"
 WORKDIR /app
 COPY --parents **/pyproject.toml uv.lock ./
 
-RUN --mount=type=cache,target=/root/.cache/uv \
+RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv \
     uv sync --frozen --package rp-to-hevy-cli --no-editable --compile-bytecode
 
 FROM debian:trixie-slim@sha256:1d3c811171a08a5adaa4a163fbafd96b61b87aa871bbc7aa15431ac275d3d430
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+RUN --mount=type=cache,id=apt-runtime,target=/var/cache/apt \
+    --mount=type=cache,id=apt-lists-runtime,target=/var/lib/apt/lists \
     apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates=20250419 \
     libffi8=3.4.8-2 \
