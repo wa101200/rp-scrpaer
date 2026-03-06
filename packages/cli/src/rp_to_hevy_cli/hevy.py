@@ -15,7 +15,7 @@ from hevy_api_service.models.get_exercise_templates200_response import (
 from hevy_api_service.models.get_workouts200_response import GetWorkouts200Response
 
 from rp_to_hevy_cli.settings import hevy_client
-from rp_to_hevy_cli.utils import resolve_output_path, write_json, write_json_multi
+from rp_to_hevy_cli.utils import resolve_output_path, write_json
 
 HEVY_EXPORT_TYPES = [
     "all",
@@ -77,10 +77,18 @@ async def _hevy_export(export_type: str, output: Path | CloudPath) -> None:
             _fetch_all_exercise_templates(templates_api, api_key),
             _fetch_all_workouts(workouts_api, api_key),
         )
-        write_json_multi(
-            {"exercise_templates": templates, "workouts": workouts},
-            output,
-        )
+        data = {"exercise_templates": templates, "workouts": workouts}
+        if output.suffix == ".json":
+            write_json(data, output)
+        elif output.is_dir():
+            if isinstance(output, Path):
+                output.mkdir(parents=True, exist_ok=True)
+            for key, value in data.items():
+                write_json(value, output / f"{key}.json")
+        else:
+            raise click.ClickException(
+                f"Invalid output path {output}. Must be .json or directory."
+            )
 
 
 @click.group()

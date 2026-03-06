@@ -9,7 +9,7 @@ from api_service_rp.models.mesocycle import Mesocycle
 from cloudpathlib import CloudPath
 
 from rp_to_hevy_cli.settings import rp_client
-from rp_to_hevy_cli.utils import resolve_output_path, write_json, write_json_multi
+from rp_to_hevy_cli.utils import resolve_output_path, write_json
 
 EXPORT_TYPES = [
     "all",
@@ -67,7 +67,17 @@ async def _export(export_type: str, output: Path | CloudPath) -> None:
 
         if export_type == "all":
             data = await _fetch_all(user_api, training_api)
-            write_json_multi(data, output)
+            if output.suffix == ".json":
+                write_json(data, output)
+            elif output.is_dir():
+                if isinstance(output, Path):
+                    output.mkdir(parents=True, exist_ok=True)
+                for key, value in data.items():
+                    write_json(value, output / f"{key}.json")
+            else:
+                raise click.ClickException(
+                    f"Invalid output path {output}. Must be .json or directory."
+                )
             return
 
         fetchers = {

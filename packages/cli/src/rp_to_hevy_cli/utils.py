@@ -96,16 +96,6 @@ def write_json(data: object, output: Path | CloudPath) -> None:
     click.echo(f"Wrote {output}")
 
 
-def write_json_multi(data: dict, output: Path | CloudPath) -> None:
-    if output.suffix == ".json":
-        write_json(data, output)
-    else:
-        if isinstance(output, Path):
-            output.mkdir(parents=True, exist_ok=True)
-        for key, value in data.items():
-            write_json(value, output / f"{key}.json")
-
-
 def resolve_output_path(
     output: str | None, default_dir: str, export_type: str
 ) -> Path | CloudPath:
