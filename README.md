@@ -108,21 +108,21 @@ mise //...:test                       # test every package
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --dry-run
 
 # Import everything from a specific date
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --start-date 2026-01-01
 
 # Re-sync previously imported workouts
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --upsert
 ```
 
@@ -207,21 +207,21 @@ Finally, import your entire RP training history into Hevy:
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --dry-run
 
 # Import everything from a specific date
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --start-date 2026-01-01
 
 # Re-sync previously imported workouts
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --upsert
 ```
 

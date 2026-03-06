@@ -120,21 +120,21 @@ Options:
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --dry-run
 
 # Import everything from January 2026 onwards
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --start-date 2026-01-01
 
 # With Redis caching for repeated runs
 mise //packages/cli:cli port-rp-workout-to-hevy \
   --title-api-base-url https://openrouter.ai/api/v1 \
   --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-2.5-flash \
+  --title-api-model google/gemini-3-flash-preview \
   --redis-url redis://127.0.0.1:6379 \
   --upsert
 ```
