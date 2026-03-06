@@ -6,6 +6,7 @@ watchPatterns = [
   "packages/api-service/**",
   "packages/embeddings/**",
   "uv.lock",
+  "railway/hevy-export.toml",
 ]
 
 [deploy]
