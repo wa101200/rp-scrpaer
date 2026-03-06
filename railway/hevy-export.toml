@@ -10,7 +10,8 @@ watchPatterns = [
 ]
 
 [deploy]
-startCommand = "rp-to-hevy-cli hevy export --type all -o s3://stashed-lockerbox-flrz0lt/exports/hevy/"
+startCommand = 'bash -c "rp-to-hevy-cli hevy export --type all -o s3://$AWS_S3_BUCKET_NAME
+/exports/hevy/"'
 
 cronSchedule = "*/15 * * * *"
 
