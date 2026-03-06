@@ -61,6 +61,8 @@ flowchart TD
     CLI --> Pipeline
 ```
 
+## Core workflow
+
 The core command is **`port-rp-workout-to-hevy`** — it fetches every mesocycle from RP, maps exercises through the AI match file, generates descriptive workout titles via LLM (e.g. "Chest & Triceps", "Pull Day"), transforms sets (lb to kg, duration clamping), deduplicates against existing Hevy workouts, and creates or updates them via the Hevy API.
 
 ## Build System & CI
