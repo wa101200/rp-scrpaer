@@ -4,7 +4,6 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from pathlib import Path
 from typing import Any
-from uuid import UUID
 
 import click
 from cloudpathlib import CloudPath
@@ -21,22 +20,18 @@ HEVY_EXPORT_TYPES = [
 
 
 async def _fetch_all_pages[T](
-    fetch: Callable[..., Awaitable[Any]],
+    fetch: Callable[[int], Awaitable[Any]],
     items_attr: str,
-    api_key: UUID,
-    page_size: int,
 ) -> list[T]:
-    page = 1
-    all_items: list[T] = []
-    while True:
-        resp = await fetch(api_key=api_key, page=page, page_size=page_size)
-        items = getattr(resp, items_attr, None)
-        if items:
-            all_items.extend(items)
-        if page >= (resp.page_count or 1):
-            break
-        page += 1
-    return all_items
+    first_resp = await fetch(1)
+    page_count = first_resp.page_count or 1
+    all_items: list[T] = list(getattr(first_resp, items_attr, None) or [])
+
+    remaining = await asyncio.gather(*(fetch(p) for p in range(2, page_count + 1)))
+
+    return all_items + [
+        item for resp in remaining for item in (getattr(resp, items_attr, None) or [])
+    ]
 
 
 async def _hevy_export(export_type: str, output: Path | CloudPath) -> None:
@@ -45,28 +40,33 @@ async def _hevy_export(export_type: str, output: Path | CloudPath) -> None:
         templates_api = ExerciseTemplatesApi(client)
         workouts_api = WorkoutsApi(client)
 
+        fetchers = {
+            "exercise-templates": lambda: _fetch_all_pages(
+                lambda p: templates_api.get_exercise_templates(
+                    api_key=api_key,
+                    page=p,
+                    page_size=100,
+                ),
+                "exercise_templates",
+            ),
+            "workouts": lambda: _fetch_all_pages(
+                lambda p: workouts_api.get_workouts(
+                    api_key=api_key,
+                    page=p,
+                    page_size=10,
+                ),
+                "workouts",
+            ),
+        }
+
         if export_type != "all":
-            fetchers = {
-                "exercise-templates": lambda: _fetch_all_pages(
-                    templates_api.get_exercise_templates,
-                    "exercise_templates",
-                    api_key,
-                    100,
-                ),
-                "workouts": lambda: _fetch_all_pages(
-                    workouts_api.get_workouts, "workouts", api_key, 10
-                ),
-            }
             write_json(await fetchers[export_type](), output)
             return
 
-        templates, workouts = await asyncio.gather(
-            _fetch_all_pages(
-                templates_api.get_exercise_templates, "exercise_templates", api_key, 100
-            ),
-            _fetch_all_pages(workouts_api.get_workouts, "workouts", api_key, 10),
-        )
-        data = {"exercise_templates": templates, "workouts": workouts}
+        keys = list(fetchers)
+        results = await asyncio.gather(*(f() for f in fetchers.values()))
+        data = dict(zip(keys, results, strict=True))
+
         if output.suffix == ".json":
             write_json(data, output)
         elif output.is_dir():
