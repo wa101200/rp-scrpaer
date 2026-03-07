@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 
 import chromadb
@@ -8,7 +10,14 @@ logger = logging.getLogger(__name__)
 def create_client(
     host: str = "localhost",
     port: int = 8000,
+    *,
+    api_key: str | None = None,
 ) -> chromadb.ClientAPI:
+    if api_key:
+        logger.info("Connecting to Chroma Cloud at %s:%d", host, port)
+        return chromadb.CloudClient(
+            cloud_host=host, cloud_port=port, api_key=api_key
+        )
     logger.info("Connecting to ChromaDB at %s:%d", host, port)
     return chromadb.HttpClient(host=host, port=port)
 

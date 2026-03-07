@@ -17,15 +17,12 @@ from embeddings import (
 )
 from embeddings.embed import DEFAULT_N_RESULTS
 
-from rp_to_hevy_cli.embedding.utils import (
-    _chromadb_options,
-    _resolve_input,
-)
+from rp_to_hevy_cli.embedding.utils import _resolve_input
+from rp_to_hevy_cli.settings import chroma_config
 from rp_to_hevy_cli.utils import _write_yaml
 
 
 @click.command("run-rp-similarity-search")
-@_chromadb_options
 @click.option(
     "--n-results",
     type=int,
@@ -59,8 +56,6 @@ from rp_to_hevy_cli.utils import _write_yaml
     help="Directory containing ground truth YAML files.",
 )
 def run_rp_similarity_search(
-    chroma_host: str,
-    chroma_port: int,
     n_results: int,
     metrics_output: str | None,
     exercise_output_dir: str | None,
@@ -72,7 +67,10 @@ def run_rp_similarity_search(
     ground_truths_dir: str,
 ):
     """Run similarity search on already-embedded exercises in ChromaDB."""
-    client = create_client(host=chroma_host, port=chroma_port)
+    chroma_host, chroma_port, chroma_api_key = chroma_config()
+    client = create_client(
+        host=chroma_host, port=chroma_port, api_key=chroma_api_key
+    )
     hevy_collection = create_collection(client, "hevy_exercises")
     rp_collection = create_collection(client, "rp_exercises")
 
@@ -80,14 +78,18 @@ def run_rp_similarity_search(
     rp_embeddings = np.array(rp_data["embeddings"], dtype=np.float32)
     rp_ids = rp_data["ids"]
     rp_doc_names = rp_data["documents"] or []
-    rp_docs = [{"id": id_, "name": name} for id_, name in zip(rp_ids, rp_doc_names)]
+    rp_docs = [
+        {"id": id_, "name": name}
+        for id_, name in zip(rp_ids, rp_doc_names, strict=True)
+    ]
 
     results = query_matches(hevy_collection, rp_embeddings, n_results)
 
     hevy_data = hevy_collection.get(include=["documents"])
     hevy_docs = hevy_data["documents"] or []
     click.echo(
-        f"Queried {len(rp_doc_names)} RP exercises against {len(hevy_docs)} Hevy exercises."
+        f"Queried {len(rp_doc_names)} RP exercises "
+        f"against {len(hevy_docs)} Hevy exercises."
     )
 
     if metrics_output:

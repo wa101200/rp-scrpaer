@@ -50,17 +50,6 @@ def _embedder_options(f):
     return wrapper
 
 
-def _chromadb_options(f):
-    @click.option("--chroma-host", default="localhost", help="ChromaDB server host.")
-    @click.option(
-        "--chroma-port", type=int, default=8000, help="ChromaDB server port."
-    )
-    @functools.wraps(f)
-    def wrapper(*args, **kwargs):
-        return f(*args, **kwargs)
-
-    return wrapper
-
 
 def _resolve_input(path_str: str) -> str:
     """If *path_str* is a cloud URI, download to a local temp file and return its path."""
