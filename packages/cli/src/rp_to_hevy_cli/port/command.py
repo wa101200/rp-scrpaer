@@ -11,8 +11,10 @@ from hevy_api_service import GetWorkouts200Response, WorkoutsApi
 from hevy_api_service.models import (
     PostWorkoutsRequestBody as HevyPostWorkoutsRequestBody,
 )
+from pydantic_ai import Agent
+from pydantic_ai.models.openai import OpenAIChatModel
+from pydantic_ai.providers.openai import OpenAIProvider
 
-from rp_to_hevy_cli.agent import build_openai_agent
 from rp_to_hevy_cli.cache import LLMCache
 from rp_to_hevy_cli.hevy import _fetch_all_pages
 from rp_to_hevy_cli.port.models import DEFAULT_MATCHES_PATH, _load_matches
@@ -165,12 +167,12 @@ async def _port_rp_workout_to_hevy(
 
     title_api_base_url, title_api_key, title_api_model = title_llm_config()
     click.echo(f"Generating workout titles via {title_api_model}...")
-    title_agent = build_openai_agent(
-        title_api_base_url,
-        title_api_key,
+    title_model = OpenAIChatModel(
         title_api_model,
-        _TITLE_SYSTEM_PROMPT,
-        WorkoutTitle,
+        provider=OpenAIProvider(base_url=title_api_base_url, api_key=title_api_key),
+    )
+    title_agent = Agent(
+        title_model, system_prompt=_TITLE_SYSTEM_PROMPT, output_type=WorkoutTitle
     )
     sem = asyncio.Semaphore(title_concurrency)
 
