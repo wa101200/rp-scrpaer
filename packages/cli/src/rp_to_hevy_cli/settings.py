@@ -38,9 +38,7 @@ def title_llm_config() -> tuple[str, str, str]:
 
 
 def embedding_api_config() -> tuple[str, str, str, int | None, int]:
-    base_url = _require_env(
-        "EMBEDDING_API_BASE_URL", "Set the embedding API base URL."
-    )
+    base_url = _require_env("EMBEDDING_API_BASE_URL", "Set the embedding API base URL.")
     api_key = _require_env("EMBEDDING_API_KEY", "Set the embedding API key.")
     model = _require_env("EMBEDDING_API_MODEL", "Set the embedding model name.")
     dimensions = os.environ.get("EMBEDDING_API_DIMENSIONS")
