@@ -4,8 +4,10 @@ import asyncio
 from pathlib import Path
 
 import click
+from pydantic_ai import Agent
+from pydantic_ai.models.openai import OpenAIChatModel
+from pydantic_ai.providers.openai import OpenAIProvider
 
-from rp_to_hevy_cli.agent import build_openai_agent
 from rp_to_hevy_cli.cache import LLMCache
 from rp_to_hevy_cli.embedding.judge_core import (
     _SYSTEM_PROMPT,
@@ -43,9 +45,10 @@ async def _run(
     exercises = [yaml.load(f.read_text()) for f in files]
     total = len(exercises)
 
-    agent = build_openai_agent(
-        api_base_url, api_key, api_model, _SYSTEM_PROMPT, JudgeResult
+    model = OpenAIChatModel(
+        api_model, provider=OpenAIProvider(base_url=api_base_url, api_key=api_key)
     )
+    agent = Agent(model, system_prompt=_SYSTEM_PROMPT, output_type=JudgeResult)
     sem = asyncio.Semaphore(concurrency)
     cache = LLMCache.from_url(cache_url, f"llm-judge:{api_model}")
 

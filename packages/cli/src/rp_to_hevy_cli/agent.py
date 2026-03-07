@@ -2,33 +2,13 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import cast
 
 from pydantic import BaseModel
 from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
 
 from rp_to_hevy_cli.cache import LLMCache
 
 logger = logging.getLogger(__name__)
-
-
-def build_openai_agent[T: BaseModel](
-    api_base_url: str,
-    api_key: str,
-    api_model: str,
-    system_prompt: str,
-    output_type: type[T],
-) -> Agent[None, T]:
-    model = OpenAIChatModel(
-        api_model,
-        provider=OpenAIProvider(base_url=api_base_url, api_key=api_key),
-    )
-    return cast(
-        "Agent[None, T]",
-        Agent(model, system_prompt=system_prompt, output_type=output_type),
-    )
 
 
 async def run_agent_cached[T: BaseModel](
