@@ -29,7 +29,14 @@ ENV PATH="/opt/python/bin:$PATH"
 WORKDIR /app
 COPY --parents **/pyproject.toml uv.lock ./
 
-RUN uv sync --frozen --package rp-to-hevy-cli --no-editable --compile-bytecode
+RUN uv sync --frozen --package rp-to-hevy-cli --no-editable --compile-bytecode \
+    && find /app/.venv -type d \( -name tests -o -name test \) -exec rm -rf {} + \
+    && rm -rf /opt/python/lib/python3.12/idlelib \
+              /opt/python/lib/python3.12/lib2to3 \
+              /opt/python/lib/python3.12/ensurepip \
+              /opt/python/lib/python3.12/pydoc_data \
+              /opt/python/lib/python3.12/turtle* \
+              /opt/python/lib/python3.12/tkinter
 
 FROM debian:trixie-slim
 
