@@ -29,7 +29,7 @@ from rp_to_hevy_cli.port.workout_title_generator import (
 )
 from rp_to_hevy_cli.rp import _fetch_mesocycles
 from rp_to_hevy_cli.settings import hevy_client, rp_client, title_llm_config
-from rp_to_hevy_cli.utils import RedisCache, build_openai_agent
+from rp_to_hevy_cli.utils import LLMCache, build_openai_agent
 
 
 @click.command("port-rp-workout-to-hevy")
@@ -71,9 +71,16 @@ from rp_to_hevy_cli.utils import RedisCache, build_openai_agent
     help="Per-request timeout for title generation (seconds).",
 )
 @click.option(
-    "--redis-url",
-    default=None,
-    help="Redis URL for caching LLM results.",
+    "--cache-url",
+    default="sqlite+libsql:///data/cache.db",
+    help="Cache database URL.",
+)
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Skip confirmation prompt.",
 )
 def port_rp_workout_to_hevy(
     matches_path: Path,
@@ -82,7 +89,8 @@ def port_rp_workout_to_hevy(
     upsert: bool,
     title_concurrency: int,
     title_timeout: float,
-    redis_url: str | None,
+    cache_url: str,
+    yes: bool,
 ):
     asyncio.run(
         _port_rp_workout_to_hevy(
@@ -92,7 +100,8 @@ def port_rp_workout_to_hevy(
             upsert=upsert,
             title_concurrency=title_concurrency,
             title_timeout=title_timeout,
-            redis_url=redis_url,
+            cache_url=cache_url,
+            yes=yes,
         )
     )
 
@@ -104,7 +113,8 @@ async def _port_rp_workout_to_hevy(
     upsert: bool = False,
     title_concurrency: int = 10,
     title_timeout: float = 120.0,
-    redis_url: str | None = None,
+    cache_url: str = "sqlite+libsql:///data/cache.db",
+    yes: bool = False,
 ) -> None:
     """Port RP workout data to Hevy format."""
 
@@ -163,9 +173,7 @@ async def _port_rp_workout_to_hevy(
     )
     sem = asyncio.Semaphore(title_concurrency)
 
-    cache: RedisCache | None = None
-    if redis_url:
-        cache = RedisCache.from_url(redis_url, f"workout-titles:{title_api_model}")
+    cache = LLMCache.from_url(cache_url, f"workout-titles:{title_api_model}")
 
     titled_mesos: list[Mesocycle] = await asyncio.gather(
         *(
@@ -174,8 +182,7 @@ async def _port_rp_workout_to_hevy(
         )
     )
 
-    if cache is not None:
-        await cache.close()
+    await cache.close()
 
     for meso in titled_mesos:
         for week_idx, week in enumerate(meso.weeks or []):
@@ -238,7 +245,7 @@ async def _port_rp_workout_to_hevy(
         _print_summary(stats)
         return
 
-    if not click.confirm("\nProceed with import?"):
+    if not yes and not click.confirm("\nProceed with import?"):
         click.echo("Aborted.")
         return
 

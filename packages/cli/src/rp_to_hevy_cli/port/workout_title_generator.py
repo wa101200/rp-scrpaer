@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from pydantic_ai import Agent
 
 from rp_to_hevy_cli.port.models import ExerciseMatch
-from rp_to_hevy_cli.utils import RedisCache, run_agent_cached
+from rp_to_hevy_cli.utils import LLMCache, run_agent_cached
 
 _SYSTEM_PROMPT = """\
 You are an expert personal trainer. Given a list of exercises performed in a \
@@ -34,7 +34,7 @@ async def _generate_title_for_day(
     exercise_names: list[str],
     sem: asyncio.Semaphore,
     timeout: float,
-    cache: RedisCache | None = None,
+    cache: LLMCache | None = None,
 ) -> str:
     user_prompt = "Exercises:\n" + "\n".join(f"- {name}" for name in exercise_names)
     cache_key = "Exercises:\n" + "\n".join(
@@ -59,7 +59,7 @@ async def generate_workout_titles(
     agent: Agent[None, WorkoutTitle],
     sem: asyncio.Semaphore,
     timeout: float = 120.0,
-    cache: RedisCache | None = None,
+    cache: LLMCache | None = None,
 ) -> Mesocycle:
     """Generate titles from the first week's exercises, then apply to all weeks."""
     meso = mesocycle.model_copy(deep=True)

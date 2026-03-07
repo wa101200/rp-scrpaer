@@ -5,17 +5,20 @@ import hashlib
 import io
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any, cast
 
 import click
-import redis.asyncio as aioredis
 from cloudpathlib import AnyPath, AzureBlobPath, CloudPath, GSPath, S3Path
 from pydantic import BaseModel
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from ruamel.yaml import YAML
+from sqlalchemy import Column, String, Text, create_engine
+from sqlalchemy.orm import DeclarativeBase, Session
+from sqlalchemy.pool import StaticPool
 
 logger = logging.getLogger(__name__)
 
@@ -106,36 +109,70 @@ def resolve_output_path(
 
 
 # ---------------------------------------------------------------------------
-# Redis cache
+# LLM response cache (SQLAlchemy + libSQL)
 # ---------------------------------------------------------------------------
 
 
-class RedisCache:
-    """Async Redis hash cache keyed by SHA-256 of a prompt string."""
+class _Base(DeclarativeBase):
+    pass
 
-    __slots__ = ("_client", "_hash_key")
 
-    def __init__(self, client: aioredis.Redis, hash_key: str) -> None:
-        self._client = client
-        self._hash_key = hash_key
+class _CacheEntry(_Base):
+    __tablename__ = "cache_entries"
+    namespace = Column(String, primary_key=True)
+    field_hash = Column(String(64), primary_key=True)
+    value = Column(Text, nullable=False)
+
+
+class LLMCache:
+    """Async LLM response cache backed by SQLAlchemy + libSQL."""
+
+    __slots__ = ("_engine", "_namespace")
+
+    def __init__(self, engine, namespace: str) -> None:
+        self._engine = engine
+        self._namespace = namespace
 
     @staticmethod
     def field(prompt: str) -> str:
         return hashlib.sha256(prompt.encode()).hexdigest()
 
     async def get(self, prompt: str) -> str | None:
-        return await self._client.hget(self._hash_key, self.field(prompt))  # ty: ignore[invalid-await]
+        with Session(self._engine) as session:
+            row = session.get(_CacheEntry, (self._namespace, self.field(prompt)))
+            return str(row.value) if row else None
 
     async def set(self, prompt: str, value: str) -> None:
-        await self._client.hset(self._hash_key, self.field(prompt), value)  # ty: ignore[invalid-await]
+        from sqlalchemy.dialects.sqlite import insert
+
+        with Session(self._engine) as session:
+            stmt = (
+                insert(_CacheEntry)
+                .values(
+                    namespace=self._namespace,
+                    field_hash=self.field(prompt),
+                    value=value,
+                )
+                .on_conflict_do_update(
+                    index_elements=["namespace", "field_hash"],
+                    set_={"value": value},
+                )
+            )
+            session.execute(stmt)
+            session.commit()
 
     async def close(self) -> None:
-        await self._client.aclose()
+        self._engine.dispose()
 
     @classmethod
-    def from_url(cls, redis_url: str, hash_key: str) -> RedisCache:
-        client = aioredis.from_url(redis_url, decode_responses=True)
-        return cls(client, hash_key)
+    def from_url(cls, db_url: str, namespace: str) -> LLMCache:
+        connect_args: dict[str, str] = {}
+        auth_token = os.environ.get("TURSO_AUTH_TOKEN")
+        if auth_token:
+            connect_args["auth_token"] = auth_token
+        engine = create_engine(db_url, connect_args=connect_args, poolclass=StaticPool)
+        _Base.metadata.create_all(engine)
+        return cls(engine, namespace)
 
 
 # ---------------------------------------------------------------------------
@@ -166,7 +203,7 @@ async def run_agent_cached[T: BaseModel](
     sem: asyncio.Semaphore,
     timeout: float,
     max_retries: int = 3,
-    cache: RedisCache | None = None,
+    cache: LLMCache | None = None,
     cache_key: str | None = None,
     output_type: type[T] | None = None,
 ) -> T | None:

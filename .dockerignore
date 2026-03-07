@@ -19,3 +19,4 @@
 !packages/api-service/src/**
 !packages/embeddings/src
 !packages/embeddings/src/**
+!data/embeddings/llm-matches.yaml

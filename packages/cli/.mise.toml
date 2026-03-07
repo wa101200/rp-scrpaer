@@ -10,9 +10,6 @@ extends = "build"
 [tasks.push]
 extends = "push"
 
-[tasks.scan-docker]
-extends = "scan-docker"
-
 [tasks.build-push]
 extends = "build-push"
 
@@ -71,29 +68,12 @@ run = """
 uv run python -m rp_to_hevy_cli port-rp-workout-to-hevy \
   --matches "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
   --start-date 2026-02-28 \
-  --redis-url "$REDIS_URL"
+  --cache-url "sqlite+libsql://llm-cache-wadhah101.aws-us-west-2.turso.io?secure=true"
 """
 
 [tasks.port-rp-workout-to-hevy.env]
 HEVY_API_KEY = { required = true }
+TURSO_AUTH_TOKEN = { required = true }
 TITLE_API_BASE_URL = "https://openrouter.ai/api/v1"
 TITLE_API_KEY = "{{env.OPENROUTER_API_KEY}}"
 TITLE_API_MODEL = "google/gemini-3-flash-preview"
-REDIS_URL = "redis://127.0.0.1:6379"
-
-[tasks.port-rp-workout-to-hevy-dry-run]
-description = "Dry run: preview RP workouts that would be imported to Hevy"
-run = """
-uv run python -m rp_to_hevy_cli port-rp-workout-to-hevy \
-  --matches "$MONOREPO_ROOT/data/embeddings/llm-matches.yaml" \
-  --start-date 2026-01-01 \
-  --dry-run \
-  --redis-url "$REDIS_URL"
-"""
-
-[tasks.port-rp-workout-to-hevy-dry-run.env]
-HEVY_API_KEY = { required = true }
-TITLE_API_BASE_URL = "https://openrouter.ai/api/v1"
-TITLE_API_KEY = "{{env.OPENROUTER_API_KEY}}"
-TITLE_API_MODEL = "google/gemini-3-flash-preview"
-REDIS_URL = "redis://127.0.0.1:6379"
