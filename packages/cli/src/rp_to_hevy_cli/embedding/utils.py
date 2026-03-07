@@ -32,8 +32,6 @@ def _data_options(f):
     return wrapper
 
 
-
-
 def _resolve_input(path_str: str) -> str:
     """If *path_str* is a cloud URI, download to a local temp file and return its path."""
     path = AnyPath(path_str)

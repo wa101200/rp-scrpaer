@@ -15,9 +15,7 @@ def create_client(
 ) -> chromadb.ClientAPI:
     if api_key:
         logger.info("Connecting to Chroma Cloud at %s:%d", host, port)
-        return chromadb.CloudClient(
-            cloud_host=host, cloud_port=port, api_key=api_key
-        )
+        return chromadb.CloudClient(cloud_host=host, cloud_port=port, api_key=api_key)
     logger.info("Connecting to ChromaDB at %s:%d", host, port)
     return chromadb.HttpClient(host=host, port=port)
 

@@ -68,9 +68,7 @@ def run_rp_similarity_search(
 ):
     """Run similarity search on already-embedded exercises in ChromaDB."""
     chroma_host, chroma_port, chroma_api_key = chroma_config()
-    client = create_client(
-        host=chroma_host, port=chroma_port, api_key=chroma_api_key
-    )
+    client = create_client(host=chroma_host, port=chroma_port, api_key=chroma_api_key)
     hevy_collection = create_collection(client, "hevy_exercises")
     rp_collection = create_collection(client, "rp_exercises")
 
