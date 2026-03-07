@@ -34,7 +34,7 @@ run = 'echo "${REGISTRY_PASSWORD}" | docker login "${REGISTRY_URL}" -u "${REGIST
 description = "Build the Docker image locally"
 env = { '_'.source = { path = "scripts/ci/github-token.env.sh" } }
 usage = 'arg "[tag]" default="local" help="Image tag to use"'
-run = "docker buildx build --load --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME:${usage_tag} ../.."
+run = "docker buildx build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME:${usage_tag} ../.."
 
 [task_templates.push]
 description = "Build and push multi-platform Docker image to registry"

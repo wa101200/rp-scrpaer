@@ -107,43 +107,30 @@ Options:
   --dry-run                   Show what would be imported without posting
   --start-date [%Y-%m-%d]    Only import days finished on or after this date
   --upsert                    Update existing imported workouts instead of skipping them
-  --title-api-base-url TEXT   API base URL for workout title LLM  [required]
-  --title-api-key TEXT        API key for workout title LLM  [required]
-  --title-api-model TEXT      Model name for workout title LLM  [required]
   --title-concurrency INT     Max concurrent title-generation requests  [default: 10]
   --title-timeout FLOAT       Per-request timeout for title generation (seconds)  [default: 120.0]
-  --redis-url TEXT            Redis URL for caching LLM results
+  --cache-url TEXT            Cache database URL  [default: sqlite+libsql:///data/cache.db]
+  --yes, -y                   Skip confirmation prompt
 ```
 
 ```bash
 # Preview what would be imported
-mise //packages/cli:cli port-rp-workout-to-hevy \
-  --title-api-base-url https://openrouter.ai/api/v1 \
-  --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-3-flash-preview \
-  --dry-run
+mise //packages/cli:cli port-rp-workout-to-hevy --dry-run
 
 # Import everything from January 2026 onwards
-mise //packages/cli:cli port-rp-workout-to-hevy \
-  --title-api-base-url https://openrouter.ai/api/v1 \
-  --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-3-flash-preview \
-  --start-date 2026-01-01
+mise //packages/cli:cli port-rp-workout-to-hevy --start-date 2026-01-01
 
-# With Redis caching for repeated runs
+# With remote Turso cache and auto-confirm
 mise //packages/cli:cli port-rp-workout-to-hevy \
-  --title-api-base-url https://openrouter.ai/api/v1 \
-  --title-api-key $OPENROUTER_API_KEY \
-  --title-api-model google/gemini-3-flash-preview \
-  --redis-url redis://127.0.0.1:6379 \
-  --upsert
+  --cache-url "sqlite+libsql://your-db.turso.io?secure=true" \
+  --upsert --yes
 ```
 
 **How it works:**
 
 1. Loads the AI-generated exercise match file ([`llm-matches.yaml`](../../data/embeddings/llm-matches.yaml)) produced by the embedding pipeline above
 2. Fetches all mesocycles from RP's reverse-engineered API (training blocks containing weeks, days, exercises, and sets with weight/reps/RIR)
-3. Generates workout titles via LLM — inspects the exercises in each day's first week and produces gym-standard names like "Chest & Triceps", "Pull Day", or "Legs & Glutes". Titles are generated once from the first week and reused across all weeks in the mesocycle. Results are cached in Redis when `--redis-url` is provided
+3. Generates workout titles via LLM — inspects the exercises in each day's first week and produces gym-standard names like "Chest & Triceps", "Pull Day", or "Legs & Glutes". Titles are generated once from the first week and reused across all weeks in the mesocycle. Results are cached in the SQLAlchemy/libSQL cache database
 4. Fetches existing Hevy workouts for deduplication (by date and embedded `rp-day-id` tag)
 5. Filters days — skips unfinished, skipped, or already-imported days
 6. Transforms RP training data into Hevy workout payloads — maps each RP exercise to its Hevy equivalent using the AI match file, converts sets (lb→kg), and clamps duration to 45min–2h
@@ -172,6 +159,7 @@ mise //packages/cli:cli hevy export -o s3://my-bucket/exports/hevy/exercises.jso
 | `export-rp-s3` | Export all RP data to S3 (requires `BUCKET_NAME`) |
 | `export-hevy-local` | Export Hevy exercises to `exports/hevy/` |
 | `export-hevy-s3` | Export Hevy exercises to S3 (requires `BUCKET_NAME`) |
+| `port-rp-workout-to-hevy` | Port RP workouts to Hevy (requires `HEVY_API_KEY`, `RP_BEARER_TOKEN`, `TURSO_AUTH_TOKEN`) |
 | `build` | Build the Docker image |
 
 ## Package Structure
@@ -201,9 +189,11 @@ src/rp_to_hevy_cli/
 | `pydantic-ai` | LLM agent framework (structured output, retries) |
 | `api-service` | Async API clients for RP and Hevy (workspace) |
 | `embeddings` | Embedding and similarity search library (workspace) |
-| `cloudpathlib[s3]` | Cloud storage abstraction (S3, GCS, Azure) |
+| `cloudpathlib[s3,gs]` | Cloud storage abstraction (S3, GCS, Azure) |
 | `pyyaml` >=6.0 | YAML output for embedding results |
 | `ruamel.yaml` | YAML loading for exercise match files |
+| `sqlalchemy` >=2.0 | Database ORM for LLM response caching |
+| `sqlalchemy-libsql` | SQLAlchemy dialect for libSQL/Turso |
 
 Requires **Python >= 3.12**.
 
@@ -235,3 +225,4 @@ mise //packages/cli:build-push
 | `RP_BEARER_TOKEN` | *(required)* | RP bearer token (from web app network traffic) |
 | `HEVY_API_KEY` | *(required)* | Hevy developer API key |
 | `HEVY_API_BASE_URL` | `https://api.hevyapp.com` | Hevy API base URL |
+| `TURSO_AUTH_TOKEN` | *(optional)* | Auth token for remote Turso cache database |
