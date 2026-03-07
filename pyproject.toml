@@ -6,7 +6,7 @@ requires-python = ">=3.12"
 
 [tool.uv.workspace]
 members = ["packages/*"]
-exclude = ["packages/pipeline"]
+exclude = ["packages/pipeline", "packages/infra"]
 
 [tool.uv.sources]
 rp-to-hevy-cli = { workspace = true }

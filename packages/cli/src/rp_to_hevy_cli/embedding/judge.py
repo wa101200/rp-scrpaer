@@ -11,7 +11,7 @@ from rp_to_hevy_cli.embedding.judge_core import (
     _Counter,
     _judge_one,
 )
-from rp_to_hevy_cli.utils import RedisCache, _write_yaml, build_openai_agent, yaml
+from rp_to_hevy_cli.utils import LLMCache, _write_yaml, build_openai_agent, yaml
 
 
 async def _run(
@@ -24,7 +24,7 @@ async def _run(
     concurrency: int,
     timeout: float,
     strict: bool = False,
-    redis_url: str | None = None,
+    cache_url: str = "sqlite+libsql:///data/cache.db",
 ) -> None:
     input_path = Path(input_dir)
     files = sorted(input_path.glob("*.yaml"))
@@ -45,10 +45,7 @@ async def _run(
         api_base_url, api_key, api_model, _SYSTEM_PROMPT, JudgeResult
     )
     sem = asyncio.Semaphore(concurrency)
-
-    cache: RedisCache | None = None
-    if redis_url is not None:
-        cache = RedisCache.from_url(redis_url, f"llm-judge:{api_model}")
+    cache = LLMCache.from_url(cache_url, f"llm-judge:{api_model}")
 
     click.echo(
         f"Processing {total} exercises with {api_model} (concurrency={concurrency})..."
@@ -61,8 +58,7 @@ async def _run(
     raw_results = await asyncio.gather(*tasks)
     click.echo(err=True)  # newline after progress
 
-    if cache is not None:
-        await cache.close()
+    await cache.close()
 
     results = [r for r in raw_results if r is not None]
     results.sort(key=lambda r: int(r["rp_id"]))
@@ -118,9 +114,9 @@ async def _run(
     help="Exit if LLM returns an out-of-range candidate number.",
 )
 @click.option(
-    "--redis-url",
-    default=None,
-    help="Redis URL for caching LLM results, e.g. redis://127.0.0.1:6379",
+    "--cache-url",
+    default="sqlite+libsql:///data/cache.db",
+    help="Cache database URL.",
 )
 def llm_judge(
     api_base_url: str,
@@ -132,7 +128,7 @@ def llm_judge(
     output: str,
     timeout: float,
     strict: bool,
-    redis_url: str | None,
+    cache_url: str,
 ) -> None:
     """Use an LLM to pick the best Hevy match for each RP exercise."""
     asyncio.run(
@@ -146,6 +142,6 @@ def llm_judge(
             concurrency,
             timeout,
             strict,
-            redis_url,
+            cache_url,
         )
     )

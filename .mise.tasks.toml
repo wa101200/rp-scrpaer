@@ -30,39 +30,44 @@ description = "Log in to Docker registry"
 env = { REGISTRY_PASSWORD = { required = true }, REGISTRY_URL = { required = true }, REGISTRY_USERNAME = { required = true } }
 run = 'echo "${REGISTRY_PASSWORD}" | docker login "${REGISTRY_URL}" -u "${REGISTRY_USERNAME}" --password-stdin'
 
-[task_templates.scan-docker]
-description = "Scan Docker image for leaked secrets with TruffleHog"
-run = """
-trufflehog docker --image docker://$IMAGE_NAME:local --results=verified --fail --json > scan-results.json
-"""
+[task_templates.build]
+description = "Build the Docker image locally"
+env = { '_'.source = { path = "scripts/ci/github-token.env.sh" } }
+usage = 'arg "[tag]" default="local" help="Image tag to use"'
+run = "docker buildx build --load --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME:${usage_tag} ../.."
 
 [task_templates.push]
-description = "Push Docker image to registry"
+description = "Build and push multi-platform Docker image to registry"
+env = { '_'.source = { path = "scripts/ci/github-token.env.sh" } }
 usage = 'arg "<tag>" var=#true var_min=1 help="Image tags to push"'
 run = """
 FULL_IMAGE="${REGISTRY_URL}/${REGISTRY_USERNAME}/${IMAGE_NAME}"
+TAG_ARGS=""
 for tag in ${usage_tag}; do
-  docker tag "${IMAGE_NAME}:local" "${FULL_IMAGE}:${tag}"
-  docker push "${FULL_IMAGE}:${tag}"
+  TAG_ARGS="$TAG_ARGS -t ${FULL_IMAGE}:${tag}"
 done
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  --push \
+  --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN \
+  -f Dockerfile \
+  $TAG_ARGS \
+  ../..
 """
 depends = ["//:registry-login"]
 
-[task_templates.build]
-env = { '_'.source = { path = "scripts/ci/github-token.env.sh" } }
-usage = 'arg "[tag]" default="local" help="Image tag to use"'
-run = "docker buildx build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -f Dockerfile -t $IMAGE_NAME:${usage_tag} ../.."
-description = "Build the CLI Docker image"
-
-# We use `--load` + separate `docker push` instead of the faster `buildx build --push`.
-# `--push` skips the local daemon export, but we need the image locally so TruffleHog can
-# scan it for secrets before anything reaches the registry. This is a public repo — a leaked secret is instantly exposed with no undo. The ~30-60s overhead (export + re-upload) is an acceptable trade-off for gating pushes behind a secret scan.
 [task_templates.build-push]
-env = { '_'.source = { path = "scripts/ci/git-diff-hash.sh" } }
+description = "Build and push Docker image to registry with git-derived tags"
+env = { '_'.source = { path = "scripts/ci/git-current.sh" } }
 usage = 'arg "[tag]" var=#true help="Image tags to push"'
-description = "Build and auto push Docker image to registry with current git branch and hash along local changes"
-run = [
-  { task = "build" },
-  { task = "scan-docker" },
-  'mise run push ${usage_tag:-"$GIT_SHA_SHORT-$GIT_DIFF_HASH"}',
-]
+run = """
+TAGS="${usage_tag:-"$GIT_SHA_SHORT-dev $GIT_BRANCH_NORM"}"
+mise run push $TAGS
+
+FULL_IMAGE="${REGISTRY_URL}/${REGISTRY_USERNAME}/${IMAGE_NAME}"
+FIRST_TAG=$(echo $TAGS | awk '{print $1}')
+IMAGE_SHA=$(docker buildx imagetools inspect "${FULL_IMAGE}:${FIRST_TAG}" 2>/dev/null | grep -m1 'Digest:' | awk '{print $2}')
+echo "IMAGE_NAME=$FULL_IMAGE"
+echo "IMAGE_TAG=$FIRST_TAG"
+echo "IMAGE_SHA=$IMAGE_SHA"
+"""

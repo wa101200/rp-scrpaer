@@ -29,3 +29,7 @@ packages/cli/export/profile.json
 scan-results.json
 chroma_data/
 scripts/ci/env.sh
+
+.terraform
+infra/terraform.tfvars
+infra/.backend.conf

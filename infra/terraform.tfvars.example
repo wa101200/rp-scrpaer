@@ -1,0 +1,5 @@
+project_id       = "your-gcp-project-id"
+project_number   = "your-gcp-project-number"
+hevy_export_image = "docker.io/your-username/rp-to-hevy-cli@sha256:your-image-digest"
+data_bucket_name = "your-data-bucket-name"
+turso_cache_url  = "sqlite+libsql://your-turso-db-url.turso.io?secure=true"

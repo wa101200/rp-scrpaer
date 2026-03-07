@@ -8,7 +8,7 @@ import click
 from pydantic import BaseModel
 from pydantic_ai import Agent
 
-from rp_to_hevy_cli.utils import RedisCache, run_agent_cached
+from rp_to_hevy_cli.utils import LLMCache, run_agent_cached
 
 _SYSTEM_PROMPT = """\
 You are an expert in resistance training and exercise science.
@@ -97,7 +97,7 @@ async def _judge_one(
     counter: _Counter,
     timeout: float,
     strict: bool = False,
-    cache: RedisCache | None = None,
+    cache: LLMCache | None = None,
 ) -> dict | None:
     """Judge a single exercise with retries."""
     candidates = [m["hevy_embedding_name"] for m in exercise["semantic_matches"]]
