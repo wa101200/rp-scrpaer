@@ -37,6 +37,13 @@ def title_llm_config() -> tuple[str, str, str]:
     return base_url, api_key, model
 
 
+def chroma_config() -> tuple[str, int, str | None]:
+    host = os.environ.get("CHROMA_HOST", "localhost")
+    port = int(os.environ.get("CHROMA_PORT", "8000"))
+    api_key = os.environ.get("CHROMA_API_KEY")
+    return host, port, api_key
+
+
 def hevy_client() -> tuple[HevyApiClient, UUID]:
     api_key = UUID(
         _require_env(

@@ -15,17 +15,16 @@ from embeddings import (
 )
 
 from rp_to_hevy_cli.embedding.utils import (
-    _chromadb_options,
     _data_options,
     _embedder_options,
     _resolve_input,
 )
+from rp_to_hevy_cli.settings import chroma_config
 
 
 @click.command()
 @_data_options
 @_embedder_options
-@_chromadb_options
 @click.option("--rp-prompt", default="", help="Prompt prepended to RP exercise texts.")
 @click.option(
     "--hevy-prompt", default="", help="Prompt prepended to Hevy exercise texts."
@@ -40,8 +39,6 @@ def embd(
     api_dimensions: int | None,
     api_max_rpm: int,
     api_batch_size: int,
-    chroma_host: str,
-    chroma_port: int,
     rp_prompt: str,
     hevy_prompt: str,
 ):
@@ -64,7 +61,10 @@ def embd(
     rp_df = prepare_rp_exercises(rp_raw, mappings)
     hevy_df = prepare_hevy_exercises(hevy_raw)
 
-    client = create_client(host=chroma_host, port=chroma_port)
+    chroma_host, chroma_port, chroma_api_key = chroma_config()
+    client = create_client(
+        host=chroma_host, port=chroma_port, api_key=chroma_api_key
+    )
     hevy_collection = create_collection(client, "hevy_exercises")
     rp_collection = create_collection(client, "rp_exercises")
 
